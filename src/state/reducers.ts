@@ -2,9 +2,19 @@ import actions from './actions';
 
 export const reducer = ( state, action ) => {
     
-    console.log('updated', action.type, action.payload);
+    if (action.type != actions.SET_CALENDAR ) {
+        console.log('updated', action.type, action.payload);
+    }
 
     switch ( action.type ) {
+        case actions.SET_BASE:
+            return { 
+                ...state, 
+                base: {
+                    ...state.base,
+                    ...action.payload
+                }
+            }
         case actions.CONTENT_LOADED:
             return { 
                 ...state, 
@@ -18,10 +28,7 @@ export const reducer = ( state, action ) => {
                 ...state, 
                 content: {
                     ...state.content,
-                    events: action.payload.events,
-                    types: action.payload.types,
-                    locations: action.payload.locations,
-                    days: action.payload.days
+                    ...action.payload
                 }
             }
         case actions.SET_DAYS:
@@ -56,11 +63,11 @@ export const reducer = ( state, action ) => {
                     locations: action.payload
                 }
             }
-
         case actions.TOGGLE_PLAY:
             return { 
                 ...state, 
                 sound: {
+                    ...state.sound,
                     isPlaying: !state.sound.isPlaying
                 }
             }
@@ -73,6 +80,14 @@ export const reducer = ( state, action ) => {
                         ...state.base.sizes,
                         ...action.payload
                     }
+                }
+            }
+        case actions.SET_CALENDAR:
+            return { 
+                ...state, 
+                calendar: {
+                    ...state.calendar,
+                    ...action.payload
                 }
             }
         default:

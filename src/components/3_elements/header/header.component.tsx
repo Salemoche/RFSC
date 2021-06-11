@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { NavLink } from 'react-router-dom';
-import PlayerComponent from '../player/player.component';
 
 // Styles
 // import './header.styles.scss';
@@ -25,11 +24,10 @@ function HeaderComponent() {
                 <NavLink to="/" exact>
                     <li>Kalender</li>
                 </NavLink>
-                <NavLink to="/radio">
-                    <li>Radio</li>
+                <NavLink to="/space">
+                    <li>Space</li>
                 </NavLink>
             </ul>
-            <PlayerComponent/>
         </HeaderStyles>
     )
 }

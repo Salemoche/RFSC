@@ -13,6 +13,7 @@ import InfoPage from '../../../pages/info/info.page';
 import { GlobalStyle, AppStyles, MainStyles } from '../../../styles/default.styles';
 import { useBaseState } from '../../../state/provider';
 import FooterComponent from '../footer/footer.component';
+import SpacePage from '../../../pages/space/space.page';
 
 function Wrapper() {
 
@@ -23,11 +24,12 @@ function Wrapper() {
             <GlobalStyle/>
             <AppStyles sizes={ state.base.sizes }>
                 <HeaderComponent/>
-                <MainStyles className="rfsc-content" styles={ state.base.styles }>
+                <MainStyles styles={ state.base.styles }>
                 <Switch>
-                    <Route path="/"component={HomePage}/>
+                    <Route path="/" exact component={HomePage}/>
                     <Route path="/infos" exact component={InfoPage}/>
                     <Route path="/radio" exact component={RadioPage}/>
+                    <Route path="/space" exact component={SpacePage}/>
                 </Switch>
                 </MainStyles>
                 <FooterComponent/>

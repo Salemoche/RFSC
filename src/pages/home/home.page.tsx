@@ -3,7 +3,7 @@ import CalendarComponent from '../../components/3_elements/calendar/calendar.com
 
 function HomePage({ props }) {
     return (
-        <div>
+        <div className="rfsc-content rfsc-home">
             <CalendarComponent/>
         </div>
     )

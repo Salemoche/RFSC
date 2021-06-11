@@ -12,11 +12,18 @@ export const baseState = {
         styles: defaultStyles,
         showDetail: false,
         currentDetail: '',
+        icons: {
+            logo: '',
+            play: '',
+            onAir: '',
+        }
     },
     calendar: {
-        scrollDistance: 0,
+        scrollDist: 0,
+        scrollDir: 'forward',
         currentDay: 1,
         currentItem: 1,
+        filters: []
     },
     content: {
         days: {},
@@ -25,7 +32,8 @@ export const baseState = {
         events: {},
     },
     sound: {
-        isPlaying: false
+        isPlaying: false,
+        onAir: true,
     },
 
 }

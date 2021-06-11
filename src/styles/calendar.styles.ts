@@ -7,35 +7,65 @@ export const CalendarStyles = styled.div `
     top: 0;
     left: 0;
     perspective: 500px;
-    transform-style: preserve-3d;
+    /* transform-style: preserve-3d; */
 `
 
 export const CalendarListStyles = styled.div `
     position: absolute;
-    left: 50%;
-    top: 50%;
-    /* transform: translate(-50%, -50%) rotate3d(1, 0, 0, 60deg) perspective(10px); */
-    transform: translate(-50%, -50%) rotateX(60deg) perspective(10px);
+    left: 0;
+    top: 70%;
+    width: 100%;
+    pointer-events: none;
+    /* transform: translate(-50%, -50%) rotate3d(1, 0, 0, 60deg) */
+    /* transform: translate(-50%, -50%) rotateX(60deg) */
+    transform: translateY(-50%) rotateX(60deg);
     transform-style: preserve-3d;
     z-index: ${props => props.styles.zIndices?.list};
     text-align: center;
-    perspective: 500px;
+    /* perspective: 500px; */
+    /* background: purple; */
 
     .rfsc-calendar__list-container {
-        transform: translateY(${props => props.scrollDist}px);
+        /* transform: translateY(${props => props.scrollDist}px);
+        transform: translate(-50%, -50%) rotateX(60deg) perspective(10px);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        background: red; */
         transform-style: preserve-3d;
+        transform: translateY(calc(-50% + (${props => props.scrollDist}px)));
+        /* margin-top: -5000px; */
 
         .rfsc-calendar__list__day {
-            transform-style: preserve-3d;
+            /* transform-style: preserve-3d; */
         }
     }
 `
 export const CalendarListItemStyles = styled.div `
     box-sizing: border-box;
-    transform: rotateX(-2deg);
-    /* transform: rotateX(-60deg);
-    transform-style: preserve-3d; */
-    /* transform: rotate3d(-1,0,0,60deg); */
+    /* transform: rotateX(-60deg) rotateY(${props => props.distanceFromViewport * 0.05}deg); */
+    transform: rotateX(-60deg);
+    height: 500px;
+    width: 500px;
+    margin: 0 auto;
+    transition: ${props => props.styles.animation.transitions.long};
+    cursor: pointer;
+    pointer-events: all;
+
+    &:hover {
+        /* transform: rotateX(-60deg) scale(1.05); */
+
+
+        .rfsc-list-item__side {
+            &.rfsc-list-item__side-front {
+                transform: rotateY(-180deg);
+            }
+
+            &.rfsc-list-item__side-back {
+                transform: rotateY(0deg);
+            }
+        }
+    }
 
     &.active {
         opacity: 1;
@@ -46,18 +76,51 @@ export const CalendarListItemStyles = styled.div `
     }
 
     &.behind-viewport {
-        background: blue;
+        opacity: 0;
+        pointer-events: none;
     }
-
 
     &.in-front-of-viewport {
-        background: yellow;
+        /* background: yellow; */
     }
+
+    &.invisible {
+        opacity: 0;
+    }
+
+    .rfsc-list-item__side {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        transition: ${props => props.styles.animation.transitions.long};
+        backface-visibility: hidden;
+
+        &.rfsc-list-item__side-front {
+            transform: rotateY(0deg);
+            background-color: ${props => props.styles.colors.green};
+            color: ${props => props.styles.colors.red};
+        }
+
+        &.rfsc-list-item__side-back {
+            transform: rotateY(180deg);
+            background: white;
+        }
+    }
+
+
+    /* &.rendered {
+        display: inherit;
+    }
+
+    &.not-rendered {
+        display: none;
+    } */
+
 `
 
 export const CalendarGraphic = styled.div `
 
-    .st0{fill:#1A171B;}
+    .st0{fill: #ffffff;}
     .st1{font-family:'ABCMonumentGrotesk-Medium';}
     .st2{font-size:21.0676px;}
     .st3{font-size:21.0675px;}
@@ -74,8 +137,9 @@ export const CalendarGraphic = styled.div `
         [id*=location],
         [id*=type] {
             cursor: pointer;
-            transition: ${props => props.styles.animation.transition};
+            transition: ${props => props.styles.animation.transitions.regular};
             transform-origin: center;
+            fill: white;
 
             &:hover {
                 /* transform: scale(1.5); */
