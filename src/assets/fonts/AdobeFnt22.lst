@@ -1,0 +1,114 @@
+%!Adobe-FontList 1.22
+%Locale:0x409
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:ABCMonumentGrotesk-Medium
+FamilyName:ABC Monument Grotesk
+StyleName:Medium
+MenuName:ABC Monument Grotesk Medium
+StyleBits:0
+WeightClass:500
+WidthClass:5
+AngleClass:0
+FullName:ABC Monument Grotesk Medium
+WritingScript:Roman
+OutlineFileName:/Users/gabriel/Dropbox/Summer Camp 2021 Programmierung/Sketches/InDesign/Document fonts/ABCMonumentGrotesk-Medium.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:104992
+FileModTime:644258168
+NameArray:0,Mac,4,ABC Monument Grotesk Medium
+NameArray:0,Win,1,ABC Monument Grotesk Medium
+NameArray:0,Win,16,ABC Monument Grotesk
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Invalid
+OutlineFileName:/Users/gabriel/Dropbox/Summer Camp 2021 Programmierung/Sketches/InDesign/Document fonts/AdobeFnt22.lst
+FileLength:2924
+FileModTime:644965569
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:BallyhaunisNF
+FamilyName:Ballyhaunis NF
+StyleName:Regular
+MenuName:Ballyhaunis NF
+StyleBits:0
+WeightClass:400
+WidthClass:5
+AngleClass:0
+FullName:Ballyhaunis NF
+WritingScript:Roman
+OutlineFileName:/Users/gabriel/Dropbox/Summer Camp 2021 Programmierung/Sketches/InDesign/Document fonts/Ballyhaunis NF Regular.ttf
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:95348
+FileModTime:612321842
+NameArray:0,Mac,18,Ballyhaunis NF
+NameArray:0,Mac,4,Ballyhaunis NF
+NameArray:0,Win,1,Ballyhaunis NF
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:MinionPro-Regular
+FamilyName:Minion Pro
+StyleName:Regular
+MenuName:Minion Pro
+StyleBits:0
+WeightClass:400
+WidthClass:5
+AngleClass:0
+FullName:Minion Pro
+WritingScript:Roman
+OutlineFileName:/Users/gabriel/Dropbox/Summer Camp 2021 Programmierung/Sketches/InDesign/Document fonts/MinionPro-Regular.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:218640
+FileModTime:598542801
+DesignSize:110
+NameArray:0,Mac,4,Minion Pro
+NameArray:0,Win,1,Minion Pro
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:MonumentGrotesk-Medium
+FamilyName:Monument Grotesk
+StyleName:Medium
+MenuName:Monument Grotesk Medium
+StyleBits:0
+WeightClass:500
+WidthClass:5
+AngleClass:0
+FullName:Monument Grotesk Medium
+WritingScript:Roman
+OutlineFileName:/Users/gabriel/Dropbox/Summer Camp 2021 Programmierung/Sketches/InDesign/Document fonts/MonumentGrotesk-Medium.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:171880
+FileModTime:556239600
+NameArray:0,Mac,18,Monument Grotesk Medium
+NameArray:0,Mac,4,Monument Grotesk Medium
+NameArray:0,Win,1,Monument Grotesk Medium
+NameArray:0,Win,16,Monument Grotesk
+%EndFont
+

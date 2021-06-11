@@ -1,25 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// Base
+import './App.scss';
+
+// Helpers
+import { BaseStateProvider } from './state/provider';
+import LoaderComponent from './components/1_atoms/loader/loader.component';
+
+// Styles 
+import Wrapper from './components/3_elements/wrapper/wrapper.component';
 
 function App() {
+  
+  // const [base, dispatchBase] = useReducer( reducer, baseState);
+  // const [content, dispatchContent] = useReducer( reducer, baseState);
+  // const [months, setMonths] = useState([]);
+  // const [days, setDays] = useState([]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BaseStateProvider>
+      <LoaderComponent/>
+      <div className="App rfsc">
+        <Wrapper/>
+      </div>
+    </BaseStateProvider>
   );
 }
 
