@@ -1,0 +1,17 @@
+@font-face {
+    font-family: 'Monument';
+    font-style: normal;
+    font-weight: 400;
+    // src: url('/assets/fonts/ABCMonumentGrotesk-Medium.otf') format('opentype');
+    src: local(''),
+        url('/assets/fonts/ABCMonumentGrotesk-Medium.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'Ballyhaunis';
+    font-style: normal;
+    font-weight: 400;
+    // src: url('/assets/fonts/Ballyhaunis NF Regular.ttf') format('truetype');
+    src: local(''),
+        url('/assets/fonts/Ballyhaunis NF Regular.ttf') format('truetype');
+}

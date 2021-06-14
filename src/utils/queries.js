@@ -54,7 +54,9 @@ export const WP_QUERY = {
         pages {
             nodes {    
             pageId
-
+            infos {
+                content
+            }
             space {
                 content
                 icon {
@@ -86,6 +88,7 @@ export const WP_QUERY = {
                                         date
                                         fromTime
                                         toTime
+                                        leader
                                     }
                                 }
                             }
@@ -129,6 +132,9 @@ export const WP_QUERY = {
                     sourceUrl
                 }
                 iconPlay {
+                    sourceUrl
+                }
+                iconPause {
                     sourceUrl
                 }
                 iconOnAir {

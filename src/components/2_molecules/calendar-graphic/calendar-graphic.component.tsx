@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import CalendarDetailComponent from '../calendar-detail/calendar-detail.component';
 import { CalendarGraphic } from '../../../styles/calendar.styles';
 import { useBaseState } from '../../../state/provider';
 

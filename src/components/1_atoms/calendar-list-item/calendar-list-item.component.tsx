@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { formatTime } from '../../../utils/helpers';
 import { CalendarListItemStyles } from '../../../styles/calendar.styles';
 import { useBaseState } from '../../../state/provider';
-import { formatDiagnostic } from 'typescript';
+import actions from '../../../state/actions';
 
 function CalendarListItemComponent({ post, date, scrollDist, containerHeight, activeThreshold, viewPortShift, far, week }) {
 
@@ -15,14 +14,14 @@ function CalendarListItemComponent({ post, date, scrollDist, containerHeight, ac
     // const [active, setActive] = useState(false);
     const [offsetTop, setOffsetTop] = useState(0)
     const styles = useBaseState().state.base.styles;
+    const updateBaseState = useBaseState().dispatchBase
 
 
     useEffect(() => {
-        if (typeof elementRef.current?.offsetTop == 'number') {
+        if (typeof elementRef.current?.offsetTop === 'number') {
             setOffsetTop(elementRef.current?.offsetTop);
         }
         setBehindViewport(false);
-        console.log(post)
 
     }, [])
 
@@ -66,7 +65,8 @@ function CalendarListItemComponent({ post, date, scrollDist, containerHeight, ac
     }, [scrollDist])
 
     const handleClick = (e) => {
-        console.log(e.target, post)
+        console.log(e.target, post, getPost().post.id);
+        updateBaseState({ type: actions.SET_BASE, payload: { showEventDetail: true, currentEventDetail: getPost().post.id } });
     }
 
     /**
@@ -83,6 +83,7 @@ function CalendarListItemComponent({ post, date, scrollDist, containerHeight, ac
         let postObject = {
             type: '',
             events: [],
+            id: '',
             front: {
                 icon: '',
                 extra: ''
@@ -99,6 +100,7 @@ function CalendarListItemComponent({ post, date, scrollDist, containerHeight, ac
                 postObject = {
                     type: 'event',
                     events: post.events,
+                    id: post.events[0]?.id,
                     front: {
                         icon: '',
                         extra: post.extra
@@ -126,6 +128,7 @@ function CalendarListItemComponent({ post, date, scrollDist, containerHeight, ac
                 postObject = {
                     type: 'tattoo',
                     events: [],
+                    id: post.id,
                     front: {
                         icon: post.icon.sourceUrl,
                         extra: post.extra
@@ -140,7 +143,7 @@ function CalendarListItemComponent({ post, date, scrollDist, containerHeight, ac
                                 <div className="rfsc-list-item__header__week">W{week}</div>
                             </div>
                             <div className="rfsc-list-item__content">
-                                <img src={post.icon.sourceUrl} className="rfsc-list-item__content__icon"/>
+                                <img src={post.icon.sourceUrl} alt={post.icon.altText || 'icon' } className="rfsc-list-item__content__icon"/>
                                 <div className="rfsc-list-item__content__extra">
                                     {post.extra}
                                 </div>
@@ -152,6 +155,7 @@ function CalendarListItemComponent({ post, date, scrollDist, containerHeight, ac
             case 'Page_Days_days_Posts_RadioLayout':
                 postObject = {
                     type: 'radio',
+                    id: post.id,
                     events: [],
                     front: {
                         icon: post.icon.sourceUrl,
@@ -167,7 +171,7 @@ function CalendarListItemComponent({ post, date, scrollDist, containerHeight, ac
                                 <div className="rfsc-list-item__header__week">{week}</div>
                             </div>
                             <div className="rfsc-list-item__content">
-                                <img src={post.icon.sourceUrl} className="rfsc-list-item__content__icon"/>
+                                <img src={post.icon.sourceUrl} alt={post.icon.altText || 'icon' } className="rfsc-list-item__content__icon"/>
                                 <div className="rfsc-list-item__content__extra">
                                     {post.extra}
                                 </div>
@@ -179,6 +183,7 @@ function CalendarListItemComponent({ post, date, scrollDist, containerHeight, ac
             case 'Page_Days_days_Posts_SpaceLayout':
                 postObject = {
                     type: 'space',
+                    id: post.id,
                     events: [],
                     front: {
                         icon: post.icon.sourceUrl,
@@ -194,7 +199,7 @@ function CalendarListItemComponent({ post, date, scrollDist, containerHeight, ac
                                 <div className="rfsc-list-item__header__week">{week}</div>
                             </div>
                             <div className="rfsc-list-item__content">
-                                <img src={post.icon.sourceUrl} className="rfsc-list-item__content__icon"/>
+                                <img src={post.icon.sourceUrl} alt={post.icon.altText || 'icon' } className="rfsc-list-item__content__icon"/>
                                 <div className="rfsc-list-item__content__extra">
                                     {post.extra}
                                 </div>
@@ -217,6 +222,7 @@ function CalendarListItemComponent({ post, date, scrollDist, containerHeight, ac
             offsetTop={offsetTop}
             styles={styles}
             onClick={handleClick}
+            data-id={getPost().post.id}
         >
             {getPost().content.front}
             {getPost().content.back}

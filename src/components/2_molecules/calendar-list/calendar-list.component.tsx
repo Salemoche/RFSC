@@ -10,6 +10,7 @@ interface CalendarListComponentProps {
 
 const CalendarListComponent: React.FC<CalendarListComponentProps> = () => {
 
+    const base = useBaseState().state.base;
     const styles = useBaseState().state.base.styles;
     const days = useBaseState().state.content.days;
     let { scrollDist, scrollDir } = useBaseState().state.calendar;
@@ -24,7 +25,7 @@ const CalendarListComponent: React.FC<CalendarListComponentProps> = () => {
 
 
     useEffect(() => {
-        if (typeof elementRef.current?.offsetHeight == 'number') {
+        if (typeof elementRef.current?.offsetHeight === 'number') {
             setOffsetHeight(elementRef.current?.offsetHeight);
         }
     }, [])
@@ -33,10 +34,10 @@ const CalendarListComponent: React.FC<CalendarListComponentProps> = () => {
         
         // restart scroll in either direction 
 
-        if (scrollDir == 'forward' && scrollDist > offsetHeight) {
+        if (scrollDir === 'forward' && scrollDist > offsetHeight) {
             console.log('we are over');
             updateCalendar({ type: actions.SET_CALENDAR, payload: { scrollDist: - far } });
-        } else if (scrollDir == 'backwards' && scrollDist < - far ) {
+        } else if (scrollDir === 'backwards' && scrollDist < - far ) {
             console.log('we are under');
             updateCalendar({ type: actions.SET_CALENDAR, payload: { scrollDist: offsetHeight + viewPortShift } });
         }
@@ -72,6 +73,9 @@ const CalendarListComponent: React.FC<CalendarListComponentProps> = () => {
                         ))}
                     </div>
                 ))}
+                <div className="rfsc-calendar__list__title">
+                    <img src={base.icons.iconLogo ? base.icons.iconLogo.sourceUrl : ''} alt="rfsc-logo" />
+                </div>
             </div>
         </CalendarListStyles>
     )

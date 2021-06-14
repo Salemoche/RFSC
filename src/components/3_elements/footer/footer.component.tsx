@@ -2,10 +2,10 @@ import React, { useEffect } from 'react'
 import PlayerComponent from '../player/player.component';
 // Styles
 // import './footer.styles.scss';
-import { ButtonStyles, FooterStyles } from '../../../styles/default.styles';
+import { ButtonStyles, FooterStyles, IconStyles } from '../../../styles/default.styles';
 import { useBaseState } from '../../../state/provider';
 import actions from '../../../state/actions';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 function FooterComponent() {
     const state = useBaseState().state;
@@ -15,16 +15,18 @@ function FooterComponent() {
         setFooterSize({ type: actions.SET_SIZES, payload: { footerHeight: 50} });
     }, [])
 
-    // console.log(state.sound)
-
     return (
-        <FooterStyles className="rfsc-footer" sizes={ state.base.sizes } styles={ state.base.styles }>
+        <FooterStyles className={`rfsc-footer ${ state.base.headerFooterClass }`} sizes={ state.base.sizes } styles={ state.base.styles }>
             <PlayerComponent/>
-            <Link to="/radio">Radio</Link>
+            <NavLink to="/radio">Radio</NavLink>
             <ButtonStyles className="rfsc-footer-on-air" styles={ state.base.styles }>
-                { state.sound.onAir.sourceUrl ?
-                    <span>on air <img src={state.base.icons.onAir} alt="rfsc-logo" /></span>
-                    
+                { state.sound.onAir ?
+                    <div>
+                        on air 
+                        <IconStyles className="rfsc-icon" styles={ state.base.styles }>
+                            <img src={state.base.icons.iconOnAir.sourceUrl} alt="rfsc-logo" />
+                        </IconStyles>
+                    </div>
                 :
                     <span>offline</span>
                 }

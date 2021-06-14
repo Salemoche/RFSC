@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import actions from '../../../state/actions';
 import { useBaseState } from '../../../state/provider';
-import { WP_QUERY, WP_TEST_QUERY } from '../../../utils/queries';
+import { WP_QUERY } from '../../../utils/queries';
 import { isType, isLocation } from '../../../utils/helpers';
 
 function LoaderComponent() {
@@ -35,14 +35,15 @@ function LoaderComponent() {
         console.log(data)
         updateBaseState({ type: actions.SET_BASE, payload: { 
             icons: {
-                logo: data.siteSettings.siteSettings.logo,
+                iconLogo: data.siteSettings.siteSettings.logo,
                 iconOnAir: data.siteSettings.siteSettings.iconOnAir,
-                iconPlay: data.siteSettings.siteSettings.iconPlay 
+                iconPlay: data.siteSettings.siteSettings.iconPlay,
+                iconPause: data.siteSettings.siteSettings.iconPause 
             }
         }})  
         updateBaseState({ type: actions.SET_CONTENT, payload: {
             days: data.pages.nodes.filter((node) => {
-                return node.pageId == 21
+                return node.pageId === 21
             })[0].days.days,
             events: data.events.nodes,
             types: data.categories.edges.filter((edge) => {
@@ -52,11 +53,15 @@ function LoaderComponent() {
                 return isLocation(edge.node)
             }),
             space: data.pages.nodes.filter((node) => {
-                return node.pageId == 67
+                return node.pageId === 67
             })[0].space,
             radio: data.pages.nodes.filter((node) => {
-                return node.pageId == 74
-            })[0].radio
+                return node.pageId === 74
+            })[0].radio,
+            infos: data.pages.nodes.filter((node) => {
+                return node.pageId === 84
+            })[0].infos,
+
             // space: data.pageBy.
         }})  
         // updateBaseState({ type: actions.SET_DAYS, payload: data.pageBy.days.days})  

@@ -17,26 +17,29 @@ function RadioPage() {
     }
 
     return (
-        <RadioStyles className="rfsc-content rfsc-space" styles={ base.styles } sizes={ base.sizes }>
+        <RadioStyles className="rfsc-content rfsc-radio" styles={ base.styles } sizes={ base.sizes }>
         { base.contentLoaded ? 
             <React.Fragment>
-                <div className="rfsc-space__header"></div>
-                <div className="rfsc-space__content">
-                    <div className="rfsc-space__icon rfsc-space__icon-left">
+                <div className="rfsc-radio__header"></div>
+                <div className="rfsc-radio__content">
+                    <div className="rfsc-radio__icon rfsc-radio__icon-left">
                         <img src={ radio.iconLeft.sourceUrl } alt="radio-icon-left" />
                     </div>
-                    <div className="rfsc-space__player">
+                    <div className="rfsc-radio__player" onClick={ handlePlay }>
                         { sound.onAir ?
-                            <img src={ base.icons.iconPlay.sourceUrl } alt="radio-icon-right" />
+                            sound.isPlaying ? 
+                                <img src={ base.icons.iconPause.sourceUrl } alt="pause-icon" />
+                            :
+                                <img src={ base.icons.iconPlay.sourceUrl } alt="play-icon" />
                         :
-                            <div className="rfsc-space__player__message">{ radio.offlineText }</div>
+                            <div className="rfsc-radio__player__message">{ radio.offlineText }</div>
                         }
                     </div>
-                    <div className="rfsc-space__icon rfsc-space__icon-right">
+                    <div className="rfsc-radio__icon rfsc-radio__icon-right">
                         <img src={ radio.iconRight.sourceUrl } alt="radio-icon-right" />
                     </div>
                 </div>
-                <div className="rfsc-space__footer"></div>
+                <div className="rfsc-radio__footer"></div>
             </React.Fragment>
         : 
             ''

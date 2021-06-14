@@ -14,6 +14,7 @@ import { GlobalStyle, AppStyles, MainStyles } from '../../../styles/default.styl
 import { useBaseState } from '../../../state/provider';
 import FooterComponent from '../footer/footer.component';
 import SpacePage from '../../../pages/space/space.page';
+import AudioComponent from '../audio/audio.component';
 
 function Wrapper() {
 
@@ -33,6 +34,7 @@ function Wrapper() {
                 </Switch>
                 </MainStyles>
                 <FooterComponent/>
+                <AudioComponent/>
             </AppStyles>
         </Router>
     );

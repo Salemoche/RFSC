@@ -2,7 +2,7 @@ import actions from './actions';
 
 export const reducer = ( state, action ) => {
     
-    if (action.type != actions.SET_CALENDAR ) {
+    if (action.type !== actions.SET_CALENDAR ) {
         console.log('updated', action.type, action.payload);
     }
 

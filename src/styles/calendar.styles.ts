@@ -39,6 +39,14 @@ export const CalendarListStyles = styled.div `
         .rfsc-calendar__list__day {
             /* transform-style: preserve-3d; */
         }
+
+        .rfsc-calendar__list__title {
+            transform: rotateX(-60deg);
+            width: 50vw;
+            display: block;
+            margin: 0 auto;
+            max-width: 500px;
+        }
     }
 `
 export const CalendarListItemStyles = styled.div `
@@ -131,6 +139,9 @@ export const CalendarGraphic = styled.div `
     justify-content: center;
 
     svg {
+
+        height: 100%;
+        
         [id*=event],
         [id*=week],
         [id*=day],
@@ -160,43 +171,43 @@ export const CalendarGraphic = styled.div `
 `
 
 const CalendarCircleStyles = styled.div `
-    position: absolute;
+    /* position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    border-radius: 50%;
+    border-radius: 50%; */
 `
 
 export const CalendarLocationsStyles = styled(CalendarCircleStyles) `
-    min-width: 500px;
+    /* min-width: 500px;
     min-height: 500px;
     width: 50vh;
     height: 50vh;
-    /* background: red; */
+    // background: red;
     z-index: ${props => props.styles.zIndices?.locations};
-    transform: translate(-50%, -50%) rotate(${props => 0});
+    transform: translate(-50%, -50%) rotate(${props => 0}); */
 `
 export const CalendarTypesStyles = styled(CalendarCircleStyles) `
-    min-width: 800px;
+    /* min-width: 800px;
     min-height: 800px;
     width: 60vh;
     height: 60vh;
-    /* background: yellow; */
+    // background: yellow;
     z-index: ${props => props.styles.zIndices?.types};
-    transform: translate(-50%, -50%) rotate(${props => 0});
+    transform: translate(-50%, -50%) rotate(${props => 0}); */
 `
 
 const rotateCircleItem = (props, index) => {
 
-    let count = 1;
+    // let count = 1;
 
-    if (props.locations) {
-        count = props.locations.length    
-    } else if (props.types) {
-        count = props.types.length    
-    }
+    // if (props.locations) {
+    //     count = props.locations.length    
+    // } else if (props.types) {
+    //     count = props.types.length    
+    // }
 
-    return 360 / count * index + 'deg';
+    // return 360 / count * index + 'deg';
 }
 
 // const positionCircleItem = (props, index) => {
@@ -218,27 +229,27 @@ const rotateCircleItem = (props, index) => {
 
 const positionCircleItem = (props, index) => {
 
-    let count = 1;
-    let displacement = 200;
+    // let count = 1;
+    // let displacement = 200;
     
-    if (props.locations) {
-        count = props.locations.length    
-    } else if (props.types) {
-        count = props.types.length    
-    }
+    // if (props.locations) {
+    //     count = props.locations.length    
+    // } else if (props.types) {
+    //     count = props.types.length    
+    // }
 
-    let positionBase = index / count + index;
-    // console.log(positionBase, Math.sin(positionBase));
+    // let positionBase = index / count + index;
+    // // console.log(positionBase, Math.sin(positionBase));
 
-    return `${Math.sin(positionBase) * displacement }px, ${Math.cos(positionBase) * displacement }px`
+    // return `${Math.sin(positionBase) * displacement }px, ${Math.cos(positionBase) * displacement }px`
 }
 
 export const CalendarCircleItemStyles = styled.div `
-    position: absolute;
+    /* position: absolute;
     left: 50%;
     top: 50%;
-    /* height: 100%;
-    transform: translate(-50%, -50%) rotate(${props => rotateCircleItem(props, props.index)}); */
+    //  height: 100%;
+    // transform: translate(-50%, -50%) rotate(${props => rotateCircleItem(props, props.index)});
     transform: translate(${props => positionCircleItem(props, props.index)});
 
     .rfsc-calendar__item__label {
@@ -246,11 +257,11 @@ export const CalendarCircleItemStyles = styled.div `
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%)
-    }
+    } */
 `
 
 
-export const CalendarDetails = styled.div `
+export const CalendarDetailsStyles = styled.div `
     position: absolute;
     left: 50%;
     top: 50%;
@@ -260,9 +271,78 @@ export const CalendarDetails = styled.div `
     min-height: 800px;
     width: 60vh;
     height: 60vh;
-    overflow: scroll;
+    overflow-y: scroll;
     background: white;
     z-index: ${props => props.styles.zIndices.details};
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
 `
-export const CalendarDetail = styled.div `
+
+export const CalendarEventDetailsStyles = styled(CalendarDetailsStyles) `
+    background-color: ${props => props.styles.colors.green};
+    color: ${props => props.styles.colors.red};
+    padding: ${props => props.styles.spacing.medium}px;
+`
+export const CalendarEventDetailStyles = styled.div `
+    border-bottom: 2px solid ${props => props.styles.colors.red};
+    margin-bottom: ${props => props.styles.spacing.medium}px;
+    font-size: ${props => props.styles.typography.fontMedium.large.fontSize}px;
+    line-height: ${props => props.styles.typography.fontMedium.large.lineHeight};
+
+    .rfsc-event-detail__header {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: ${props => props.styles.spacing.large}px;
+
+        .rfsc-event-detail__header__leader,
+        .rfsc-event-detail__header__type {
+            text-transform: uppercase;
+        }
+    }
+
+    .rfsc-event-detail__lead {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: ${props => props.styles.spacing.large}px;
+
+        .rfsc-event-detail__lead__time,
+        .rfsc-event-detail__lead__title,
+        .rfsc-event-detail__lead__location {
+            text-align: center;
+            width: 100%;
+            text-transform: uppercase;
+        }
+
+        .rfsc-event-detail__lead__time {
+            /* font-size: ${props => props.styles.typography.fontLarge.large.fontSize}px;
+            line-height: ${props => props.styles.typography.fontLarge.large.lineHeight}; */
+        }
+
+        .rfsc-event-detail__lead__title {
+            font-size: ${props => props.styles.typography.fontLarge.large.fontSize}px;
+            line-height: ${props => props.styles.typography.fontLarge.large.lineHeight};
+        }
+    }
+
+    .rfsc-event-detail__content {
+        margin-bottom: ${props => props.styles.spacing.medium}px;
+
+        p {
+            margin-top: 0;
+
+            &:not(:last-of-type) {
+                margin-bottom: ${props => props.styles.typography.fontLarge.large.lineHeight};
+            }
+        }
+    }
+
 `
