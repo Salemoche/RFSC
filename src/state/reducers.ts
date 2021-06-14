@@ -90,7 +90,44 @@ export const reducer = ( state, action ) => {
                     ...action.payload
                 }
             }
+        case actions.SET_FILTERS:
+            return setFilters(state, action.payload);
+        case actions.RESET_FILTERS:
+            return { 
+                ...state, 
+                filters: {
+                    location: [],
+                    type: [],
+                    week: [],
+                    day: [],
+                }
+            }
         default:
             return state
+    }
+}
+
+const setFilters = (state, payload) => {
+    const { type } = payload;
+    let currentFilter = state.filters[type]
+    // console.log(, payload)
+    // [action.payload.type]: [...state.filters[action.payload.type], action.payload.id]
+
+    if (currentFilter.includes(payload.id)) {
+        currentFilter = currentFilter.filter(element => {
+            return element !== payload.id;
+        })
+    } else {
+        currentFilter.push(payload.id)
+    }
+
+    console.log(currentFilter);
+
+    return { 
+        ...state, 
+        filters: {
+            ...state.filters,
+            [type]: currentFilter
+        }
     }
 }

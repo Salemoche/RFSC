@@ -3,7 +3,7 @@ import { CalendarListItemStyles } from '../../../styles/calendar.styles';
 import { useBaseState } from '../../../state/provider';
 import actions from '../../../state/actions';
 
-function CalendarListItemComponent({ post, date, scrollDist, containerHeight, activeThreshold, viewPortShift, far, week }) {
+function CalendarListItemComponent({ post, date, scrollDist, containerHeight, activeThreshold, viewPortShift, far, week, locations, types }) {
 
     const elementRef = useRef<HTMLElement>();
     const [active, setActive] = useState(false);
@@ -226,6 +226,9 @@ function CalendarListItemComponent({ post, date, scrollDist, containerHeight, ac
         >
             {getPost().content.front}
             {getPost().content.back}
+            {/* {locations.map(location => (
+                <h1 style={{zIndex: 100, width: '100%', height: '100%', border: '3px solid red'}}>{location}</h1>
+            ))} */}
             {/* <h1 style={{fontSize: '100px', position: 'absolute', zIndex: 3}}>{distanceFromViewport}</h1> */}
         </CalendarListItemStyles>
     )

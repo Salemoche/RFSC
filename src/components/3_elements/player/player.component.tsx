@@ -12,8 +12,6 @@ function PlayerComponent() {
         updateBaseState({ type: actions.TOGGLE_PLAY });
     }
 
-    console.log(base, sound)
-
     return (
         <NavPlayerStyles className="rfsc-nav-player" styles={ base.styles }>
             { base.contentLoaded ? 

@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import { CalendarGraphic } from '../../../styles/calendar.styles';
 import { useBaseState } from '../../../state/provider';
+import actions from '../../../state/actions';
 
 function CalendarGraphicComponent() {
 
     const styles = useBaseState().state.base.styles;
+    const updateFilters = useBaseState().dispatchBase;
+
     const [rotations, setRotations] = useState({
         current: 0,
         types: {
@@ -28,22 +31,33 @@ function CalendarGraphicComponent() {
     )
 
     const handleClick = (e) => {
-        // console.log(e.target.id);
+        console.log(e.target);
+        e.stopPropagation();
+
         let type = '';
+        let id = '';
 
         if (e.target.id.includes('event')) {
             type = 'event';
+            id = e.target.id;
+            return
         } else if (e.target.id.includes('week')) {
             type = 'week';
+            id = e.target.id;
         } else if (e.target.id.includes('day')) {
             type = 'day';
-        } else if (e.target.id.includes('location')) {
+            id = e.target.id;
+        } else if (e.target.closest('#Orte')) {
             type = 'location';
-        } else if (e.target.id.includes('type')) {
+            id = e.target.parentNode.id.split('location-')[1];
+        } else if (e.target.closest('#Veranstaltungsart')) {
             type = 'type';
+            id = e.target.parentNode.id.split('type-')[1];
         }
 
-        console.log(e.target.id, type)
+        updateFilters({ type: actions.SET_FILTERS, payload: { type, id } });
+
+        // console.log(e.target, id, type)
     }
 
     return (

@@ -176,6 +176,7 @@ export const SpaceStyles = styled.div `
 
     .rfsc-space__icon {
         width: 100%;
+        /* padding-bottom: 100%; */
         margin-bottom: ${props => (props.styles.spacing.large)}px;
         opacity: 0.3;
 
@@ -393,7 +394,7 @@ export const RadioStyles = styled.div `
                 cursor: pointer;
                 /* width: 33%; */
                 /* height: 100%; */
-                img {
+                .rfsc-image {
                     width: 200px;
                     max-width: 66%;
                     margin: 0 auto;
@@ -451,3 +452,37 @@ export const FormStyles = styled.form`
     }
 `
 
+
+export const ImageStyles = styled.div`
+
+    position: relative;
+    
+    .rfsc-image-preloader {
+        width: 100%;
+        height: 100%;
+        min-width: 100px;
+        min-height: 100px;
+        /* padding-bottom: 100%; */
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-image: url('https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif');
+        background-position: center;
+        background-size: cover;
+        transition: .3s;
+        
+        ${props => {
+            if (props.imageLoaded) {
+                return `
+                    opacity: 0;
+                    pointer-events: none;
+                `
+            }
+        }}
+    }
+    
+    img {
+        width: 100%;
+        height: 100%;
+    }
+`

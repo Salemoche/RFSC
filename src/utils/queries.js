@@ -90,6 +90,16 @@ export const WP_QUERY = {
                                         toTime
                                         leader
                                     }
+                                    categories {
+                                        edges {
+                                            node {
+                                            id
+                                            slug
+                                            parentId
+                                            name
+                                            }
+                                        }
+                                    }
                                 }
                             }
                             fieldGroupName

@@ -3,6 +3,7 @@ import SignUpFormComponent from '../../components/2_molecules/sign-up-form/sign-
 import actions from '../../state/actions';
 import { useBaseState } from '../../state/provider';
 import { SpaceStyles } from '../../styles/default.styles';
+import ImageContainerComponent from '../../components/1_atoms/image-container/image-container.component';
 
 function SpacePage() {
 
@@ -24,7 +25,7 @@ function SpacePage() {
             { base.contentLoaded ? 
                 <React.Fragment>
                     <div className="rfsc-space__icon">
-                        <img src={space.icon.sourceUrl} alt="space-icon" />
+                        <ImageContainerComponent src={space.icon.sourceUrl} alt="space-icon"/>
                     </div>
                     <div className="rfsc-space__content">
                         <div className="rfsc-space__content__text" dangerouslySetInnerHTML={{__html: space.content}}></div>

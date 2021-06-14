@@ -32,7 +32,9 @@ function LoaderComponent() {
         })
 
         const { data } = await fetchEvent.json()
+        console.log('=============================== data ===============================')
         console.log(data)
+        console.log('=============================== data ===============================')
         updateBaseState({ type: actions.SET_BASE, payload: { 
             icons: {
                 iconLogo: data.siteSettings.siteSettings.logo,

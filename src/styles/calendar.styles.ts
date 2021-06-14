@@ -8,6 +8,14 @@ export const CalendarStyles = styled.div `
     left: 0;
     perspective: 500px;
     /* transform-style: preserve-3d; */
+
+    .rfsc-filter-reset {
+        position: absolute;
+        right: 0;
+        bottom: ${props => (props.styles.spacing.medium)}px;
+        color: ${props => (props.styles.colors.red)};
+        cursor: pointer;
+    }
 `
 
 export const CalendarListStyles = styled.div `
@@ -141,7 +149,7 @@ export const CalendarGraphic = styled.div `
     svg {
 
         height: 100%;
-        
+
         [id*=event],
         [id*=week],
         [id*=day],

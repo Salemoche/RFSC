@@ -1,5 +1,5 @@
 // Base
-import React from 'react';
+import React, { useState } from 'react';
 
 // Components
 // import CalendarTypesComponent from '../../2_molecules/calendar-types/calendar-types.component';
@@ -21,10 +21,12 @@ function CalendarComponent() {
 
     // const content = useBaseState().state.content;
     const base = useBaseState().state.base;
+    const filters = useBaseState().state.filters;
     const updateBase = useBaseState().dispatchBase;
     // const [ scrollDist, setScrollDist ] = useState(0);
     let scrollDist = useBaseState().state.calendar.scrollDist;
     const dampener = 0.8;
+    const [hasFilters, setHasFilters] = useState(false);
 
     const handleScroll = (e) => {
         // setScrollDist(state => state += e.deltaY * dampener );
@@ -46,14 +48,23 @@ function CalendarComponent() {
         }
     } 
 
+    const resetFilters = () => {
+        updateBase({ type: actions.RESET_FILTERS });
+    } 
+
     useEffect(() => {
         return () => {
             updateBase({ type: actions.SET_BASE, payload: { headerFooterClass: 'default' } });
         }
     }, [])
 
+    useEffect(() => {
+        setHasFilters(filters && (filters.location.length !== 0 || filters.day.length !== 0 || filters.type.length !== 0 || filters.week.length !== 0));
+        console.log(filters, hasFilters)
+    }, [filters])
+
     return (
-        <CalendarStyles onWheel={handleScroll} className="rfsc-calendar">
+        <CalendarStyles onWheel={handleScroll} className="rfsc-calendar" styles={base.styles}>
             { base.contentLoaded ? 
                 <React.Fragment>
                     { base.showEventDetail ? 
@@ -65,6 +76,13 @@ function CalendarComponent() {
                     {/* <CalendarTypesComponent types={content.types}/> */}
                     <CalendarListComponent/>
                     <CalendarGraphicComponent/>
+                    { hasFilters ?
+                        <div className="rfsc-filter-reset" onClick={resetFilters}>
+                            Clear Filters
+                        </div>
+                    :
+                        ''
+                    }
                 </React.Fragment>
             : 
                 ''

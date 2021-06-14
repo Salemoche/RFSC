@@ -22,7 +22,7 @@ export const baseState = {
         showRadioDetail: false,
         currentRadioDetail: '',
         showTattooDetail: false,
-        currentTattooDetail: ''
+        currentTattooDetail: '',
     },
     calendar: {
         scrollDist: 0, //-450,
@@ -42,5 +42,11 @@ export const baseState = {
         isPlaying: false,
         onAir: true,
     },
+    filters: {
+        location: [],
+        type: [],
+        week: [],
+        day: [],
+    }
 
 }
