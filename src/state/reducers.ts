@@ -2,7 +2,10 @@ import actions from './actions';
 
 export const reducer = ( state, action ) => {
     
-    if (action.type !== actions.SET_CALENDAR ) {
+    if (
+        action.type !== actions.SET_CALENDAR &&
+        action.type !== actions.SET_ACTIVE_CALENDAR 
+    ) {
         console.log('updated', action.type, action.payload);
     }
 
@@ -12,6 +15,22 @@ export const reducer = ( state, action ) => {
                 ...state, 
                 base: {
                     ...state.base,
+                    ...action.payload
+                }
+            }
+        case actions.SET_ACTIVE_CALENDAR:
+            return { 
+                ...state, 
+                base: {
+                    ...state.base,
+                    ...action.payload
+                }
+            }
+        case actions.SET_SOUND:
+            return { 
+                ...state, 
+                sound: {
+                    ...state.sound,
                     ...action.payload
                 }
             }

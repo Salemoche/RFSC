@@ -1,8 +1,10 @@
 import styled, { createGlobalStyle } from 'styled-components'
+import { animation } from './animation.styles';
 
 export const defaultStyles = {
     colors: {
-        gray: '#00000044',
+        grayOpacity: '#00000044',
+        grayReal: '#bbb',
         green: '#d0ff00',
         red: '#ff0000',
         grayFont: '#00000059'
@@ -84,6 +86,7 @@ export const GlobalStyle = createGlobalStyle `
 
         &.active {
             color: ${props => (defaultStyles.colors.red)};
+            cursor: default;
         }
     }
 
@@ -94,6 +97,20 @@ export const GlobalStyle = createGlobalStyle `
             margin-bottom: ${defaultStyles.spacing.medium};
         }
     }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin-top: 0;
+        font-weight: 400;
+        text-transform: uppercase;
+    }
+
+    // animation 
+    ${animation.blinking}
 `
 
 export const AppStyles = styled.div `
@@ -113,7 +130,7 @@ export const MainStyles = styled.main `
     grid-column-start: 1;
     grid-column-end: 13;
     position: relative;
-    background-color: ${props => (props.styles.colors.gray)};
+    background-color: ${props => (props.styles.colors.grayOpacity)};
 
     .rfsc-content {
         height: 100%;
@@ -231,7 +248,7 @@ export const ButtonStyles = styled.div `
 
 const getHeaderFooterStyles = ({ styles, className}, header = true) => {
     if (className.includes('info') || className.includes('space')) {
-        return styles.colors.gray;
+        return styles.colors.grayOpacity;
     } else {
         return styles.colors.green;
     }
@@ -248,6 +265,7 @@ export const HeaderStyles = styled.nav `
     line-height: ${props => (props.styles.typography.fontLarge.large.lineHeight)};
     text-transform: uppercase;
     padding: 0 ${props => (props.styles.spacing.small)}px; 
+    padding-top: 2px;
     
     ul {
         width: 100%;
@@ -284,6 +302,7 @@ export const FooterStyles = styled.footer `
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: auto;
     padding: 0 ${props => (props.styles.spacing.small)}px; 
+    padding-top: ${props => (props.styles.spacing.extraSmall)}px;
 
     /* display: flex; */
     /* justify-content: center; */
@@ -311,6 +330,7 @@ export const FooterStyles = styled.footer `
         .rfsc-icon {
             /* height: 100%; */
             margin-right: ${props => (props.styles.spacing.extraSmall)}px;
+            transform: translateY(-3px);
             /* margin-left: ${props => (props.styles.spacing.small)}px; */
 
             img {
@@ -342,7 +362,10 @@ export const FooterStyles = styled.footer `
         justify-content: flex-end;
 
         .rfsc-icon {
+            opacity: 0;
             margin-left: ${props => (props.styles.spacing.extraSmall)}px;
+            animation: rfsc_blink 1s infinite alternate;
+            transform: translateY(1px);
             /* margin-right: ${props => (props.styles.spacing.small)}px; */
         }
         /* margin-left: auto;  */
@@ -433,6 +456,10 @@ export const FormStyles = styled.form`
     flex-wrap: wrap;
     justify-content: space-between;
 
+    label {
+        /* transform: translate(12px, 44px); */
+    }
+
     input, 
     textarea,
     select {
@@ -450,6 +477,31 @@ export const FormStyles = styled.form`
             width: calc(50% - ${props => (props.styles.spacing.small)}px)
         }
     }
+
+    .rfsc-checkbox-container {
+        width: 100%;
+        display: grid;
+        grid-template-columns: ${props => (props.styles.spacing.large)}px auto;
+        margin-bottom: ${props => (props.styles.spacing.large)}px;
+        
+        label {
+            grid-column-start: 1;
+            grid-column-end: 3;
+            margin-bottom: ${props => (props.styles.spacing.large)}px;
+        }
+
+        input[type="checkbox"] {
+            grid-column-start: 1;
+            grid-column-end: 2;
+        }
+
+        .rfsc-checkbox-label {
+            display: inline-block;
+            grid-column-start: 2;
+            grid-column-end: 3;
+            padding-left: ${props => (props.styles.spacing.large)}px;
+        }
+    }
 `
 
 
@@ -458,15 +510,22 @@ export const ImageStyles = styled.div`
     position: relative;
     
     .rfsc-image-preloader {
-        width: 100%;
-        height: 100%;
-        min-width: 100px;
-        min-height: 100px;
+        /* width: 100%;
+        height: 100%; */
+        width: 100px;
+        height: 100px;
         /* padding-bottom: 100%; */
         position: absolute;
-        top: 0;
-        left: 0;
-        background-image: url('https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif');
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        
+        ${props => {
+            if (props.hasLoader) {
+                return "background-image: url('https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif');"
+            }
+        }}
+
         background-position: center;
         background-size: cover;
         transition: .3s;
@@ -484,5 +543,16 @@ export const ImageStyles = styled.div`
     img {
         width: 100%;
         height: 100%;
+        transition: .3s;
+        opacity: 0;
+        
+        ${props => {
+            if (props.imageLoaded) {
+                return `
+                    opacity: 1;
+                    pointer-events: all;
+                `
+            }
+        }}
     }
 `

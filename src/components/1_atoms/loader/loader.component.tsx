@@ -43,6 +43,9 @@ function LoaderComponent() {
                 iconPause: data.siteSettings.siteSettings.iconPause 
             }
         }})  
+        updateBaseState({ type: actions.SET_SOUND, payload: { 
+            stream: data.siteSettings.siteSettings.stream
+        }})  
         updateBaseState({ type: actions.SET_CONTENT, payload: {
             days: data.pages.nodes.filter((node) => {
                 return node.pageId === 21

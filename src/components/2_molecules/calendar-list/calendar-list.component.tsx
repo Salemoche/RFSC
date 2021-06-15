@@ -3,7 +3,8 @@ import CalendarListItemComponent from '../../1_atoms/calendar-list-item/calendar
 import { CalendarListStyles } from '../../../styles/calendar.styles';
 import { useBaseState } from '../../../state/provider';
 import actions from '../../../state/actions';
-import { isLocation, isType } from '../../../utils/helpers';
+import { formatDate, isLocation, isType } from '../../../utils/helpers';
+import ImageContainerComponent from '../../1_atoms/image-container/image-container.component';
 interface CalendarListComponentProps {
     // scrollDist: Number
 }
@@ -114,8 +115,10 @@ const CalendarListComponent: React.FC<CalendarListComponentProps> = () => {
                                 return (
                                     <CalendarListItemComponent
                                         key={i}
-                                        date={'4.12'}
+                                        date={formatDate(day.date)}
+                                        day={day.index}
                                         week={day.week}
+                                        month={7}
                                         in-project={`${day.index}-${post.i}`}
                                         post={post}
                                         scrollDist={+scrollDist}
@@ -132,7 +135,7 @@ const CalendarListComponent: React.FC<CalendarListComponentProps> = () => {
                     </div>
                 ))}
                 <div className="rfsc-calendar__list__title">
-                    <img src={base.icons.iconLogo ? base.icons.iconLogo.sourceUrl : ''} alt="rfsc-logo" />
+                    <ImageContainerComponent src={base.icons.iconLogo ? base.icons.iconLogo.sourceUrl : ''} alt="rfsc-logo" hasLoader={false}/>
                 </div>
             </div>
         </CalendarListStyles>

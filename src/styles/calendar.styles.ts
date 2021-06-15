@@ -13,8 +13,10 @@ export const CalendarStyles = styled.div `
         position: absolute;
         right: 0;
         bottom: ${props => (props.styles.spacing.medium)}px;
+        right: ${props => (props.styles.spacing.medium)}px;
         color: ${props => (props.styles.colors.red)};
         cursor: pointer;
+        text-transform: uppercase;
     }
 `
 
@@ -59,7 +61,6 @@ export const CalendarListStyles = styled.div `
 `
 export const CalendarListItemStyles = styled.div `
     box-sizing: border-box;
-    /* transform: rotateX(-60deg) rotateY(${props => props.distanceFromViewport * 0.05}deg); */
     transform: rotateX(-60deg);
     height: 500px;
     width: 500px;
@@ -67,12 +68,104 @@ export const CalendarListItemStyles = styled.div `
     transition: ${props => props.styles.animation.transitions.long};
     cursor: pointer;
     pointer-events: all;
+    font-size: ${props => props.styles.typography.fontMedium.large.fontSize}px;
+    line-height: ${props => props.styles.typography.fontMedium.large.lineHeight};
+
+    .rfsc-list-item__side {
+
+        display: grid;
+        grid-template-rows: 1fr auto 1fr;
+        grid-template-columns: 1fr;
+
+        &.rfsc-list-item__side-front {
+            padding: ${props => (props.styles.spacing.medium)}px;
+
+            &.radio {
+                background: ${props => (props.styles.colors.grayReal)};
+                color: black;
+            }
+
+            &.event {
+
+                .rfsc-list-item__header {
+                    
+                }
+
+                .rfsc-list-item__content {
+                    grid-row-end: 3;
+                    overflow: scroll;
+                    align-items: flex-start;
+                    align-content: flex-start;
+}
+                }
+            }
+        }
+
+        .rfsc-list-item__header {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            grid-row-start: 1;
+            grid-row-end: 2;
+
+            .rfsc-list-item__header__date {
+
+            }
+
+            .rfsc-list-item__header__category {
+
+            }
+
+            .rfsc-list-item__header__week {
+
+            }
+        }
+
+        .rfsc-list-item__content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-content: center;
+            align-items: center;
+            /* align-items: space-between;
+            align-content: space-between; */
+            grid-row-start: 2;
+            grid-row-end: 3;
+            font-size: ${props => props.styles.typography.fontMedium.large.fontSize}px;
+            line-height: ${props => props.styles.typography.fontMedium.large.lineHeight};
+
+            .rfsc-list-item__content__item {
+                width: 100%;
+                margin: ${props => (props.styles.spacing.large)}px 0;
+                
+
+                span {
+                }
+
+                .rfsc-list-item__content__item__title {
+                    width: 100%;
+                    font-size: ${props => props.styles.typography.fontLarge.large.fontSize}px;
+                    line-height: ${props => props.styles.typography.fontLarge.large.lineHeight};
+                    margin: ${props => (props.styles.spacing.small)}px 0
+                }
+            }
+
+            .rfsc-list-item__content__icon {
+                width: 80%;
+                height: 80%;
+            }
+
+            .rfsc-list-item__content__extra {
+                text-transform: uppercase;
+            }
+        }
+    }
 
     &:hover {
         /* transform: rotateX(-60deg) scale(1.05); */
 
 
-        .rfsc-list-item__side {
+        /* .rfsc-list-item__side {
             &.rfsc-list-item__side-front {
                 transform: rotateY(-180deg);
             }
@@ -80,7 +173,7 @@ export const CalendarListItemStyles = styled.div `
             &.rfsc-list-item__side-back {
                 transform: rotateY(0deg);
             }
-        }
+        } */
     }
 
     &.active {
@@ -160,10 +253,58 @@ export const CalendarGraphic = styled.div `
             transform-origin: center;
             fill: white;
 
+            text {
+                transition: ${props => props.styles.animation.transitions.regular};
+            }
+
             &:hover {
                 /* transform: scale(1.5); */
                 fill: ${props => props.styles.colors.red};
+
+                text {
+                    fill: ${props => props.styles.colors.red};
+                }
             }
+        }
+
+        [data-active] {
+            fill: green;
+        }
+
+        ${props => getActiveId(props)} {
+            fill: black;
+
+            text {
+                fill: black;
+            }
+
+            /* &:hover {
+
+                fill: white;
+
+                    text {
+                        fill: white;
+                    }
+                }
+            } */
+        }
+
+        ${props => getFilteredId(props)} {
+            fill: ${props => props.styles.colors.red};
+
+            text {
+                fill: ${props => props.styles.colors.red};
+            }
+
+            /* &:hover {
+
+                fill: white;
+
+                    text {
+                        fill: white;
+                    }
+                }
+            } */
         }
 
         #Orte, 
@@ -177,6 +318,28 @@ export const CalendarGraphic = styled.div `
     }
 
 `
+
+const getActiveId = ({currentDetail: {id, day, week, month}}) => {
+
+    return `
+        #m${month}-w${week}-d${day}-day,
+        [id*='w${week}'][id*='-week'],
+        #m${month}-w${week}-d${day}-week
+    `;
+}
+
+const getFilteredId = ({filters: {location, type}}) => {
+
+    const locationString = location.map(loc => (` #location-${loc}`)).toString();
+    const typeString = type.map(typ => (` #type-${typ}`)).toString();
+
+    const filterString = `
+        ${locationString ? typeString + ', ' : typeString } ${locationString}
+    `
+
+    return filterString;
+}
+
 
 const CalendarCircleStyles = styled.div `
     /* position: absolute;

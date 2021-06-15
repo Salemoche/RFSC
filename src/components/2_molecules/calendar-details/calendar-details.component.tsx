@@ -12,11 +12,11 @@ function CalendarDetailsComponent() {
 
     useEffect(() => {
 
-        if (elementRef && elementRef.current && document.querySelector(`[data-id='${currentEventDetail}']`)) {
+        if (elementRef && elementRef.current && document.querySelector(`[data-id='${currentEventDetail.id}']`)) {
             // Scroll to current Element on load
-            let currentEventDetailElement = document.querySelector(`[data-id='${currentEventDetail}']`) as HTMLElement;
+            let currentEventDetailElement = document.querySelector(`[data-id='${currentEventDetail.id}']`) as HTMLElement;
             elementRef.current.scrollTop = currentEventDetailElement?.offsetTop || 0;
-            console.log(currentEventDetail, document.querySelector(`[data-id='${currentEventDetail}']`));
+            console.log(currentEventDetail.id, document.querySelector(`[data-id='${currentEventDetail.id}']`));
         }
         
         return () => {

@@ -18,11 +18,24 @@ export const baseState = {
         },
         headerFooterClass: 'default',
         showEventDetail: false,
-        currentEventDetail: '',
-        showRadioDetail: false,
-        currentRadioDetail: '',
         showTattooDetail: false,
-        currentTattooDetail: '',
+        showRadioDetail: false,
+        currentEventDetail: {
+            id: ''
+        },
+        currentDetailParameters: {
+            day: 1,
+            week: 1,
+            month: 7,
+            types: [],
+            locations: []
+        }
+        // currentRadioDetail: {
+        //     id: ''
+        // },
+        // currentTattooDetail: {
+        //     id: ''
+        // },
     },
     calendar: {
         scrollDist: 0, //-450,
@@ -41,6 +54,7 @@ export const baseState = {
     sound: {
         isPlaying: false,
         onAir: true,
+        stream: '',
     },
     filters: {
         location: [],

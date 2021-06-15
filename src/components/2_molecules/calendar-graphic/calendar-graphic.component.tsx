@@ -1,3 +1,16 @@
+/**
+*========================================
+*	
+*	RememberRemember
+*	
+*========================================
+
+    1. add onClick function to all elements
+
+
+*/
+
+
 import React, { useState } from 'react'
 import { CalendarGraphic } from '../../../styles/calendar.styles';
 import { useBaseState } from '../../../state/provider';
@@ -6,6 +19,8 @@ import actions from '../../../state/actions';
 function CalendarGraphicComponent() {
 
     const styles = useBaseState().state.base.styles;
+    const currentDetail = useBaseState().state.base.currentDetailParameters;
+    const filters = useBaseState().state.filters;
     const updateFilters = useBaseState().dispatchBase;
 
     const [rotations, setRotations] = useState({
@@ -57,11 +72,18 @@ function CalendarGraphicComponent() {
 
         updateFilters({ type: actions.SET_FILTERS, payload: { type, id } });
 
-        // console.log(e.target, id, type)
+    }
+
+    const toggleActive = () => {
+
+    }
+
+    const checkActive = () => {
+        // return true
     }
 
     return (
-        <CalendarGraphic className="rfsc-calendar__graphic" styles={styles}>
+        <CalendarGraphic className="rfsc-calendar__graphic" styles={styles} currentDetail={currentDetail} filters={filters}>
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
              viewBox="0 0 1920 1080">
             <g onClick={handleClick} id="Monate">
@@ -86,7 +108,7 @@ function CalendarGraphicComponent() {
                 <path onClick={handleClick} id="m7-w1-d5-day" className="st0" d="M623.7,194.3v-12.5h-4.8v-2.2h12.2v2.2h-4.8v12.5H623.7z M642.4,189.5c0,2.8-1.8,5-5.3,5
                     c-2.9,0-5-1.7-5-4.7l2.5-0.4c0,1.9,1,3,2.5,3c1.8,0,2.7-1.1,2.7-3c0-1.8-1.1-2.7-2.7-2.7c-1.1,0-1.9,0.4-2.4,1.1l-2.3-0.4l1.1-8
                     h8.1v2.2h-6l-0.5,3.8c0.6-0.6,1.5-1,2.6-1C640.1,184.6,642.4,186.1,642.4,189.5z"/>
-                <path onClick={handleClick} id="m7-w1-d6-day" className="st0" d="M593,224.9v-12.5h-4.8v-2.2h12.2v2.2h-4.8v12.5H593z M611.8,220.1c0,2.4-1.4,5-5.2,5
+                <path onClick={handleClick} id="m7-w2-d6-day" className="st0" d="M593,224.9v-12.5h-4.8v-2.2h12.2v2.2h-4.8v12.5H593z M611.8,220.1c0,2.4-1.4,5-5.2,5
                     c-4.4,0-5.4-3.8-5.4-7.2c0-4.8,1.5-8,5.7-8c2.8,0,4.2,1.7,4.5,3.9l-2.5,0.4c-0.1-1.1-0.6-2.2-2.1-2.2c-2.5,0-3.1,2.6-3.1,5.3
                     c0.7-1.3,2-2,3.5-2C610,215.3,611.8,217.3,611.8,220.1z M609.3,220.1c0-1.7-0.8-2.7-2.5-2.7c-1.7,0-2.6,1.2-2.6,2.8
                     c0,1.4,0.7,2.8,2.5,2.8C608.5,223,609.3,222.1,609.3,220.1z"/>

@@ -36,7 +36,7 @@ function AudioComponent() {
     return (
         <div className="rfsc-audio" style={styles}>
             { baseState.base.contentLoaded ? 
-                <audio controls ref={ elementRef } src="https://radiobollwerk.out.airtime.pro/radiobollwerk_a" preload="auto" ></audio>
+                <audio controls ref={ elementRef } src={ baseState.sound.stream } preload="auto" ></audio>
             : 
                 ''
             }

@@ -74,6 +74,7 @@ export const WP_QUERY = {
             }
             days {
                 days {
+                    date
                     week
                     index
                     posts {
@@ -93,11 +94,17 @@ export const WP_QUERY = {
                                     categories {
                                         edges {
                                             node {
+                                                id
+                                                slug
+                                                parentId
+                                                name
+                                            }
+                                        }
+                                        nodes {
                                             id
                                             slug
                                             parentId
                                             name
-                                            }
                                         }
                                     }
                                 }
@@ -150,6 +157,7 @@ export const WP_QUERY = {
                 iconOnAir {
                     sourceUrl
                 }
+                stream
             }
         }
     }`

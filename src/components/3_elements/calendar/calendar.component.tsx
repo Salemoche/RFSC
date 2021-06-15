@@ -39,7 +39,7 @@ function CalendarComponent() {
 
         scrollDist += Math.floor(e.deltaY * dampener);
         
-        console.log(e.deltaY);
+        // console.log(e.deltaY);
         
         if (e.deltaY > 0) {
             updateBase({ type: actions.SET_CALENDAR, payload: { scrollDist, scrollDir: 'forward' } });
@@ -54,7 +54,7 @@ function CalendarComponent() {
 
     useEffect(() => {
         return () => {
-            updateBase({ type: actions.SET_BASE, payload: { headerFooterClass: 'default' } });
+            updateBase({ type: actions.SET_BASE, payload: { headerFooterClass: 'default', showEventDetail: false, } });
         }
     }, [])
 
@@ -78,6 +78,12 @@ function CalendarComponent() {
                     <CalendarGraphicComponent/>
                     { hasFilters ?
                         <div className="rfsc-filter-reset" onClick={resetFilters}>
+                            { filters.location.map(location => (
+                                <span>{location}, </span>
+                            ))}
+                            { filters.type.map(type => (
+                                <span>{type}, </span>
+                            ))}
                             Clear Filters
                         </div>
                     :

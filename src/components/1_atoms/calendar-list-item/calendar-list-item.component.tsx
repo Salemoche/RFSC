@@ -2,8 +2,23 @@ import React, { useEffect, useRef, useState } from 'react'
 import { CalendarListItemStyles } from '../../../styles/calendar.styles';
 import { useBaseState } from '../../../state/provider';
 import actions from '../../../state/actions';
+import { formatTime, isLocation } from '../../../utils/helpers';
+import ImageContainerComponent from '../image-container/image-container.component';
 
-function CalendarListItemComponent({ post, date, scrollDist, containerHeight, activeThreshold, viewPortShift, far, week, locations, types }) {
+function CalendarListItemComponent({ 
+    post, 
+    date, 
+    scrollDist, 
+    containerHeight, 
+    activeThreshold, 
+    viewPortShift, 
+    far, 
+    day,
+    week, 
+    month, 
+    locations, 
+    types, 
+}) {
 
     const elementRef = useRef<HTMLElement>();
     const [active, setActive] = useState(false);
@@ -31,6 +46,8 @@ function CalendarListItemComponent({ post, date, scrollDist, containerHeight, ac
             && containerHeight - scrollDist + viewPortShift < offsetTop + activeThreshold / 2
         ) {
             setActive(true);
+            setCurrentDetail();
+
         } else {
             setActive(false);
         }
@@ -65,8 +82,26 @@ function CalendarListItemComponent({ post, date, scrollDist, containerHeight, ac
     }, [scrollDist])
 
     const handleClick = (e) => {
-        console.log(e.target, post, getPost().post.id);
-        updateBaseState({ type: actions.SET_BASE, payload: { showEventDetail: true, currentEventDetail: getPost().post.id } });
+            
+        setCurrentDetail(true);
+    }
+
+    const setCurrentDetail = (show = false) => {
+            
+        updateBaseState({ type: actions.SET_ACTIVE_CALENDAR, payload: { 
+            showEventDetail: show, 
+            currentEventDetail: { 
+                id: getPost().post.id,
+            },
+            currentDetailParameters: { 
+                id: getPost().post.id,
+                day,
+                week,
+                month,
+                types: [],
+                locations: []
+            }
+        }});
     }
 
     /**
@@ -108,18 +143,29 @@ function CalendarListItemComponent({ post, date, scrollDist, containerHeight, ac
                 }
                 content = {
                     front: 
-                    <div className="rfsc-list-item__side rfsc-list-item__side-front">
+                    <div className={`rfsc-list-item__side rfsc-list-item__side-front ${postObject.type}`}>
                         <div className="rfsc-list-item__header">
-                            <div className="rfsc-list-item__header__date">{date}</div>
-                            <div className="rfsc-list-item__header__category">{date}</div>
+                            <div className="rfsc-list-item__header__date">{ date.day }.{ date.month }</div>
+                            <div className="rfsc-list-item__header__category">{ date.day }.{ date.month }</div>
                             <div className="rfsc-list-item__header__week">W{week}</div></div>
-                        {post.events.map( (event, i) => (
-                            <div key={event.slug} className="rfsc-list-item__content">
-                                <h1>{event.title}</h1>
-                                <h2>{event.event_content.fromTime}</h2>
-                                <h2>{event.event_content.toTime}</h2>
+                            <div className="rfsc-list-item__content">
+                            {post.events.map( (event, i) => (
+                                <div key={event.slug} className="rfsc-list-item__content__item">
+                                    <div className="rfsc-list-item__content__item__time">
+                                        <span>{formatTime(event.event_content.fromTime)?.hours}.{formatTime(event.event_content.fromTime)?.minutes}</span> – 
+                                        <span> {formatTime(event.event_content.toTime)?.hours}.{formatTime(event.event_content.toTime)?.minutes}</span> H
+                                    </div>
+                                    <h1 className="rfsc-list-item__content__item__title">{event.title}</h1>
+                                    <div className="rfsc-list-item__content__item__location">
+                                        {event.categories.nodes.filter(category => {
+                                            return isLocation(category)
+                                        }).map(location =>(
+                                            <span>{location.name}</span>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
                             </div>
-                        ))}
                     </div>,
                     back: <div className="rfsc-list-item__side rfsc-list-item__side-back"></div>
                 }
@@ -136,14 +182,14 @@ function CalendarListItemComponent({ post, date, scrollDist, containerHeight, ac
                 }
                 content = {
                     front: 
-                        <div className="rfsc-list-item__side rfsc-list-item__side-front">
+                        <div className={`rfsc-list-item__side rfsc-list-item__side-front ${postObject.type}`}>
                             <div className="rfsc-list-item__header">
-                                <div className="rfsc-list-item__header__date">{date}</div>
-                                <div className="rfsc-list-item__header__category">{date}</div>
+                                <div className="rfsc-list-item__header__date">{ date.day }.{ date.month }</div>
+                                <div className="rfsc-list-item__header__category">{ date.day }.{ date.month }</div>
                                 <div className="rfsc-list-item__header__week">W{week}</div>
                             </div>
                             <div className="rfsc-list-item__content">
-                                <img src={post.icon.sourceUrl} alt={post.icon.altText || 'icon' } className="rfsc-list-item__content__icon"/>
+                                <ImageContainerComponent src={post.icon.sourceUrl} alt={post.icon.altText || 'icon' } className="rfsc-list-item__content__icon"/>
                                 <div className="rfsc-list-item__content__extra">
                                     {post.extra}
                                 </div>
@@ -164,14 +210,14 @@ function CalendarListItemComponent({ post, date, scrollDist, containerHeight, ac
                 }
                 content = {
                     front: 
-                        <div className="rfsc-list-item__side rfsc-list-item__side-front">
+                        <div className={`rfsc-list-item__side rfsc-list-item__side-front ${postObject.type}`}>
                             <div className="rfsc-list-item__header">
-                                <div className="rfsc-list-item__header__date">{date}</div>
-                                <div className="rfsc-list-item__header__category">{date}</div>
-                                <div className="rfsc-list-item__header__week">{week}</div>
+                                <div className="rfsc-list-item__header__date">{ date.day }.{ date.month }</div>
+                                <div className="rfsc-list-item__header__category">{ date.day }.{ date.month }</div>
+                                <div className="rfsc-list-item__header__week">W{week}</div>
                             </div>
                             <div className="rfsc-list-item__content">
-                                <img src={post.icon.sourceUrl} alt={post.icon.altText || 'icon' } className="rfsc-list-item__content__icon"/>
+                                <ImageContainerComponent src={post.icon.sourceUrl} alt={post.icon.altText || 'icon' } className="rfsc-list-item__content__icon"/>
                                 <div className="rfsc-list-item__content__extra">
                                     {post.extra}
                                 </div>
@@ -192,14 +238,14 @@ function CalendarListItemComponent({ post, date, scrollDist, containerHeight, ac
                 }
                 content = {
                     front: 
-                        <div className="rfsc-list-item__side rfsc-list-item__side-front">
+                        <div className={`rfsc-list-item__side rfsc-list-item__side-front ${postObject.type}`}>
                             <div className="rfsc-list-item__header">
-                                <div className="rfsc-list-item__header__date">{date}</div>
-                                <div className="rfsc-list-item__header__category">{date}</div>
-                                <div className="rfsc-list-item__header__week">{week}</div>
+                                <div className="rfsc-list-item__header__date">{ date.day }.{ date.month }</div>
+                                <div className="rfsc-list-item__header__category">{ date.day }.{ date.month }</div>
+                                <div className="rfsc-list-item__header__week">W{week}</div>
                             </div>
                             <div className="rfsc-list-item__content">
-                                <img src={post.icon.sourceUrl} alt={post.icon.altText || 'icon' } className="rfsc-list-item__content__icon"/>
+                                <ImageContainerComponent src={post.icon.sourceUrl} alt={post.icon.altText || 'icon' } className="rfsc-list-item__content__icon"/>
                                 <div className="rfsc-list-item__content__extra">
                                     {post.extra}
                                 </div>
