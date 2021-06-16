@@ -72,6 +72,21 @@ export const WP_QUERY = {
                 }
                 offlineText
             }
+            program {
+                programDays {
+                    date
+                    host
+                    type
+                    program {
+                        artist
+                        artistLink
+                        fieldGroupName
+                        label
+                        labelLink
+                        time
+                    }
+                }
+            }
             days {
                 days {
                     date

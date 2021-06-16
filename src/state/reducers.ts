@@ -118,7 +118,7 @@ export const reducer = ( state, action ) => {
                     location: [],
                     type: [],
                     week: [],
-                    day: [],
+                    day: {},
                 }
             }
         default:

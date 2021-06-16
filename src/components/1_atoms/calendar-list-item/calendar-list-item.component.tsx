@@ -4,6 +4,7 @@ import { useBaseState } from '../../../state/provider';
 import actions from '../../../state/actions';
 import { formatTime, isLocation } from '../../../utils/helpers';
 import ImageContainerComponent from '../image-container/image-container.component';
+import { useHistory } from 'react-router-dom';
 
 function CalendarListItemComponent({ 
     post, 
@@ -30,6 +31,7 @@ function CalendarListItemComponent({
     const styles = useBaseState().state.base.styles;
     const hasScrolled = useBaseState().state.calendar.hasScrolled;
     const updateBaseState = useBaseState().dispatchBase
+    const history = useHistory();
 
 
     useEffect(() => {
@@ -46,7 +48,7 @@ function CalendarListItemComponent({
             && containerHeight - scrollDist + viewPortShift < offsetTop + activeThreshold / 2
         ) {
             setActive(true);
-            setCurrentDetail();
+            setCurrentDetail({ showEventDetail: false, showTattooDetail: false, showRadioDetail: false });
 
         } else {
             setActive(false);
@@ -81,15 +83,34 @@ function CalendarListItemComponent({
 
     }, [scrollDist])
 
-    const handleClick = (e) => {
+    const handleClick = (e, type) => {
+        // console.log(e.target, type);
+        let detail = 'showEventDetail';
+
+        switch (type) {
+            case 'event':
+                setCurrentDetail({ showEventDetail: true, showTattooDetail: false, showRadioDetail: false });
+                break;
+            case 'radio':
+                setCurrentDetail({ showEventDetail: false, showTattooDetail: false, showRadioDetail: true });
+                break;
+            case 'tattoo':
+                setCurrentDetail({ showEventDetail: false, showTattooDetail: true, showRadioDetail: false });
+                break;
+            case 'space':
+                history.push('/space');
+                // console.log('redirect');
+                break;
+            default:
+                break;
+        }
             
-        setCurrentDetail(true);
     }
 
-    const setCurrentDetail = (show = false) => {
+    const setCurrentDetail = (showDetails = { showEventDetail: false, showTattooDetail: false, showRadioDetail: false }) => {
             
         updateBaseState({ type: actions.SET_ACTIVE_CALENDAR, payload: { 
-            showEventDetail: show, 
+            ...showDetails, 
             currentEventDetail: { 
                 id: getPost().post.id,
             },
@@ -267,7 +288,7 @@ function CalendarListItemComponent({
             scrollDist={scrollDist}
             offsetTop={offsetTop}
             styles={styles}
-            onClick={handleClick}
+            onClick={(e) => handleClick(e, getPost().post.type)}
             data-id={getPost().post.id}
         >
             {getPost().content.front}

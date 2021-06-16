@@ -63,13 +63,20 @@ function LoaderComponent() {
             space: data.pages.nodes.filter((node) => {
                 return node.pageId === 67
             })[0].space,
-            radio: data.pages.nodes.filter((node) => {
-                return node.pageId === 74
-            })[0].radio,
+            radio: {
+                ... data.pages.nodes.filter((node) => {
+                    return node.pageId === 74
+                })[0].radio,
+                ... data.pages.nodes.filter((node) => {
+                    return node.pageId === 74
+                })[0].program
+            },
             infos: data.pages.nodes.filter((node) => {
                 return node.pageId === 84
-            })[0].infos
-
+            })[0].infos,
+            tattoo: data.pages.nodes.filter((node) => {
+                return node.pageId === 104
+            })[0].program
             // space: data.pageBy.
         }})  
         // updateBaseState({ type: actions.SET_DAYS, payload: data.pageBy.days.days})  

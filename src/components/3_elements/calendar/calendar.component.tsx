@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 // import CalendarLocationsComponent from '../../2_molecules/calendar-locations/calendar-locations.component';
 import CalendarListComponent from '../../2_molecules/calendar-list/calendar-list.component';
 import CalendarGraphicComponent from '../../2_molecules/calendar-graphic/calendar-graphic.component';
-import CalendarDetailsComponent from '../../2_molecules/calendar-details/calendar-details.component';
+import CalendarDetailsComponent from '../calendar-details/calendar-details.component';
 
 // Utils
 import { useBaseState } from '../../../state/provider';
@@ -50,10 +50,6 @@ function CalendarComponent() {
         updateBase({ type: actions.SET_CALENDAR, payload: { scrollDist, hasScrolled: true } });
     } 
 
-    const resetFilters = () => {
-        updateBase({ type: actions.RESET_FILTERS });
-    } 
-
     useEffect(() => {
         return () => {
             // updateBase({ type: actions.SET_CALENDAR, payload: { scrollDist: 0 } });
@@ -66,15 +62,27 @@ function CalendarComponent() {
         console.log(filters, hasFilters)
     }, [filters])
 
+    const resetFilters = () => {
+        updateBase({ type: actions.RESET_FILTERS });
+    } 
+
+    const showDetails = () => {
+        if ( base.showEventDetail ) {
+            return <CalendarDetailsComponent type={'event'}/>
+        } else if ( base.showRadioDetail ) {
+            return <CalendarDetailsComponent type={'radio'}/>
+        } else if ( base.showTattooDetail ) {
+            return <CalendarDetailsComponent type={'tattoo'}/>
+        } else {
+            return ''
+        }
+    }
+
     return (
         <CalendarStyles onWheel={handleScroll} className="rfsc-calendar" styles={base.styles}>
             { base.contentFetched ? 
                 <React.Fragment>
-                    { base.showEventDetail ? 
-                        <CalendarDetailsComponent/>
-                    :
-                        ''
-                    }
+                    { showDetails() }
                     {/* <CalendarLocationsComponent locations={content.locations}/> */}
                     {/* <CalendarTypesComponent types={content.types}/> */}
                     <CalendarListComponent/>

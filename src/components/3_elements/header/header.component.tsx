@@ -16,7 +16,7 @@ function HeaderComponent() {
     }, [])
 
     const handleClose = () => {
-        setBaseState({ type: actions.SET_BASE, payload: { showEventDetail: false } });
+        setBaseState({ type: actions.SET_BASE, payload: { showEventDetail: false, showRadioDetail: false, showTattooDetail: false } });
     }
 
     return (
@@ -25,7 +25,7 @@ function HeaderComponent() {
                 <NavLink to="/infos">
                     <li>Infos</li>
                 </NavLink>
-                { state.base.showEventDetail ?
+                { state.base.showEventDetail || state.base.showRadioDetail || state.base.showTattooDetail ?
                     <ButtonStyles 
                         className="color-red" 
                         styles={ state.base.styles }

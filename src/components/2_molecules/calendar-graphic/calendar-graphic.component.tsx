@@ -107,11 +107,13 @@ function CalendarGraphicComponent() {
                     console.log(month, week, day, event1.title)
 
                     document.querySelector(`#m${month}-w${week}-d${day}-event-1`)?.append(event1Text.cloneNode(true));
+                    // document.querySelector(`#m${month}-w${week}-d${day}-event-1`)?.setAttribute('d', '');
 
                     if (event2) {
                         const event2Text = document.createElement('text');
                         event2Text.innerHTML = event2.title;
                         document.querySelector(`#m${month}-w${week}-d${day}-event-2`)?.append(event2Text.cloneNode(true));
+                        // document.querySelector(`#m${month}-w${week}-d${day}-event-2`)?.setAttribute('d', '');
                     }
                 }
             });

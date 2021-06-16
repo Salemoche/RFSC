@@ -466,28 +466,75 @@ export const CalendarDetailsStyles = styled.div `
 `
 
 export const CalendarEventDetailsStyles = styled(CalendarDetailsStyles) `
-    background-color: ${props => props.styles.colors.green};
-    color: ${props => props.styles.colors.red};
     /* padding: ${props => props.styles.spacing.medium}px; */
-    border: ${props => props.styles.spacing.medium}px solid ${props => props.styles.colors.green};
-`
-export const CalendarEventDetailStyles = styled.div `
-    border-bottom: 2px solid ${props => props.styles.colors.red};
-    margin-bottom: ${props => props.styles.spacing.medium}px;
-    font-size: ${props => props.styles.typography.fontMedium.large.fontSize}px;
-    line-height: ${props => props.styles.typography.fontMedium.large.lineHeight};
 
-    .rfsc-event-detail__header {
+    &.event {
+        background-color: ${props => props.styles.colors.green};
+        color: ${props => props.styles.colors.red};
+        border: ${props => props.styles.spacing.medium}px solid ${props => props.styles.colors.green};
+    }
+
+    &.radio {
+        background-color: ${props => props.styles.colors.grayReal};
+        color: black;
+        border: ${props => props.styles.spacing.medium}px solid ${props => props.styles.colors.grayReal};
+    }
+
+    &.tattoo {
+        background-color: white;
+        color: black;
+        border: ${props => props.styles.spacing.medium}px solid white;
+    }
+
+
+    .rfsc-detail-header {
         width: 100%;
         display: flex;
         justify-content: space-between;
         margin-bottom: ${props => props.styles.spacing.large}px;
 
-        .rfsc-event-detail__header__leader,
-        .rfsc-event-detail__header__type {
+        .rfsc-detail-header__item {
             text-transform: uppercase;
+            width: 33%;
+        }
+
+        .rfsc-event-detail__header__leader,
+        .rfsc-radio-detail__header__host,
+        .rfsc-tattoo-detail__header__host {
+            text-align: center;
+        }
+
+        .rfsc-event-detail__header__type,
+        .rfsc-radio-detail__header__type,
+        .rfsc-tattoo-detail__header__type {
+            text-align: right;
         }
     }
+
+    
+    .rfsc-radio-detail__header,
+    .rfsc-tattoo-detail__header {
+        border-bottom: 2px solid black;
+        padding-bottom: ${props => props.styles.spacing.large}px;
+    }
+`
+
+export const CalendarEventDetailStyles = styled.div `
+    margin-bottom: ${props => props.styles.spacing.medium}px;
+    /* font-size: ${props => props.styles.typography.fontMedium.large.fontSize}px;
+    line-height: ${props => props.styles.typography.fontMedium.large.lineHeight}; */
+
+    &.rfsc-event {
+        border-bottom: 2px solid ${props => props.styles.colors.red};
+    }
+
+    &.rfsc-radio, &.rfsc-tattoo {
+        /* border-bottom: 2px solid black; */
+    }
+
+    /* ========
+    Event 
+    ======== */
 
     .rfsc-event-detail__lead {
         width: 100%;
@@ -524,6 +571,32 @@ export const CalendarEventDetailStyles = styled.div `
             &:not(:last-of-type) {
                 margin-bottom: ${props => props.styles.typography.fontLarge.large.lineHeight};
             }
+        }
+    }
+
+    /* ========
+    Radio / Tattoo 
+    ======== */
+
+    .rfsc-tattoo-detail__item,
+    .rfsc-radio-detail__item {
+        border-bottom: 2px solid black;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        text-align: center;
+        margin-bottom: ${props => props.styles.spacing.large}px;
+        padding-bottom: ${props => props.styles.spacing.large}px;
+
+        > * {
+            width: 100%;
+        }
+
+        .rfsc-radio-detail__item__artist,
+        .rfsc-tattoo-detail__item__artist {
+
+            font-size: ${props => props.styles.typography.fontLarge.large.fontSize}px;
+            line-height: ${props => props.styles.typography.fontLarge.large.lineHeight};
         }
     }
 

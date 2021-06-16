@@ -19,9 +19,15 @@ export const baseState = {
         },
         headerFooterClass: 'default',
         showEventDetail: false,
-        showTattooDetail: false,
-        showRadioDetail: false,
         currentEventDetail: {
+            id: ''
+        },
+        showTattooDetail: false,
+        currentTattooDetail: {
+            id: ''
+        },
+        showRadioDetail: false,
+        currentRadioDetail: {
             id: ''
         },
         currentDetailParameters: {
@@ -56,6 +62,7 @@ export const baseState = {
         locations: {},
         events: {},
         infos: {},
+        tattoo: {}
     },
     sound: {
         isPlaying: false,
