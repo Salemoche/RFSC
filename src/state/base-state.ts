@@ -54,7 +54,8 @@ export const baseState = {
         currentDay: 1,
         currentItem: 1,
         filters: [],
-        events: []
+        events: [],
+        eventPositions: {}
     },
     content: {
         days: {},

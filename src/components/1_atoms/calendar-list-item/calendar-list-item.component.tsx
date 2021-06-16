@@ -30,13 +30,17 @@ function CalendarListItemComponent({
     const [offsetTop, setOffsetTop] = useState(0)
     const styles = useBaseState().state.base.styles;
     const hasScrolled = useBaseState().state.calendar.hasScrolled;
-    const updateBaseState = useBaseState().dispatchBase
     const history = useHistory();
+    const updateBaseState = useBaseState().dispatchBase
 
 
     useEffect(() => {
         if (typeof elementRef.current?.offsetTop === 'number') {
             setOffsetTop(elementRef.current?.offsetTop);
+            const id = getPost().post.id;
+            if (id) {
+                updateBaseState({type: actions.SET_CALENDAR_EVENT_POSITIONS, payload: { [id]: elementRef.current?.offsetTop}})
+            }
         }
         setBehindViewport(false);
     }, [])

@@ -4,7 +4,8 @@ export const reducer = ( state, action ) => {
     
     if (
         action.type !== actions.SET_CALENDAR &&
-        action.type !== actions.SET_ACTIVE_CALENDAR 
+        action.type !== actions.SET_ACTIVE_CALENDAR &&
+        action.type !== actions.SET_CALENDAR_EVENT_POSITIONS 
     ) {
         console.log('updated', action.type, action.payload);
     }
@@ -107,6 +108,17 @@ export const reducer = ( state, action ) => {
                 calendar: {
                     ...state.calendar,
                     ...action.payload
+                }
+            }
+        case actions.SET_CALENDAR_EVENT_POSITIONS:
+            return { 
+                ...state, 
+                calendar: {
+                    ...state.calendar,
+                    eventPositions: {
+                        ...state.calendar.eventPositions,
+                        ...action.payload
+                    }
                 }
             }
         case actions.SET_FILTERS:

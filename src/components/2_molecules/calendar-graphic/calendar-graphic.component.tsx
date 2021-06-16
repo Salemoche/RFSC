@@ -24,6 +24,8 @@ function CalendarGraphicComponent() {
     const filters = useBaseState().state.filters;
     const updateBaseState = useBaseState().dispatchBase;
     const days = useBaseState().state.content.days;
+    const eventPositions = useBaseState().state.calendar.eventPositions 
+    const updateBase = useBaseState().dispatchBase;
 
     const [rotations, setRotations] = useState({
         current: 0,
@@ -56,15 +58,22 @@ function CalendarGraphicComponent() {
     }, [])
 
     const handleClick = (e) => {
-        console.log(e.target);
         e.stopPropagation();
 
         let type = '';
         let id = '';
+        let eventId = '';
 
         if (e.target.id.includes('event')) {
             type = 'event';
             id = e.target.id;
+            eventId = e.target.getAttribute('data-event-id');
+
+            // scroll to event
+            
+            if (eventId) {
+                updateBase({ type: actions.SET_CALENDAR, payload: { scrollDist: eventPositions[eventId], hasScrolled: true } });
+            }
             return
         } else if (e.target.id.includes('week')) {
             type = 'week';
@@ -94,6 +103,7 @@ function CalendarGraphicComponent() {
                     const event1 = events[0];
                     const event1Text = document.createElement('text');
                     event1Text.innerHTML = event1.title;
+                    const event1Id = events[0].id || '';
                     const event2 = events[1] || null;
 
                     const { day, month } = formatDate(event1.event_content.date);
@@ -106,13 +116,20 @@ function CalendarGraphicComponent() {
 
                     console.log(month, week, day, event1.title)
 
-                    document.querySelector(`#m${month}-w${week}-d${day}-event-1`)?.append(event1Text.cloneNode(true));
+                    const event1Node = document.querySelector(`#m${month}-w${week}-d${day}-event-1`);
+
+                    event1Node?.append(event1Text.cloneNode(true));
+                    event1Node?.setAttribute('data-event-id', event1Id);
                     // document.querySelector(`#m${month}-w${week}-d${day}-event-1`)?.setAttribute('d', '');
 
                     if (event2) {
                         const event2Text = document.createElement('text');
                         event2Text.innerHTML = event2.title;
-                        document.querySelector(`#m${month}-w${week}-d${day}-event-2`)?.append(event2Text.cloneNode(true));
+                        const event2Id = events[1].id || '';
+
+                        const event2Node = document.querySelector(`#m${month}-w${week}-d${day}-event-2`)
+                        event2Node?.append(event2Text.cloneNode(true));
+                        event2Node?.setAttribute('data-event-id', event2Id);
                         // document.querySelector(`#m${month}-w${week}-d${day}-event-2`)?.setAttribute('d', '');
                     }
                 }
