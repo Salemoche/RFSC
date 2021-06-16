@@ -22,7 +22,7 @@ function HomePage({ props }) {
 
     return (
         <div className="rfsc-content rfsc-home" onLoad={ contentLoaded }>
-            {/* <BackgroundVideoComponent/> */}
+            <BackgroundVideoComponent/>
             <CalendarComponent/>
         </div>
     )

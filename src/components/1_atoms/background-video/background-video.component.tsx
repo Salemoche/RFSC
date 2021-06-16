@@ -10,8 +10,8 @@ function BackgroundVideoComponent() {
 
     return (
         <BackgroundVideoComponentStyles>
-            <video className="rfsc-background-video" muted autoPlay>
-                <source src={ backgrounds.gray.mediaItemUrl } />
+            <video className="rfsc-background-video"src={ backgrounds.gray.mediaItemUrl } muted={true} autoPlay loop>
+                {/* <source src={ backgrounds.gray.mediaItemUrl } /> */}
             </video>
         </BackgroundVideoComponentStyles>
     )
