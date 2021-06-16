@@ -41,6 +41,9 @@ function LoaderComponent() {
                 iconOnAir: data.siteSettings.siteSettings.iconOnAir,
                 iconPlay: data.siteSettings.siteSettings.iconPlay,
                 iconPause: data.siteSettings.siteSettings.iconPause 
+            },
+            backgrounds: {
+                gray: data.siteSettings.siteSettings.backgroundGray
             }
         }})  
         updateBaseState({ type: actions.SET_SOUND, payload: { 
@@ -65,7 +68,7 @@ function LoaderComponent() {
             })[0].radio,
             infos: data.pages.nodes.filter((node) => {
                 return node.pageId === 84
-            })[0].infos,
+            })[0].infos
 
             // space: data.pageBy.
         }})  

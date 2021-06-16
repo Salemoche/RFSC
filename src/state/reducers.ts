@@ -39,7 +39,7 @@ export const reducer = ( state, action ) => {
                 ...state, 
                 base: {
                     ...state.base,
-                    contentLoaded: action.payload
+                    contentFetched: action.payload
                 }
             }
         case actions.SET_CONTENT:

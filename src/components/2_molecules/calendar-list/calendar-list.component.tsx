@@ -16,7 +16,7 @@ const CalendarListComponent: React.FC<CalendarListComponentProps> = () => {
     const days = useBaseState().state.content.days;
     const filters = useBaseState().state.filters;
     let { scrollDist, scrollDir } = useBaseState().state.calendar;
-    const updateCalendar = useBaseState().dispatchBase;
+    const updateBase = useBaseState().dispatchBase;
 
     const [offsetHeight, setOffsetHeight] = useState(0)
     const elementRef = useRef<HTMLElement>();
@@ -30,6 +30,10 @@ const CalendarListComponent: React.FC<CalendarListComponentProps> = () => {
         if (typeof elementRef.current?.offsetHeight === 'number') {
             setOffsetHeight(elementRef.current?.offsetHeight);
         }
+
+        // updateBase({ type: actions.SET_CALENDAR, payload: { scrollDist, scrollDir: 'forward' } });
+
+
     }, [])
 
     useEffect(() => {
@@ -42,16 +46,21 @@ const CalendarListComponent: React.FC<CalendarListComponentProps> = () => {
 
         if (scrollDir === 'forward' && scrollDist > offsetHeight) {
             console.log('we are over');
-            updateCalendar({ type: actions.SET_CALENDAR, payload: { scrollDist: - far } });
+            updateBase({ type: actions.SET_CALENDAR, payload: { scrollDist: - far } });
         } else if (scrollDir === 'backwards' && scrollDist < - far ) {
             console.log('we are under');
-            updateCalendar({ type: actions.SET_CALENDAR, payload: { scrollDist: offsetHeight + viewPortShift } });
+            updateBase({ type: actions.SET_CALENDAR, payload: { scrollDist: offsetHeight + viewPortShift } });
         }
     }, [scrollDist])
 
+    // const getFilters = (post) => {
+    // }
+
     const getFilters = (post) => {
         const locations: string[] = [];
+        const locationTitles: string[] = [];
         const types: string[] = [];
+        const typeTitles: string[] = [];
 
         switch (post.fieldGroupName) {
             case 'Page_Days_days_Posts_EventLayout':
@@ -60,8 +69,10 @@ const CalendarListComponent: React.FC<CalendarListComponentProps> = () => {
                         const category = node.node;
                         if ( isType(category)) {
                             types.push(category?.slug);
+                            typeTitles.push(category?.name);
                         } else if ( isLocation(category)) {
                             locations.push(category?.slug);
+                            locationTitles.push(category?.name);
                         }
                     });
                 });
@@ -76,9 +87,13 @@ const CalendarListComponent: React.FC<CalendarListComponentProps> = () => {
                 break;
         }
 
+        // console.log(types, typeTitles);
+
         return {
             locations,
-            types
+            locationTitles,
+            types,
+            typeTitles,
         }
     }
 
@@ -126,8 +141,7 @@ const CalendarListComponent: React.FC<CalendarListComponentProps> = () => {
                                         activeThreshold={activeThreshold}
                                         viewPortShift={viewPortShift}
                                         far={far}
-                                        locations={getFilters(post).locations}
-                                        types={getFilters(post).types}
+                                        filters={getFilters(post)}
                                     />
                                 )
                             }

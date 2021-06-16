@@ -25,7 +25,7 @@ function CalendarComponent() {
     const updateBase = useBaseState().dispatchBase;
     // const [ scrollDist, setScrollDist ] = useState(0);
     let scrollDist = useBaseState().state.calendar.scrollDist;
-    const dampener = 0.8;
+    const dampener = 2;
     const [hasFilters, setHasFilters] = useState(false);
 
     const handleScroll = (e) => {
@@ -39,13 +39,15 @@ function CalendarComponent() {
 
         scrollDist += Math.floor(e.deltaY * dampener);
         
-        // console.log(e.deltaY);
+        // console.log(scrollDist);
         
         if (e.deltaY > 0) {
             updateBase({ type: actions.SET_CALENDAR, payload: { scrollDist, scrollDir: 'forward' } });
         } else {
             updateBase({ type: actions.SET_CALENDAR, payload: { scrollDist, scrollDir: 'backwards' } });
         }
+
+        updateBase({ type: actions.SET_CALENDAR, payload: { scrollDist, hasScrolled: true } });
     } 
 
     const resetFilters = () => {
@@ -54,6 +56,7 @@ function CalendarComponent() {
 
     useEffect(() => {
         return () => {
+            // updateBase({ type: actions.SET_CALENDAR, payload: { scrollDist: 0 } });
             updateBase({ type: actions.SET_BASE, payload: { headerFooterClass: 'default', showEventDetail: false, } });
         }
     }, [])
@@ -65,7 +68,7 @@ function CalendarComponent() {
 
     return (
         <CalendarStyles onWheel={handleScroll} className="rfsc-calendar" styles={base.styles}>
-            { base.contentLoaded ? 
+            { base.contentFetched ? 
                 <React.Fragment>
                     { base.showEventDetail ? 
                         <CalendarDetailsComponent/>

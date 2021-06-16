@@ -78,10 +78,12 @@ export const CalendarListItemStyles = styled.div `
         grid-template-columns: 1fr;
 
         &.rfsc-list-item__side-front {
-            padding: ${props => (props.styles.spacing.medium)}px;
+            /* padding: ${props => (props.styles.spacing.medium)}px; */
+            border: ${props => (props.styles.spacing.medium)}px solid ${props => (props.styles.colors.green)};
 
             &.radio {
                 background: ${props => (props.styles.colors.grayReal)};
+                border: ${props => (props.styles.spacing.medium)}px solid ${props => (props.styles.colors.grayReal)};
                 color: black;
             }
 
@@ -107,13 +109,13 @@ export const CalendarListItemStyles = styled.div `
             width: 100%;
             grid-row-start: 1;
             grid-row-end: 2;
+            text-transform: uppercase;
 
             .rfsc-list-item__header__date {
 
             }
 
             .rfsc-list-item__header__category {
-
             }
 
             .rfsc-list-item__header__week {
@@ -154,34 +156,26 @@ export const CalendarListItemStyles = styled.div `
                 width: 80%;
                 height: 80%;
             }
+        }
 
-            .rfsc-list-item__content__extra {
-                text-transform: uppercase;
-            }
+        .rfsc-list-item__extra {
+            text-transform: uppercase;
         }
     }
 
-    &:hover {
-        /* transform: rotateX(-60deg) scale(1.05); */
-
-
-        /* .rfsc-list-item__side {
-            &.rfsc-list-item__side-front {
-                transform: rotateY(-180deg);
-            }
-
-            &.rfsc-list-item__side-back {
-                transform: rotateY(0deg);
-            }
-        } */
+    &.initial {
+        opacity: 0 !important;
     }
 
     &.active {
         opacity: 1;
+        transform: rotateX(-60deg) scale(1);
     }
 
     &.inactive {
-        opacity: 0.5;
+        transform: rotateX(-60deg) scale(0.9);
+        opacity: 0.9
+        /* opacity: 0.5; */
     }
 
     &.behind-viewport {
@@ -195,6 +189,22 @@ export const CalendarListItemStyles = styled.div `
 
     &.invisible {
         opacity: 0;
+        /* display: none; */
+    }
+
+    &:hover {
+        transform: rotateX(-60deg) scale(1.05);
+
+
+        /* .rfsc-list-item__side {
+            &.rfsc-list-item__side-front {
+                transform: rotateY(-180deg);
+            }
+
+            &.rfsc-list-item__side-back {
+                transform: rotateY(0deg);
+            }
+        } */
     }
 
     .rfsc-list-item__side {
@@ -458,7 +468,8 @@ export const CalendarDetailsStyles = styled.div `
 export const CalendarEventDetailsStyles = styled(CalendarDetailsStyles) `
     background-color: ${props => props.styles.colors.green};
     color: ${props => props.styles.colors.red};
-    padding: ${props => props.styles.spacing.medium}px;
+    /* padding: ${props => props.styles.spacing.medium}px; */
+    border: ${props => props.styles.spacing.medium}px solid ${props => props.styles.colors.green};
 `
 export const CalendarEventDetailStyles = styled.div `
     border-bottom: 2px solid ${props => props.styles.colors.red};

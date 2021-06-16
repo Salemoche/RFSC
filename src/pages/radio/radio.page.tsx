@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import actions from '../../state/actions';
 import { useBaseState } from '../../state/provider';
 import { RadioStyles } from '../../styles/default.styles';
@@ -9,20 +9,31 @@ function RadioPage() {
     const radio = useBaseState().state.content.radio;
     const sound = useBaseState().state.sound;
     const base = useBaseState().state.base;
-    const updateCalendar = useBaseState().dispatchBase;
+    const updateBaseState = useBaseState().dispatchBase;
 
     // console.log(radio, sound, base)
 
+    useEffect(() => {
+        updateBaseState({ type: actions.SET_BASE, payload: { contentLoaded: true } });
+        return () => {       
+            updateBaseState({ type: actions.SET_BASE, payload: { contentLoaded: false } });
+        }
+    }, [])
+
     const handlePlay = () => {
-        updateCalendar({ type: actions.TOGGLE_PLAY });
+        updateBaseState({ type: actions.TOGGLE_PLAY });
     }
 
     const handleOnLoad = (e) => {
         console.log(e.target);
     }
 
+    const contentLoaded = () => {
+        // updateBaseState({ type: actions.SET_BASE, payload: { contentLoaded: true } });
+    }
+
     return (
-        <RadioStyles className="rfsc-content rfsc-radio" styles={ base.styles } sizes={ base.sizes }>
+        <RadioStyles className="rfsc-content rfsc-radio" styles={ base.styles } sizes={ base.sizes } onLoad={ contentLoaded }>
         { base.contentLoaded ? 
             <React.Fragment>
                 <div className="rfsc-radio__header"></div>

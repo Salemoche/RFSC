@@ -158,6 +158,9 @@ export const WP_QUERY = {
                     sourceUrl
                 }
                 stream
+                backgroundGray {
+                    mediaItemUrl
+                }
             }
         }
     }`

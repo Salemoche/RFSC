@@ -9,20 +9,25 @@ function SpacePage() {
 
     const space = useBaseState().state.content.space;
     const base = useBaseState().state.base;
-    const setheaderFooterClass = useBaseState().dispatchBase;
+    const updateBaseState = useBaseState().dispatchBase;
 
     useEffect(() => {
-        setheaderFooterClass({ type: actions.SET_BASE, payload: { headerFooterClass: 'space' } });
+        updateBaseState({ type: actions.SET_BASE, payload: { headerFooterClass: 'space' } });
 
         return () => {
-            setheaderFooterClass({ type: actions.SET_BASE, payload: { headerFooterClass: 'default' } });
+            updateBaseState({ type: actions.SET_BASE, payload: { headerFooterClass: 'default' } });
+            updateBaseState({ type: actions.SET_BASE, payload: { contentLoaded: false } });
         }
     }, [])
     // console.log(space)
 
+    const contentLoaded = () => {
+        updateBaseState({ type: actions.SET_BASE, payload: { contentLoaded: true } });
+    }
+
     return (
-        <SpaceStyles className="rfsc-content rfsc-space" styles={ base.styles }>
-            { base.contentLoaded ? 
+        <SpaceStyles className="rfsc-content rfsc-space" styles={ base.styles } onLoad={ contentLoaded }>
+            { base.contentFetched ? 
                 <React.Fragment>
                     <div className="rfsc-space__icon">
                         <ImageContainerComponent src={space.icon.sourceUrl} alt="space-icon"/>

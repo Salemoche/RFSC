@@ -15,6 +15,7 @@ import { useBaseState } from '../../../state/provider';
 import FooterComponent from '../footer/footer.component';
 import SpacePage from '../../../pages/space/space.page';
 import AudioComponent from '../audio/audio.component';
+import LoadingComponent from '../../2_molecules/loading/loading.component';
 
 function Wrapper() {
 
@@ -33,6 +34,7 @@ function Wrapper() {
                     <Route path="/space" exact component={SpacePage}/>
                 </Switch>
                 </MainStyles>
+                {/* <LoadingComponent/> */}
                 <FooterComponent/>
                 <AudioComponent/>
             </AppStyles>

@@ -11,17 +11,19 @@
 */
 
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { CalendarGraphic } from '../../../styles/calendar.styles';
 import { useBaseState } from '../../../state/provider';
 import actions from '../../../state/actions';
+import { formatDate } from '../../../utils/helpers';
 
 function CalendarGraphicComponent() {
 
     const styles = useBaseState().state.base.styles;
     const currentDetail = useBaseState().state.base.currentDetailParameters;
     const filters = useBaseState().state.filters;
-    const updateFilters = useBaseState().dispatchBase;
+    const updateBaseState = useBaseState().dispatchBase;
+    const days = useBaseState().state.content.days;
 
     const [rotations, setRotations] = useState({
         current: 0,
@@ -44,6 +46,14 @@ function CalendarGraphicComponent() {
             shedhalle: 55
         }}
     )
+
+    useEffect(() => {
+        populateEvents();
+
+        return () => {
+            
+        }
+    }, [])
 
     const handleClick = (e) => {
         console.log(e.target);
@@ -70,8 +80,44 @@ function CalendarGraphicComponent() {
             id = e.target.parentNode.id.split('type-')[1];
         }
 
-        updateFilters({ type: actions.SET_FILTERS, payload: { type, id } });
+        updateBaseState({ type: actions.SET_FILTERS, payload: { type, id } });
 
+    }
+
+    const populateEvents = () => {
+        let graphicEvents: object[] = [];
+
+        days.forEach((singleDay, i) => {
+            singleDay.posts.forEach((post, j) => {
+                const { events } = post;
+                if (events?.length > 0) {
+                    const event1 = events[0];
+                    const event1Text = document.createElement('text');
+                    event1Text.innerHTML = event1.title;
+                    const event2 = events[1] || null;
+
+                    const { day, month } = formatDate(event1.event_content.date);
+                    const { week } = singleDay
+                    
+                    graphicEvents.push({
+                        1: event1,
+                        2: event2
+                    });
+
+                    console.log(month, week, day, event1.title)
+
+                    document.querySelector(`#m${month}-w${week}-d${day}-event-1`)?.append(event1Text.cloneNode(true));
+
+                    if (event2) {
+                        const event2Text = document.createElement('text');
+                        event2Text.innerHTML = event2.title;
+                        document.querySelector(`#m${month}-w${week}-d${day}-event-2`)?.append(event2Text.cloneNode(true));
+                    }
+                }
+            });
+        });
+        console.log(graphicEvents);
+        updateBaseState({ type: actions.SET_CALENDAR, payload: { events: graphicEvents }})
     }
 
     const toggleActive = () => {

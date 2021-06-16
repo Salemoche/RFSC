@@ -2,6 +2,7 @@ import { defaultStyles } from '../styles/default.styles';
 
 export const baseState = {
     base: {
+        contentFetched: false,
         contentLoaded: false,
         sizes: {
             headerHeight: 50,
@@ -29,6 +30,9 @@ export const baseState = {
             month: 7,
             types: [],
             locations: []
+        },
+        backgrounds: {
+            gray: {}
         }
         // currentRadioDetail: {
         //     id: ''
@@ -38,11 +42,13 @@ export const baseState = {
         // },
     },
     calendar: {
-        scrollDist: 0, //-450,
+        scrollDist: -450, // 0,
         scrollDir: 'forward',
+        hasScrolled: false,
         currentDay: 1,
         currentItem: 1,
-        filters: []
+        filters: [],
+        events: []
     },
     content: {
         days: {},

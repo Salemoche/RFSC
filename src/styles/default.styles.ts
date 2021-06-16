@@ -72,12 +72,16 @@ export const GlobalStyle = createGlobalStyle `
         box-sizing: border-box;
     }
 
+    html {
+        scroll-behavior: smooth;
+    }
+
     body {
         overflow: hidden;
 
         font-family: 'Monument', 'Helvetica', 'Arial', sans-serif;
-        font-size: ${defaultStyles.typography.fontSmall.large.fontSize}px;
-        line-height: ${defaultStyles.typography.fontSmall.large.lineHeight};
+        font-size: ${defaultStyles.typography.fontMedium.large.fontSize}px;
+        line-height: ${defaultStyles.typography.fontMedium.large.lineHeight};
     }
 
     a {
@@ -360,6 +364,7 @@ export const FooterStyles = styled.footer `
         display: flex;
         align-items: center;
         justify-content: flex-end;
+        cursor: default;
 
         .rfsc-icon {
             opacity: 0;
@@ -458,6 +463,8 @@ export const FormStyles = styled.form`
 
     label {
         /* transform: translate(12px, 44px); */
+        margin-top: ${props => (props.styles.spacing.medium)}px;
+        margin-bottom: ${props => (props.styles.spacing.medium)}px;
     }
 
     input, 
@@ -487,7 +494,6 @@ export const FormStyles = styled.form`
         label {
             grid-column-start: 1;
             grid-column-end: 3;
-            margin-bottom: ${props => (props.styles.spacing.large)}px;
         }
 
         input[type="checkbox"] {
@@ -554,5 +560,27 @@ export const ImageStyles = styled.div`
                 `
             }
         }}
+    }
+`
+export const LoadingStyles = styled.div`
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background: white;
+    z-index: 1000;
+`
+
+
+
+export const BackgroundVideoComponentStyles = styled.div `
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    /* z-index: -1; */
+
+    video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 `

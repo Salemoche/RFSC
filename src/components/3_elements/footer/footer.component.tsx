@@ -19,7 +19,7 @@ function FooterComponent() {
         <FooterStyles className={`rfsc-footer ${ state.base.headerFooterClass }`} sizes={ state.base.sizes } styles={ state.base.styles }>
             <PlayerComponent/>
             <NavLink to="/radio">Radio</NavLink>
-            <ButtonStyles className="rfsc-footer-on-air" styles={ state.base.styles }>
+            <div className="rfsc-footer-on-air">
                 { state.sound.onAir ?
                     <div>
                         on air 
@@ -30,7 +30,7 @@ function FooterComponent() {
                 :
                     <span>offline</span>
                 }
-            </ButtonStyles>
+            </div>
         </FooterStyles>
     )
 }

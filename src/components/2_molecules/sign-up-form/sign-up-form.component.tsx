@@ -78,15 +78,15 @@ function SignUpFormComponent () {
                 cols={10} 
                 rows={10}
                 maxLength={1500}
-                placeholder="Short description of your event (800–1500 characters incl. word spaces) // Kurzbeschrieb der Veranstaltung (800–1500 Zeichen mit Leerschlägen)"
+                placeholder="Kurzbeschrieb der Veranstaltung (800–1500 Zeichen mit Leerschlägen)"
             ></textarea>
-            <input type="text" required name="event_performers" placeholder="Involved artists, guests, performers // Involvierte Künstler*innen, Gäste*, Performer*innen"/>
+            <input type="text" required name="event_performers" placeholder="Involvierte Künstler*innen, Gäste*, Performer*innen"/>
             <textarea 
                 name="event_timetable" 
                 id="" 
                 cols={10} 
                 rows={10}
-                placeholder="Timetable of your event (for example: Maxime Muster – 12:00–13:00, Anna Beispiel – 13:00–14:30) // Zeitplan für dein Event (zB.: Maxime Muster – 12:00–13:00, Anna Beispiel – 13:00–14:30)"
+                placeholder="Zeitplan für dein Event (zB.: Maxime Muster – 12:00–13:00, Anna Beispiel – 13:00–14:30)"
             ></textarea>
             <div className="event_techrider rfsc-checkbox-container">
                 <label htmlFor="event_techrider">Technische Bedürfnisse (nur im Clubraum)</label>

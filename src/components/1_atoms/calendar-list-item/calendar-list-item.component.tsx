@@ -16,8 +16,7 @@ function CalendarListItemComponent({
     day,
     week, 
     month, 
-    locations, 
-    types, 
+    filters, 
 }) {
 
     const elementRef = useRef<HTMLElement>();
@@ -29,6 +28,7 @@ function CalendarListItemComponent({
     // const [active, setActive] = useState(false);
     const [offsetTop, setOffsetTop] = useState(0)
     const styles = useBaseState().state.base.styles;
+    const hasScrolled = useBaseState().state.calendar.hasScrolled;
     const updateBaseState = useBaseState().dispatchBase
 
 
@@ -37,10 +37,10 @@ function CalendarListItemComponent({
             setOffsetTop(elementRef.current?.offsetTop);
         }
         setBehindViewport(false);
-
     }, [])
 
     useEffect(() => {
+
         if ( // is scrolled in focus arrea
             containerHeight - scrollDist + viewPortShift > offsetTop - activeThreshold / 2 
             && containerHeight - scrollDist + viewPortShift < offsetTop + activeThreshold / 2
@@ -146,7 +146,7 @@ function CalendarListItemComponent({
                     <div className={`rfsc-list-item__side rfsc-list-item__side-front ${postObject.type}`}>
                         <div className="rfsc-list-item__header">
                             <div className="rfsc-list-item__header__date">{ date.day }.{ date.month }</div>
-                            <div className="rfsc-list-item__header__category">{ date.day }.{ date.month }</div>
+                            <div className="rfsc-list-item__header__category">{ filters.typeTitles?.length > 1 ? 'VARIOUS' : filters.typeTitles }</div>
                             <div className="rfsc-list-item__header__week">W{week}</div></div>
                             <div className="rfsc-list-item__content">
                             {post.events.map( (event, i) => (
@@ -159,8 +159,8 @@ function CalendarListItemComponent({
                                     <div className="rfsc-list-item__content__item__location">
                                         {event.categories.nodes.filter(category => {
                                             return isLocation(category)
-                                        }).map(location =>(
-                                            <span>{location.name}</span>
+                                        }).map((location, i) =>(
+                                            <span key={i}>{location.name}</span>
                                         ))}
                                     </div>
                                 </div>
@@ -185,14 +185,14 @@ function CalendarListItemComponent({
                         <div className={`rfsc-list-item__side rfsc-list-item__side-front ${postObject.type}`}>
                             <div className="rfsc-list-item__header">
                                 <div className="rfsc-list-item__header__date">{ date.day }.{ date.month }</div>
-                                <div className="rfsc-list-item__header__category">{ date.day }.{ date.month }</div>
+                                <div className="rfsc-list-item__header__category">Tattoo</div>
                                 <div className="rfsc-list-item__header__week">W{week}</div>
                             </div>
                             <div className="rfsc-list-item__content">
                                 <ImageContainerComponent src={post.icon.sourceUrl} alt={post.icon.altText || 'icon' } className="rfsc-list-item__content__icon"/>
-                                <div className="rfsc-list-item__content__extra">
-                                    {post.extra}
-                                </div>
+                            </div>
+                            <div className="rfsc-list-item__extra">
+                                {post.extra}
                             </div>
                         </div>,
                     back: <div className="rfsc-list-item__side rfsc-list-item__side-back"></div>
@@ -213,14 +213,14 @@ function CalendarListItemComponent({
                         <div className={`rfsc-list-item__side rfsc-list-item__side-front ${postObject.type}`}>
                             <div className="rfsc-list-item__header">
                                 <div className="rfsc-list-item__header__date">{ date.day }.{ date.month }</div>
-                                <div className="rfsc-list-item__header__category">{ date.day }.{ date.month }</div>
+                                <div className="rfsc-list-item__header__category">Radio-Box</div>
                                 <div className="rfsc-list-item__header__week">W{week}</div>
                             </div>
                             <div className="rfsc-list-item__content">
                                 <ImageContainerComponent src={post.icon.sourceUrl} alt={post.icon.altText || 'icon' } className="rfsc-list-item__content__icon"/>
-                                <div className="rfsc-list-item__content__extra">
-                                    {post.extra}
-                                </div>
+                            </div>
+                            <div className="rfsc-list-item__extra">
+                                {post.extra}
                             </div>
                         </div>,
                     back: <div className="rfsc-list-item__side rfsc-list-item__side-back"></div>
@@ -241,14 +241,14 @@ function CalendarListItemComponent({
                         <div className={`rfsc-list-item__side rfsc-list-item__side-front ${postObject.type}`}>
                             <div className="rfsc-list-item__header">
                                 <div className="rfsc-list-item__header__date">{ date.day }.{ date.month }</div>
-                                <div className="rfsc-list-item__header__category">{ date.day }.{ date.month }</div>
+                                <div className="rfsc-list-item__header__category">VARIOUS</div>
                                 <div className="rfsc-list-item__header__week">W{week}</div>
                             </div>
                             <div className="rfsc-list-item__content">
                                 <ImageContainerComponent src={post.icon.sourceUrl} alt={post.icon.altText || 'icon' } className="rfsc-list-item__content__icon"/>
-                                <div className="rfsc-list-item__content__extra">
-                                    {post.extra}
-                                </div>
+                            </div>
+                            <div className="rfsc-list-item__extra">
+                                {post.extra}
                             </div>
                         </div>,
                     back: <div className="rfsc-list-item__side rfsc-list-item__side-back"></div>
@@ -262,7 +262,7 @@ function CalendarListItemComponent({
     return (
         <CalendarListItemStyles 
             ref={ elementRef } 
-            className={` rfsc-calendar__list__item  rfsc-list-item  rfsc-list-item-${getPost().post.type} ${active ? 'active' : 'inactive'}  ${visible ? 'visible' : 'invisible'}  ${rendered ? 'rendered' : 'not-rendered'}  ${behindViewport ? 'behind-viewport' : 'in-front-of-viewport'}
+            className={` rfsc-calendar__list__item  rfsc-list-item  rfsc-list-item-${getPost().post.type} ${active ? 'active' : 'inactive'} ${visible ? 'visible' : 'invisible'} ${rendered ? 'rendered' : 'not-rendered'} ${behindViewport ? 'behind-viewport' : 'in-front-of-viewport'} ${hasScrolled ? '' : 'initial'}
             `}
             scrollDist={scrollDist}
             offsetTop={offsetTop}
@@ -272,7 +272,7 @@ function CalendarListItemComponent({
         >
             {getPost().content.front}
             {getPost().content.back}
-            {/* {locations.map(location => (
+            {/* {filters.locations.map(location => (
                 <h1 style={{zIndex: 100, width: '100%', height: '100%', border: '3px solid red'}}>{location}</h1>
             ))} */}
             {/* <h1 style={{fontSize: '100px', position: 'absolute', zIndex: 3}}>{distanceFromViewport}</h1> */}
