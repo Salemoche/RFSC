@@ -24,14 +24,14 @@ function Wrapper() {
     const updateBaseState = useBaseState().dispatchBase;
 
     const handleLoad = () => {
-        console.log('everything is ready');
+        // console.log('everything is ready');
         updateBaseState({ type: actions.SET_BASE, payload: { contentLoaded: true } });
     }
 
     return (
         <Router>
             <GlobalStyle/>
-            <AppStyles sizes={ state.base.sizes } onLoad={ handleLoad }>
+            <AppStyles sizes={ state.base.sizes } device={ state.base.device } onLoad={ handleLoad }>
                 <HeaderComponent/>
                 <MainStyles styles={ state.base.styles }>
                 <Switch>

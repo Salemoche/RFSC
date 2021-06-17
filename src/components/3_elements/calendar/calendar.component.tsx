@@ -27,6 +27,8 @@ function CalendarComponent() {
     let scrollDist = useBaseState().state.calendar.scrollDist;
     const dampener = 2;
     const [hasFilters, setHasFilters] = useState(false);
+    const [scrollDeltaY, setScrollDeltaY] = useState(0)
+    const [scrollStartY, setScrollStartY] = useState(0)
 
     const handleScroll = (e) => {
         // setScrollDist(state => state += e.deltaY * dampener );
@@ -36,19 +38,45 @@ function CalendarComponent() {
             e.target.classList.value.includes('rfsc-event-detail') ||
             e.target.closest('[class*=rfsc-calendar__detail]')
         ) return
-
+        
         scrollDist += Math.floor(e.deltaY * dampener);
+        setScrollDist(scrollDist, e.deltaY, dampener);
+
+    } 
+
+    const handleTouch = (e, type) => {
+
+        if (
+            e.target.classList.value.includes('rfsc-calendar__detail') ||
+            e.target.classList.value.includes('rfsc-event-detail') ||
+            e.target.closest('[class*=rfsc-calendar__detail]')
+        ) return
+
+        if (type == 'start') {
+            setScrollStartY(e.touches[0].clientY)
+        } else if (type == 'move') {
+            setScrollDeltaY(e.touches[0].clientY - scrollStartY);
+            // console.log(scroll);
+            setScrollDist(scrollDist, scrollDeltaY, - (dampener * 0.1));
+            // setScrollStartY(e.touches[0].clientY)
+        }
+
+    }
+
+    const setScrollDist = (scrollDist, deltaY, dampener) => {
         
-        // console.log(scrollDist);
+        scrollDist += Math.floor(deltaY * dampener);
+        console.log(scrollDist, deltaY);
         
-        if (e.deltaY > 0) {
+        
+        if (deltaY > 0) {
             updateBase({ type: actions.SET_CALENDAR, payload: { scrollDist, scrollDir: 'forward' } });
         } else {
             updateBase({ type: actions.SET_CALENDAR, payload: { scrollDist, scrollDir: 'backwards' } });
         }
 
         updateBase({ type: actions.SET_CALENDAR, payload: { scrollDist, hasScrolled: true } });
-    } 
+    }
 
     useEffect(() => {
         return () => {
@@ -83,7 +111,6 @@ function CalendarComponent() {
         e.stopPropagation();
         const { showEventDetail, showRadioDetail, showTattooDetail } = base;
 
-        console.log(e.target);
 
         if ( (showEventDetail || showRadioDetail || showTattooDetail) && !e.target.closest('[class*=rfsc-calendar__details]')) {
             updateBase({ type: actions.SET_BASE, payload: { showEventDetail: false, showRadioDetail: false, showTattooDetail: false } });
@@ -91,7 +118,7 @@ function CalendarComponent() {
     }
 
     return (
-        <CalendarStyles onWheel={handleScroll} className="rfsc-calendar" styles={base.styles} onClick={closeDetails}>
+        <CalendarStyles onWheel={handleScroll} onTouchStart={(e) => {handleTouch(e, 'start')}} onTouchMove={(e) => {handleTouch(e, 'move')}} className="rfsc-calendar" styles={base.styles} onClick={closeDetails}>
             { base.contentFetched ? 
                 <React.Fragment>
                     { showDetails() }

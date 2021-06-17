@@ -1,8 +1,8 @@
 import React from 'react'
-import { formatTime, formatDate, isType, isLocation } from '../../../utils/helpers';
+// import { formatTime, formatDate, isType, isLocation } from '../../../utils/helpers';
 import { CalendarEventDetailStyles } from '../../../styles/calendar.styles';
 import { useBaseState } from '../../../state/provider';
-import { deflateSync } from 'zlib';
+// import { deflateSync } from 'zlib';
 
 function CalendarDetailComponent({ type, post }) {
 

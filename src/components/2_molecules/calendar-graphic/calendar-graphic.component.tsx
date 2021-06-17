@@ -32,27 +32,27 @@ function CalendarGraphicComponent() {
         right: 0
     };
 
-    const [rotations, setRotations] = useState({
-        current: 0,
-        types: {
-            diskurs: 24,
-            tattoo: 341,
-            workshop: 299,
-            konzert: 246,
-            seeufer: 200,
-            aktion: 159,
-            kunst: 115,
-            club: 66
-        },
-        locations: {
-            foyer: 0,
-            'radio-box': 304,
-            innenhof: 240,
-            seeufer: 180,
-            clubraum: 126,
-            shedhalle: 55
-        }}
-    )
+    // const [rotations, setRotations] = useState({
+    //     current: 0,
+    //     types: {
+    //         diskurs: 24,
+    //         tattoo: 341,
+    //         workshop: 299,
+    //         konzert: 246,
+    //         seeufer: 200,
+    //         aktion: 159,
+    //         kunst: 115,
+    //         club: 66
+    //     },
+    //     locations: {
+    //         foyer: 0,
+    //         'radio-box': 304,
+    //         innenhof: 240,
+    //         seeufer: 180,
+    //         clubraum: 126,
+    //         shedhalle: 55
+    //     }}
+    // )
 
     useEffect(() => {
         populateEvents();
@@ -119,7 +119,7 @@ function CalendarGraphicComponent() {
                         2: event2
                     });
 
-                    console.log(month, week, day, event1.title)
+                    // console.log(month, week, day, event1.title)
 
                     const event1Node = document.querySelector(`#m${month}-w${week}-d${day}-event-1`);
                     if (!event1Node) return
@@ -141,7 +141,7 @@ function CalendarGraphicComponent() {
                 }
             });
         });
-        console.log(graphicEvents);
+        // console.log(graphicEvents);
         updateBaseState({ type: actions.SET_CALENDAR, payload: { events: graphicEvents }})
     }
 

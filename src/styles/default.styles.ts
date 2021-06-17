@@ -1,5 +1,6 @@
 import styled, { createGlobalStyle } from 'styled-components'
 import { animation } from './animation.styles';
+import { getTypography } from '../utils/helpers';
 
 export const defaultStyles = {
     colors: {
@@ -31,35 +32,40 @@ export const defaultStyles = {
     typography: {
         fontLarge: {
             large: {
-                fontSize: 42,
+                fontSize: '42px',
                 lineHeight: 1,
-                letterSpacing: 0.8
+                letterSpacing: '0.8px'
+            },
+            medium: {
+                fontSize: '30px',
+                lineHeight: 1,
+                letterSpacing: '0.7px'
             },
             small: {
-                fontSize: 42,
+                fontSize: '7vw',
                 lineHeight: 1,
-                letterSpacing: 0.8
+                letterSpacing: '0.8px'
             },
         },
         fontMedium: {
             large: {
-                fontSize: 23,
+                fontSize: '23px',
                 lineHeight: 1.1,
-                letterSpacing: 0.8
+                letterSpacing: '0.8px'
             },
             small: {
-                fontSize: 28,
+                fontSize: '19px',
                 lineHeight: 1.2,
-                letterSpacing: 0.8
+                letterSpacing: '0.8px'
             },
         },
         fontSmall: {
             large: {
-                fontSize: 21,
+                fontSize: '19px',
                 lineHeight: 1,
             },
             small: {
-                fontSize: 21,
+                fontSize: '16px',
                 lineHeight: 1,
             },
         },
@@ -72,6 +78,14 @@ export const defaultStyles = {
             extraLong: '.6s'
         }
     },
+    breakpoints: {
+        xxLarge: 1800,
+        xLarge: 1440,
+        large: 1080,
+        medium: 768,
+        small: 420,
+        xSmall: 320,
+    }
 }
 
 export const GlobalStyle = createGlobalStyle `
@@ -88,9 +102,10 @@ export const GlobalStyle = createGlobalStyle `
         overflow: hidden;
 
         font-family: 'Monument', 'Helvetica', 'Arial', sans-serif;
-        font-size: ${defaultStyles.typography.fontMedium.large.fontSize}px;
+        /* font-size: ${defaultStyles.typography.fontMedium.large.fontSize}px;
         letter-spacing: ${defaultStyles.typography.fontMedium.large.letterSpacing}px;
-        line-height: ${defaultStyles.typography.fontMedium.large.lineHeight};
+        line-height: ${defaultStyles.typography.fontMedium.large.lineHeight}; */
+        ${getTypography({size: 'fontMedium'})}
     }
 
     a {
@@ -136,6 +151,14 @@ export const AppStyles = styled.div `
         ${props => (props.sizes.footerHeight)}px;
     height: 100vh;
     width: 100vw;
+
+    @media screen and (max-width: ${ defaultStyles.breakpoints.medium }px ) {
+        grid-template-rows: 
+            ${props => (props.sizes.headerHeight)}px 
+            auto 
+            calc( ${props => (props.sizes.footerHeight)}px + ${props => (props.device.client.name === 'Mobile Safari' ? '20px' : '110px' )}
+             );
+    }
 `
 
 export const MainStyles = styled.main `
@@ -168,10 +191,11 @@ export const MainStyles = styled.main `
             /* display: block; */
             width: 1024px;
             height: 1024px;
-            max-width: 80vw;
-            max-height: 80vw;
-            font-size: ${props => (props.styles.typography.fontMedium.large.fontSize)}px;
-            line-height: ${props => (props.styles.typography.fontMedium.large.lineHeight)};
+            max-width: calc( 100% - ${props => (props.styles.spacing.medium)}px);
+            max-height: calc( 100% - ${props => (props.styles.spacing.medium)}px);
+            /* font-size: ${props => (props.styles.typography.fontMedium.large.fontSize)}px;
+            line-height: ${props => (props.styles.typography.fontMedium.large.lineHeight)}; */
+            ${getTypography({size: 'fontMedium'})}
             margin: 0 auto;
             display: flex;
             flex-wrap: wrap;
@@ -184,6 +208,8 @@ export const MainStyles = styled.main `
             p img {
                 width: 500px;
                 height: 500px;
+                max-height: calc( 100vw - ${props => (props.styles.spacing.large)}px);
+                max-width: calc( 100vw - ${props => (props.styles.spacing.large)}px);
                 max-width: 60vw;
                 max-height: 60vw;
                 margin-top: ${props => props.styles.spacing.extraLarge}px;
@@ -236,9 +262,11 @@ export const InfoStyles = styled.div `
 export const ButtonStyles = styled.div `
     background: none;
     border: none;
-    font-size: ${props => props.styles.typography.fontLarge.large.fontSize}px;
+    /* font-size: ${props => props.styles.typography.fontLarge.large.fontSize}px;
 letter-spacing: ${props => props.styles.typography.fontLarge.large.letterSpacing}px;
-    line-height: ${props => props.styles.typography.fontLarge.large.lineHeight};
+    line-height: ${props => props.styles.typography.fontLarge.large.lineHeight}; */
+    ${getTypography({size: 'fontLarge'})}
+
     display: inline-block;
     cursor: pointer;
     transition: opacity, color ${props => (props.styles.animation.transitions.long)};
@@ -277,8 +305,9 @@ export const HeaderStyles = styled.nav `
     grid-column-start: 1;
     grid-column-end: 13;
     background-color: ${props => getHeaderFooterStyles(props)};
-    font-size: ${props => (props.styles.typography.fontLarge.large.fontSize)}px;
-    line-height: ${props => (props.styles.typography.fontLarge.large.lineHeight)};
+    /* font-size: ${props => (props.styles.typography.fontLarge.large.fontSize)}px;
+    line-height: ${props => (props.styles.typography.fontLarge.large.lineHeight)}; */
+    ${getTypography({size: 'fontLarge'})}
     text-transform: uppercase;
     padding: 0 ${props => (props.styles.spacing.small)}px; 
     padding-top: 2px;
@@ -327,8 +356,8 @@ export const FooterStyles = styled.footer `
     /* display: flex; */
     /* justify-content: center; */
 
-    font-size: ${props => (props.styles.typography.fontLarge.large.fontSize)}px;
-    line-height: ${props => (props.styles.typography.fontLarge.large.lineHeight)};
+    ${getTypography({size: 'fontLarge'})}
+
     text-transform: uppercase;
 
     background-color: ${props => getHeaderFooterStyles(props, false)};
@@ -390,6 +419,12 @@ export const FooterStyles = styled.footer `
             /* margin-right: ${props => (props.styles.spacing.small)}px; */
         }
         /* margin-left: auto;  */
+    }
+    
+
+    @media screen and (max-width: ${ defaultStyles.breakpoints.medium }px ) {
+        align-content: flex-start;
+        padding-top: ${props => (props.styles.spacing.small)}px;
     }
 `
 
@@ -468,6 +503,20 @@ export const IconStyles = styled.div`
         width: 100%;
         height: 100%;
     }
+    
+
+    @media screen and (max-width: ${ defaultStyles.breakpoints.medium }px ) {
+
+        width: 28px;
+        height: 28px;
+    }
+    
+
+    @media screen and (max-width: ${ defaultStyles.breakpoints.small }px ) {
+
+        width: 6vw;
+        height: 6vw;
+    }
 
 `
 
@@ -488,8 +537,9 @@ export const FormStyles = styled.form`
     select {
         font-family: 'Monument', 'Helvetica', 'Arial', sans-serif;
         width: 100%;
-        font-size: ${props => (props.styles.typography.fontMedium.large.fontSize)}px;
-        line-height: ${props => (props.styles.typography.fontMedium.large.lineHeight)};
+        /* font-size: ${props => (props.styles.typography.fontMedium.large.fontSize)}px;
+        line-height: ${props => (props.styles.typography.fontMedium.large.lineHeight)}; */
+        ${getTypography({size: 'fontMedium'})}
         padding: ${props => (props.styles.spacing.small)}px;
         border: 2px solid black;
         border-radius: 0;
@@ -589,8 +639,10 @@ export const LoadingStyles = styled.div`
     .rfsc-loading__graphic {
         width: 500px;
         height: 500px;
-        max-width: 80vw;
-        max-height: 80vh;
+        max-height: calc( 100vw - ${props => (props.styles.spacing.large)}px);
+        max-width: calc( 100vw - ${props => (props.styles.spacing.large)}px);
+        /* max-width: 80vw;
+        max-height: 80vh; */
 
 
         svg {
@@ -604,19 +656,19 @@ export const LoadingStyles = styled.div`
             }
 
             #rfsc-loading-graphic__2 {
-                animation: rfsc_blink_in_out 2.5s infinite;
+                animation: rfsc_blink_in_out 5s  0.5s infinite;
             }
 
             #rfsc-loading-graphic__text-summer {
-                animation: rfsc_blink_in_out 2.5s 0.5s infinite;
+                animation: rfsc_blink_in_out 5s infinite;
             }
 
             #rfsc-loading-graphic__text-camp {
-                animation: rfsc_blink_in_out 2.5s 1s infinite;
+                animation: rfsc_blink_in_out 5s infinite;
             }
 
             #rfsc-loading-graphic__1 {
-                animation: rfsc_blink_in_out 2.5s 1.5s infinite;
+                animation: rfsc_blink_in_out 5s  0.5s infinite;
             }
         }
     }
@@ -628,11 +680,13 @@ export const BackgroundVideoComponentStyles = styled.div `
     width: 100%;
     height: 100%;
     position: absolute;
+    pointer-events: none;
     /* z-index: -1; */
 
     video {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        /* pointer-events: none; */
     }
 `

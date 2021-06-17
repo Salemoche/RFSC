@@ -39,6 +39,11 @@ export const baseState = {
         },
         backgrounds: {
             gray: {}
+        },
+        device: {
+            client: {
+                name: '',
+            }
         }
         // currentRadioDetail: {
         //     id: ''

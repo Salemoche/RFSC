@@ -1,3 +1,5 @@
+import { defaultStyles } from '../styles/default.styles';
+
 export const formatTime = (time: string, format: 'as-number' | 'as-text' = 'as-text') => {
 
     const timeArray = time.split('/');
@@ -54,4 +56,45 @@ export const isType = (category) => {
 
 export const isLocation = (category) => {
     return category.parentId === 'dGVybToy';
+}
+
+
+export const getTypography = (props) => {
+    const options = { 
+        styles: defaultStyles, 
+        size: 'fontMedium',
+        fontSize: defaultStyles.typography.fontMedium.large.fontSize,
+        lineHeight: defaultStyles.typography.fontMedium.large.lineHeight,
+        letterSpacing: defaultStyles.typography.fontMedium.large.letterSpacing,
+        ...props
+    }
+
+    
+    const { typography } = options.styles;
+
+    const styles = `
+        font-size: ${ typography[options.size].large.fontSize };
+        line-height: ${ typography[options.size].large.lineHeight };
+        letter-spacing: ${ typography[options.size].large.letterSpacing };
+
+        @media screen and ( max-width: ${ options.styles.breakpoints.large }px ) {
+            font-size: ${ typography[options.size].large.fontSize };
+            line-height: ${ typography[options.size].large.lineHeight };
+            letter-spacing: ${ typography[options.size].large.letterSpacing };
+        }
+
+        @media screen and ( max-width: ${ options.styles.breakpoints.medium }px ) {
+            font-size: ${ typography[options.size]?.medium?.fontSize || typography[options.size].small.fontSize };
+            line-height: ${ typography[options.size]?.medium?.lineHeight || typography[options.size].small.lineHeight };
+            letter-spacing: ${ typography[options.size]?.medium?.letterSpacing || typography[options.size].small.letterSpacing };
+        }
+
+        @media screen and ( max-width: ${ options.styles.breakpoints.small }px ) {
+            font-size: ${ typography[options.size].small.fontSize };
+            line-height: ${ typography[options.size].small.lineHeight };
+            letter-spacing: ${ typography[options.size].small.letterSpacing };
+        }
+    `
+
+    return styles
 }

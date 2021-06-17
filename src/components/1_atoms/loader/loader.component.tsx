@@ -3,6 +3,7 @@ import actions from '../../../state/actions';
 import { useBaseState } from '../../../state/provider';
 import { WP_QUERY } from '../../../utils/queries';
 import { isType, isLocation } from '../../../utils/helpers';
+import DeviceDetector from "device-detector-js";
 
 function LoaderComponent() {
 
@@ -12,7 +13,8 @@ function LoaderComponent() {
     useEffect(() => {
         
         fetchEvents();
-
+        getDevice();
+        
     }, [])
 
     // useEffect(() => {
@@ -69,10 +71,10 @@ function LoaderComponent() {
                 return node.pageId === 67
             })[0].space,
             radio: {
-                ... data.pages.nodes.filter((node) => {
+                ...data.pages.nodes.filter((node) => {
                     return node.pageId === 74
                 })[0].radio,
-                ... data.pages.nodes.filter((node) => {
+                ...data.pages.nodes.filter((node) => {
                     return node.pageId === 74
                 })[0].program
             },
@@ -99,6 +101,17 @@ function LoaderComponent() {
 
         updateBaseState({ type: actions.CONTENT_LOADED, payload: true});
     }
+
+    const getDevice = () => {
+
+        const deviceDetector = new DeviceDetector();
+        const userAgent = window.navigator.userAgent;
+        const device = deviceDetector.parse(userAgent);
+
+
+        updateBaseState({ type: actions.SET_BASE, payload: { device }})  
+    }
+
     return (
         <div>
             

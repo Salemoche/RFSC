@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { getTypography } from '../utils/helpers';
+import { defaultStyles } from './default.styles';
 
 export const CalendarStyles = styled.div `
     position: absolute;
@@ -73,9 +75,11 @@ export const CalendarListStyles = styled.div `
 
             .rfsc-calendar__list__title__text {
                 animation: rfsc_blink_in_out 5s 2.5s infinite;
-                font-size: ${props => props.styles.typography.fontLarge.large.fontSize}px;
+                /* font-size: ${props => props.styles.typography.fontLarge.large.fontSize}px;
                 letter-spacing: ${props => props.styles.typography.fontLarge.large.letterSpacing}px;
-                line-height: ${props => props.styles.typography.fontLarge.large.lineHeight};
+                line-height: ${props => props.styles.typography.fontLarge.large.lineHeight}; */
+                ${props => getTypography({styles: props.styles, size: 'fontLarge'})}
+
                 text-align: center;
                 text-transform: uppercase;
             }
@@ -87,13 +91,16 @@ export const CalendarListItemStyles = styled.div `
     transform: rotateX(-60deg);
     height: 500px;
     width: 500px;
+    max-height: calc( 100vw - ${props => (props.styles.spacing.large)}px);
+    max-width: calc( 100vw - ${props => (props.styles.spacing.large)}px);
     margin: 0 auto;
     transition: ${props => props.styles.animation.transitions.long};
     cursor: pointer;
     pointer-events: all;
-     font-size: ${props => props.styles.typography.fontMedium.large.fontSize}px;
+    /* font-size: ${props => props.styles.typography.fontMedium.large.fontSize}px;
     letter-spacing: ${props => props.styles.typography.fontMedium.large.letterSpacing}px;
-    line-height: ${props => props.styles.typography.fontMedium.large.lineHeight};
+    line-height: ${props => props.styles.typography.fontMedium.large.lineHeight}; */
+    ${props => getTypography({styles: props.styles, size: 'fontMedium'})}
 
     .rfsc-list-item__side {
 
@@ -128,7 +135,7 @@ export const CalendarListItemStyles = styled.div `
 
                 .rfsc-list-item__content {
                     grid-row-end: 3;
-                    overflow: scroll;
+                    overflow-y: scroll;
                     align-items: center;
                     align-content: center;
                 }
@@ -166,9 +173,10 @@ export const CalendarListItemStyles = styled.div `
         align-content: space-between; */
         grid-row-start: 2;
         grid-row-end: 3;
-            font-size: ${props => props.styles.typography.fontMedium.large.fontSize}px;
+        /* font-size: ${props => props.styles.typography.fontMedium.large.fontSize}px;
         letter-spacing: ${props => props.styles.typography.fontMedium.large.letterSpacing}px;
-        line-height: ${props => props.styles.typography.fontMedium.large.lineHeight};
+        line-height: ${props => props.styles.typography.fontMedium.large.lineHeight}; */
+        ${props => getTypography({styles: props.styles, size: 'fontMedium'})}
 
         .rfsc-list-item__content__item {
             width: 100%;
@@ -180,9 +188,11 @@ export const CalendarListItemStyles = styled.div `
 
             .rfsc-list-item__content__item__title {
                 width: 100%;
-                font-size: ${props => props.styles.typography.fontLarge.large.fontSize}px;
+                /* font-size: ${props => props.styles.typography.fontLarge.large.fontSize}px;
                 letter-spacing: ${props => props.styles.typography.fontLarge.large.letterSpacing}px;
-                line-height: ${props => props.styles.typography.fontLarge.large.lineHeight};
+                line-height: ${props => props.styles.typography.fontLarge.large.lineHeight}; */
+                ${props => getTypography({styles: props.styles, size: 'fontLarge'})}
+
                 margin: ${props => (props.styles.spacing.medium)}px 0;
                 margin: 0px;
             }
@@ -208,6 +218,7 @@ export const CalendarListItemStyles = styled.div `
     &.initial {
         opacity: 0 !important;
     }
+
 
     &.active {
         opacity: 1;
@@ -317,94 +328,115 @@ export const CalendarGraphic = styled.div `
 
     svg {
 
-        height: 108%;
+        height: 108vh;
+        width: 100vw;
         position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        width: 100%;
+        /* left: 0;
+        top: 0; */
 
-        [id*=event],
-        [id*=week],
-        [id*=day],
-        [id*=location],
-        [id*=type],
-        [id*=Monate] {
-            cursor: pointer;
-            transition: ${props => props.styles.animation.transitions.regular};
-            transform-origin: center;
-            fill: white;
+        #Layer_1 {
+            position: absolute;
+            height: 108%;
+            width: 100%;
 
-            &:hover {
-                /* transform: scale(1.5); */
-                fill: ${props => props.styles.colors.red};
+            [id*=event],
+            [id*=week],
+            [id*=day],
+            [id*=location],
+            [id*=type],
+            [id*=Monate] {
+                cursor: pointer;
+                transition: ${props => props.styles.animation.transitions.regular};
+                transform-origin: center;
+                fill: white;
+
+                &:hover {
+                    /* transform: scale(1.5); */
+                    fill: ${props => props.styles.colors.red};
+
+                    text {
+                        fill: ${props => props.styles.colors.red};
+                    }
+                }
+            }
+
+            [id*=event-1] {
+                text-anchor: end;
+            }
+
+            rect {
+                fill: none;
+            }
+
+            text {
+                transition: ${props => props.styles.animation.transitions.regular};
+                text-transform: uppercase;
+            }
+
+            [data-active] {
+                fill: green;
+            }
+
+            ${props => getActiveId(props)} {
+                fill: black;
 
                 text {
-                    fill: ${props => props.styles.colors.red};
+                    fill: black;
                 }
-            }
-        }
 
-        [id*=event-1] {
-            text-anchor: end;
-        }
+                /* &:hover {
 
-        rect {
-            fill: none;
-        }
+                    fill: white;
 
-        text {
-            transition: ${props => props.styles.animation.transitions.regular};
-            text-transform: uppercase;
-        }
-
-        [data-active] {
-            fill: green;
-        }
-
-        ${props => getActiveId(props)} {
-            fill: black;
-
-            text {
-                fill: black;
-            }
-
-            /* &:hover {
-
-                fill: white;
-
-                    text {
-                        fill: white;
+                        text {
+                            fill: white;
+                        }
                     }
-                }
-            } */
-        }
+                } */
+            }
 
-        ${props => getFilteredId(props)} {
-            /* fill: ${props => props.styles.colors.red}; */
-
-            text {
+            ${props => getFilteredId(props)} {
                 /* fill: ${props => props.styles.colors.red}; */
+
+                text {
+                    /* fill: ${props => props.styles.colors.red}; */
+                }
+
+                /* &:hover {
+
+                    fill: white;
+
+                        text {
+                            fill: white;
+                        }
+                    }
+                } */
             }
 
-            /* &:hover {
+            #Orte, 
+            #Veranstaltungsart {
+                transform-origin: center center;
+            }
 
-                fill: white;
+            .active {
+                /* color:  ${props => props.styles.colors.red}; */
+            }
 
-                    text {
-                        fill: white;
-                    }
-                }
-            } */
         }
+    }
 
-        #Orte, 
-        #Veranstaltungsart {
-            transform-origin: center center;
-        }
+    @media screen and (max-width: ${ defaultStyles.breakpoints.medium }px ) {
 
-        .active {
-            /* color:  ${props => props.styles.colors.red}; */
+        svg {
+            width: 170%;
+
+            [id*='-event'] {
+                display: none;
+            }
+
+            #Layer_1 {
+                transform: translateY(-30%);
+            }
         }
     }
 
@@ -545,6 +577,15 @@ export const CalendarDetailsStyles = styled.div `
         display: none;
     }
 
+
+    
+
+    @media screen and (max-width: ${ defaultStyles.breakpoints.medium }px ) {
+
+        max-height: calc( 100vw - ${props => (props.styles.spacing.large)}px);
+        max-width: calc( 100vw - ${props => (props.styles.spacing.extraExtralarge)}px);
+    }
+
 `
 
 export const CalendarEventDetailsStyles = styled(CalendarDetailsStyles) `
@@ -657,9 +698,10 @@ letter-spacing: ${props => props.styles.typography.fontLarge.large.letterSpacing
         }
 
         .rfsc-event-detail__lead__title {
-            font-size: ${props => props.styles.typography.fontLarge.large.fontSize}px;
+            /* font-size: ${props => props.styles.typography.fontLarge.large.fontSize}px;
             letter-spacing: ${props => props.styles.typography.fontLarge.large.letterSpacing}px;
-            line-height: ${props => props.styles.typography.fontLarge.large.lineHeight};
+            line-height: ${props => props.styles.typography.fontLarge.large.lineHeight}; */
+            ${props => getTypography({styles: props.styles, size: 'fontLarge'})}
         }
     }
 
@@ -697,9 +739,11 @@ letter-spacing: ${props => props.styles.typography.fontLarge.large.letterSpacing
         .rfsc-radio-detail__item__artist,
         .rfsc-tattoo-detail__item__artist {
             text-transform: uppercase;
-            font-size: ${props => props.styles.typography.fontLarge.large.fontSize}px;
+            /* font-size: ${props => props.styles.typography.fontLarge.large.fontSize}px;
             letter-spacing: ${props => props.styles.typography.fontLarge.large.letterSpacing}px;
-            line-height: ${props => props.styles.typography.fontLarge.large.lineHeight};
+            line-height: ${props => props.styles.typography.fontLarge.large.lineHeight}; */
+            ${props => getTypography({styles: props.styles, size: 'fontLarge'})}
+
         }
     }
 

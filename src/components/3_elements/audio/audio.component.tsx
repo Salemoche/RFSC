@@ -15,7 +15,6 @@ function AudioComponent() {
     useEffect(() => {
 
         if (elementRef && elementRef.current) {
-            console.log(baseState.sound.isPlaying, 'should change now');
             const audioPlayer = elementRef.current;
             if ( baseState.sound.isPlaying ) {
                 elementRef.current.play();
