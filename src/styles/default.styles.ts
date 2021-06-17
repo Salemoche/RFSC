@@ -4,10 +4,13 @@ import { animation } from './animation.styles';
 export const defaultStyles = {
     colors: {
         grayOpacity: '#00000044',
-        grayReal: '#bbb',
+        grayReal: '#eee',
         green: '#d0ff00',
         red: '#ff0000',
-        grayFont: '#00000059'
+        grayFont: '#00000059',
+        backgroundGrayOpacity: '#eeeeeed9',
+        backgroundGreenOpacity: '#d0ff00d9',
+        backgroundWhiteOpacity: '#ffffffd9'
     },
     zIndices: {
         header: 100,
@@ -30,20 +33,24 @@ export const defaultStyles = {
             large: {
                 fontSize: 42,
                 lineHeight: 1,
+                letterSpacing: 0.8
             },
             small: {
                 fontSize: 42,
                 lineHeight: 1,
+                letterSpacing: 0.8
             },
         },
         fontMedium: {
             large: {
-                fontSize: 28,
-                lineHeight: 1.2,
+                fontSize: 23,
+                lineHeight: 1.1,
+                letterSpacing: 0.8
             },
             small: {
                 fontSize: 28,
                 lineHeight: 1.2,
+                letterSpacing: 0.8
             },
         },
         fontSmall: {
@@ -61,7 +68,8 @@ export const defaultStyles = {
     animation: {
         transitions: {
             regular: '.1s',
-            long: '.3s'
+            long: '.3s',
+            extraLong: '.6s'
         }
     },
 }
@@ -81,6 +89,7 @@ export const GlobalStyle = createGlobalStyle `
 
         font-family: 'Monument', 'Helvetica', 'Arial', sans-serif;
         font-size: ${defaultStyles.typography.fontMedium.large.fontSize}px;
+        letter-spacing: ${defaultStyles.typography.fontMedium.large.letterSpacing}px;
         line-height: ${defaultStyles.typography.fontMedium.large.lineHeight};
     }
 
@@ -115,6 +124,7 @@ export const GlobalStyle = createGlobalStyle `
 
     // animation 
     ${animation.blinking}
+    ${animation.blinkingInOut}
 `
 
 export const AppStyles = styled.div `
@@ -227,6 +237,7 @@ export const ButtonStyles = styled.div `
     background: none;
     border: none;
     font-size: ${props => props.styles.typography.fontLarge.large.fontSize}px;
+letter-spacing: ${props => props.styles.typography.fontLarge.large.letterSpacing}px;
     line-height: ${props => props.styles.typography.fontLarge.large.lineHeight};
     display: inline-block;
     cursor: pointer;
@@ -256,6 +267,7 @@ const getHeaderFooterStyles = ({ styles, className}, header = true) => {
     } else {
         return styles.colors.green;
     }
+    
 }
 
 export const HeaderStyles = styled.nav `
@@ -270,6 +282,8 @@ export const HeaderStyles = styled.nav `
     text-transform: uppercase;
     padding: 0 ${props => (props.styles.spacing.small)}px; 
     padding-top: 2px;
+    transition: background-color ${props => (props.styles.animation.transitions.long)};
+    z-index: ${props => props.styles.zIndices?.header};
     
     ul {
         width: 100%;
@@ -307,6 +321,8 @@ export const FooterStyles = styled.footer `
     grid-template-rows: auto;
     padding: 0 ${props => (props.styles.spacing.small)}px; 
     padding-top: ${props => (props.styles.spacing.extraSmall)}px;
+    transition: background-color ${props => (props.styles.animation.transitions.long)};
+    z-index: ${props => props.styles.zIndices?.header};
 
     /* display: flex; */
     /* justify-content: center; */
@@ -551,6 +567,7 @@ export const ImageStyles = styled.div`
         height: 100%;
         transition: .3s;
         opacity: 0;
+        object-fit: contain;    
         
         ${props => {
             if (props.imageLoaded) {
@@ -568,6 +585,41 @@ export const LoadingStyles = styled.div`
     position: fixed;
     background: white;
     z-index: 1000;
+
+    .rfsc-loading__graphic {
+        width: 500px;
+        height: 500px;
+        max-width: 80vw;
+        max-height: 80vh;
+
+
+        svg {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+
+            .rfsc-loading-graphic-blink {
+                opacity: 0;
+            }
+
+            #rfsc-loading-graphic__2 {
+                animation: rfsc_blink_in_out 2.5s infinite;
+            }
+
+            #rfsc-loading-graphic__text-summer {
+                animation: rfsc_blink_in_out 2.5s 0.5s infinite;
+            }
+
+            #rfsc-loading-graphic__text-camp {
+                animation: rfsc_blink_in_out 2.5s 1s infinite;
+            }
+
+            #rfsc-loading-graphic__1 {
+                animation: rfsc_blink_in_out 2.5s 1.5s infinite;
+            }
+        }
+    }
 `
 
 

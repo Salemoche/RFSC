@@ -16,7 +16,7 @@ function InfoPage() {
 
         return () => {
             updateBaseState({ type: actions.SET_BASE, payload: { headerFooterClass: 'default' } });            
-            updateBaseState({ type: actions.SET_BASE, payload: { contentLoaded: false } });
+            // updateBaseState({ type: actions.SET_BASE, payload: { contentLoaded: false } });
         }
     }, [])
 

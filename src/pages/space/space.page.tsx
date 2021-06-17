@@ -16,13 +16,13 @@ function SpacePage() {
 
         return () => {
             updateBaseState({ type: actions.SET_BASE, payload: { headerFooterClass: 'default' } });
-            updateBaseState({ type: actions.SET_BASE, payload: { contentLoaded: false } });
+            // updateBaseState({ type: actions.SET_BASE, payload: { contentLoaded: false } });
         }
     }, [])
     // console.log(space)
 
     const contentLoaded = () => {
-        updateBaseState({ type: actions.SET_BASE, payload: { contentLoaded: true } });
+        // updateBaseState({ type: actions.SET_BASE, payload: { contentLoaded: true } });
     }
 
     return (

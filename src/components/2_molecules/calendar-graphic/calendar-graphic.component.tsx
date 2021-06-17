@@ -27,6 +27,11 @@ function CalendarGraphicComponent() {
     const eventPositions = useBaseState().state.calendar.eventPositions 
     const updateBase = useBaseState().dispatchBase;
 
+    const textDisplacer = {
+        left: 130,
+        right: 0
+    };
+
     const [rotations, setRotations] = useState({
         current: 0,
         types: {
@@ -70,7 +75,7 @@ function CalendarGraphicComponent() {
             eventId = e.target.getAttribute('data-event-id');
 
             // scroll to event
-            
+
             if (eventId) {
                 updateBase({ type: actions.SET_CALENDAR, payload: { scrollDist: eventPositions[eventId], hasScrolled: true } });
             }
@@ -117,8 +122,9 @@ function CalendarGraphicComponent() {
                     console.log(month, week, day, event1.title)
 
                     const event1Node = document.querySelector(`#m${month}-w${week}-d${day}-event-1`);
-
-                    event1Node?.append(event1Text.cloneNode(true));
+                    if (!event1Node) return
+                    // event1Node?.append(event1Text.cloneNode(true));
+                    event1Node.innerHTML = event1.title;
                     event1Node?.setAttribute('data-event-id', event1Id);
                     // document.querySelector(`#m${month}-w${week}-d${day}-event-1`)?.setAttribute('d', '');
 
@@ -149,7 +155,537 @@ function CalendarGraphicComponent() {
 
     return (
         <CalendarGraphic className="rfsc-calendar__graphic" styles={styles} currentDetail={currentDetail} filters={filters}>
-        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+            
+            <svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+	 viewBox="0 0 1920 1080">
+<g id="Layer_1">
+	<g id="Monate">
+		<g id="m7-month">
+			<text transform="matrix(1 0 0 1 937.3201 71.9394)" className="st0 st1 st2">JU</text>
+			<text transform="matrix(1 0 0 1 963.3201 71.9394)" className="st0 st1 st2">L</text>
+			<text transform="matrix(1 0 0 1 975.2202 71.9394)" className="st0 st1 st2">I</text>
+		</g>
+		<g id="m8-month">
+			<text transform="matrix(1 0 0 1 915.7678 1020.2764)" className="st0 st1 st2">A</text>
+			<text transform="matrix(1 0 0 1 929.6678 1020.2764)" className="st0 st1 st2">UGU</text>
+			<text transform="matrix(1 0 0 1 975.5678 1020.2764)" className="st0 st1 st2">S</text>
+			<text transform="matrix(1 0 0 1 988.9678 1020.2764)" className="st0 st1 st2">T</text>
+		</g>
+	</g>
+	<g id="Tage">
+		<path id="m7-w1-d2-day" className="st0" d="M772.1,102.5V90h-4.8v-2.2h12.2V90h-4.8v12.5H772.1z M790.6,100.3v2.2h-10.3
+			c0.2-3.6,2-5.4,4.4-6.9c1.6-1,3.2-1.9,3.2-3.7c0-1.4-0.7-2.3-2.1-2.3c-2.1,0-2.4,1.7-2.3,3l-2.7-0.4c0-2.3,1.3-4.7,5.1-4.7
+			c2.8,0,4.6,1.6,4.6,4.4c0,2.6-1.6,3.8-3.8,5.2c-1.6,1-3,1.8-3.3,3.2C783.4,100.3,790.6,100.3,790.6,100.3z"/>
+		<path id="m7-w1-d3-day" className="st0" d="M707.2,133.1v-12.5h-4.8v-2.2h12.2v2.2h-4.8v12.5H707.2z M726,128.8c0,3-2.2,4.6-5.2,4.6
+			c-3.4,0-5.1-2-5.2-4.8l2.6-0.4c0,1.9,0.9,3.1,2.6,3.1c1.6,0,2.6-0.8,2.6-2.4c0-1.7-1.3-2.3-2.5-2.3h-1.4v-2.2h1.1
+			c1,0,2.2-0.5,2.2-2c0-1.3-0.7-2.1-2.1-2.1c-1.9,0-2.3,1.6-2.3,2.8l-2.7-0.4c0.1-2.8,2.1-4.5,5-4.5c2.6,0,4.7,1.4,4.7,4.1
+			c0,1.3-0.7,2.4-1.9,3C725.2,125.7,726,127.2,726,128.8z"/>
+		<path id="m7-w1-d4-day" className="st0" d="M662.6,163.7v-12.5h-4.8V149H670v2.2h-4.8v12.5H662.6z M680,158.5v2.1h-1.9v3h-2.4v-3h-6.4
+			v-2.4l6.4-9.3h2.5v9.6L680,158.5L680,158.5z M675.7,158.5V155c0-0.6,0-1.7,0-2.7c-0.5,0.9-1.2,1.9-1.5,2.3l-1.3,1.9
+			c-0.4,0.5-0.9,1.3-1.4,2c0.7,0,1.5,0,1.9,0H675.7z"/>
+		<path id="m7-w1-d5-day" className="st0" d="M623.7,194.3v-12.5h-4.8v-2.2h12.2v2.2h-4.8v12.5H623.7z M642.4,189.5c0,2.8-1.8,5-5.3,5
+			c-2.9,0-5-1.7-5-4.7l2.5-0.4c0,1.9,1,3,2.5,3c1.8,0,2.7-1.1,2.7-3c0-1.8-1.1-2.7-2.7-2.7c-1.1,0-1.9,0.4-2.4,1.1l-2.3-0.4l1.1-8
+			h8.1v2.2h-6l-0.5,3.8c0.6-0.6,1.5-1,2.6-1C640.1,184.6,642.4,186.1,642.4,189.5z"/>
+		<path id="m7-w2-d6-day" className="st0" d="M593,224.9v-12.5h-4.8v-2.2h12.2v2.2h-4.8v12.5H593z M611.8,220.1c0,2.4-1.4,5-5.2,5
+			c-4.4,0-5.4-3.8-5.4-7.2c0-4.8,1.5-8,5.7-8c2.8,0,4.2,1.7,4.5,3.9l-2.5,0.4c-0.1-1.1-0.6-2.2-2.1-2.2c-2.5,0-3.1,2.6-3.1,5.3
+			c0.7-1.3,2-2,3.5-2C610,215.3,611.8,217.3,611.8,220.1z M609.3,220.1c0-1.7-0.8-2.7-2.5-2.7s-2.6,1.2-2.6,2.8
+			c0,1.4,0.7,2.8,2.5,2.8C608.5,223,609.3,222.1,609.3,220.1z"/>
+		<path id="m7-w2-d7-day" className="st0" d="M570.4,255.5V243h-4.8v-2.2h12.2v2.2H573v12.5H570.4z M578.7,240.7h9.7v2.2
+			c-3.2,3-5.1,7.7-5.3,12.6h-2.7c0.3-4.6,2-9.2,5.3-12.6h-7.1L578.7,240.7L578.7,240.7z"/>
+		<path id="m7-w2-d8-day" className="st0" d="M546.1,286.1v-12.5h-4.8v-2.2h12.2v2.2h-4.8v12.5H546.1z M565.2,281.8c0,3-2.3,4.5-5.3,4.5
+			c-3.3,0-5.3-1.7-5.3-4.5c0-2,0.8-3.2,2.5-3.8c-1.2-0.5-2-1.5-2-3.1c0-2.1,1.4-3.9,4.8-3.9c3.3,0,4.7,1.8,4.7,3.9
+			c0,1.5-0.8,2.5-2,3.1C564.4,278.5,565.2,279.8,565.2,281.8z M562.6,281.7c0-1.5-1-2.5-2.7-2.5c-1.6,0-2.7,0.9-2.7,2.5
+			s1,2.6,2.7,2.6S562.6,283.3,562.6,281.7z M557.7,275.2c0,1.2,0.7,2.1,2.2,2.1c1.4,0,2.2-0.8,2.2-2.1c0-1.3-0.7-2.1-2.2-2.1
+			S557.7,273.9,557.7,275.2z"/>
+		<path id="m7-w2-d9-day" className="st0" d="M528.3,316.7v-12.5h-4.8V302h12.2v2.2h-4.8v12.5H528.3z M547.3,308.9c0,4.7-1.4,8-5.6,8
+			c-2.8,0-4.3-1.7-4.6-4l2.4-0.4c0.1,1.2,0.7,2.3,2.2,2.3c2,0,3-1.8,3-5.2c-0.7,1.2-1.9,2-3.4,2c-2.8,0-4.6-2.1-4.6-4.9
+			c0-2.3,1.4-5.1,5.2-5.1C546.3,301.7,547.3,305.6,547.3,308.9z M544.5,306.6c0-1.5-0.7-2.8-2.5-2.8s-2.7,1-2.7,3
+			c0,1.7,0.8,2.7,2.5,2.7C543.6,309.5,544.5,308.3,544.5,306.6z"/>
+		<path id="m7-w2-d10-day" className="st0" d="M504.6,347.3v-12.5h-4.8v-2.2H512v2.2h-4.8v12.5H504.6z M518.9,332.5v14.8h-2.5v-10.7
+			c-0.7,0.7-1.8,0.9-3,0.9c-0.2,0-0.4,0-0.6,0v-2.2c2.4,0,3.7-0.8,4-2.7L518.9,332.5L518.9,332.5z M521.4,339.9
+			c0-4.5,1.8-7.6,5.6-7.6s5.6,3.2,5.6,7.6c0,4.5-1.8,7.6-5.6,7.6C523.3,347.5,521.4,344.9,521.4,339.9z M528.9,344.6
+			c0.7-0.9,0.9-2.5,0.9-4.7c0-3.6-0.5-5.5-2.8-5.5c-1,0-1.7,0.4-2.1,1.1c-0.5,0.9-0.7,2.4-0.7,4.4c0,3.7,0.5,5.5,2.8,5.5
+			C527.9,345.4,528.5,345.1,528.9,344.6z"/>
+		<path id="m7-w2-d11-day" className="st0" d="M495.7,377.8v-12.5h-4.8v-2.2h12.2v2.2h-4.8v12.5H495.7z M509.9,363.1v14.8h-2.5v-10.7
+			c-0.7,0.7-1.8,0.9-3,0.9c-0.2,0-0.4,0-0.6,0v-2.2c2.4,0,3.7-0.8,4-2.7L509.9,363.1L509.9,363.1z M518.1,363.1v14.8h-2.5v-10.7
+			c-0.7,0.7-1.8,0.9-3,0.9c-0.2,0-0.4,0-0.6,0v-2.2c2.4,0,3.7-0.8,4-2.7L518.1,363.1L518.1,363.1z"/>
+		<path id="m7-w2-d12-day" className="st0" d="M482.2,408.4v-12.5h-4.8v-2.2h12.2v2.2h-4.8v12.5H482.2z M496.4,393.7v14.8h-2.5v-10.7
+			c-0.7,0.7-1.8,0.9-3,0.9c-0.2,0-0.4,0-0.6,0v-2.2c2.4,0,3.7-0.8,4-2.7L496.4,393.7L496.4,393.7z M508.9,406.2v2.2h-10.3
+			c0.2-3.6,2-5.4,4.4-6.9c1.6-1,3.2-1.9,3.2-3.7c0-1.4-0.7-2.3-2.1-2.3c-2.1,0-2.4,1.7-2.3,3l-2.7-0.4c0-2.3,1.3-4.7,5.1-4.7
+			c2.8,0,4.6,1.6,4.6,4.4c0,2.6-1.6,3.8-3.8,5.2c-1.6,1-3,1.8-3.3,3.2L508.9,406.2L508.9,406.2z"/>
+		<path id="m7-w2-d13-day" className="st0" d="M474.6,439v-12.5h-4.8v-2.2H482v2.2h-4.8V439H474.6z M488.8,424.3V439h-2.5v-10.7
+			c-0.7,0.7-1.8,0.9-3,0.9c-0.2,0-0.4,0-0.6,0V427c2.4,0,3.7-0.8,4-2.7H488.8z M501.5,434.7c0,3-2.2,4.6-5.2,4.6
+			c-3.4,0-5.1-2-5.2-4.8l2.6-0.4c0,1.9,0.9,3.1,2.6,3.1c1.6,0,2.6-0.8,2.6-2.4c0-1.7-1.3-2.3-2.5-2.3H495v-2.2h1.1
+			c1,0,2.2-0.5,2.2-2c0-1.3-0.7-2.1-2.1-2.1c-1.9,0-2.3,1.6-2.3,2.8l-2.7-0.4c0.1-2.8,2.1-4.5,5-4.5c2.6,0,4.7,1.4,4.7,4.1
+			c0,1.3-0.7,2.4-1.9,3C500.7,431.6,501.5,433.1,501.5,434.7z"/>
+		<path id="m7-w3-d14-day" className="st0" d="M468.5,469.6v-12.5h-4.8v-2.2h12.2v2.2h-4.8v12.5H468.5z M482.7,454.9v14.8h-2.5V459
+			c-0.7,0.7-1.8,0.9-3,0.9c-0.2,0-0.4,0-0.6,0v-2.2c2.4,0,3.7-0.8,4-2.7L482.7,454.9L482.7,454.9z M495.6,464.4v2.1h-1.9v3h-2.4v-3
+			h-6.4v-2.4l6.4-9.3h2.5v9.6L495.6,464.4L495.6,464.4z M491.2,464.4V461c0-0.6,0-1.7,0-2.7c-0.5,0.9-1.2,1.9-1.5,2.3l-1.3,1.9
+			c-0.4,0.5-0.9,1.3-1.4,2c0.7,0,1.5,0,1.9,0L491.2,464.4L491.2,464.4z"/>
+		<path id="m7-w3-d15-day" className="st0" d="M465,500.2v-12.5h-4.8v-2.2h12.2v2.2h-4.8v12.5H465z M479.2,485.5v14.8h-2.5v-10.7
+			c-0.7,0.7-1.8,0.9-3,0.9c-0.2,0-0.4,0-0.6,0v-2.2c2.4,0,3.7-0.8,4-2.7L479.2,485.5L479.2,485.5z M492,495.4c0,2.8-1.8,5-5.3,5
+			c-2.9,0-5-1.7-5-4.7l2.5-0.4c0,1.9,1,3,2.5,3c1.8,0,2.7-1.1,2.7-3c0-1.8-1.1-2.7-2.7-2.7c-1.1,0-1.9,0.4-2.4,1.1l-2.3-0.4l1.1-8
+			h8.1v2.2h-6l-0.5,3.8c0.6-0.6,1.5-1,2.6-1C489.7,490.5,492,492,492,495.4z"/>
+		<path id="m7-w3-d16-day" className="st0" d="M462.7,530.8v-12.5h-4.8V516h12.2v2.2h-4.8v12.5L462.7,530.8L462.7,530.8z M476.9,516
+			v14.8h-2.5v-10.7c-0.7,0.7-1.8,0.9-3,0.9c-0.2,0-0.4,0-0.6,0v-2.2c2.4,0,3.7-0.8,4-2.7L476.9,516L476.9,516z M490,526.1
+			c0,2.4-1.4,5-5.2,5c-4.4,0-5.4-3.8-5.4-7.2c0-4.8,1.5-8,5.7-8c2.8,0,4.2,1.7,4.5,3.9l-2.5,0.4c-0.1-1.1-0.6-2.2-2.1-2.2
+			c-2.5,0-3.1,2.6-3.1,5.3c0.7-1.3,2-2,3.5-2C488.2,521.2,490,523.2,490,526.1z M487.4,526c0-1.7-0.8-2.7-2.5-2.7s-2.6,1.2-2.6,2.8
+			c0,1.4,0.7,2.8,2.5,2.8C486.6,528.9,487.4,528,487.4,526z"/>
+		<path id="m7-w3-d17-day" className="st0" d="M464.4,561.4v-12.5h-4.8v-2.2h12.2v2.2H467v12.5H464.4z M478.7,546.6v14.8h-2.5v-10.7
+			c-0.7,0.7-1.8,0.9-3,0.9c-0.2,0-0.4,0-0.6,0v-2.2c2.4,0,3.7-0.8,4-2.7L478.7,546.6L478.7,546.6z M480.7,546.6h9.7v2.2
+			c-3.2,3-5.1,7.7-5.3,12.6h-2.7c0.3-4.6,2-9.2,5.3-12.6h-7.1v-2.2H480.7z"/>
+		<path id="m7-w3-d18-day" className="st0" d="M464.5,592v-12.5h-4.8v-2.2h12.2v2.2h-4.8V592H464.5z M478.7,577.2V592h-2.5v-10.7
+			c-0.7,0.7-1.8,0.9-3,0.9c-0.2,0-0.4,0-0.6,0V580c2.4,0,3.7-0.8,4-2.7L478.7,577.2L478.7,577.2z M491.8,587.7c0,3-2.3,4.5-5.3,4.5
+			c-3.3,0-5.3-1.7-5.3-4.5c0-2,0.8-3.2,2.5-3.8c-1.2-0.5-2-1.5-2-3.1c0-2.1,1.4-3.9,4.8-3.9c3.3,0,4.7,1.8,4.7,3.9
+			c0,1.5-0.8,2.5-2,3.1C491.1,584.4,491.8,585.7,491.8,587.7z M489.2,587.6c0-1.5-1-2.5-2.7-2.5c-1.6,0-2.7,0.9-2.7,2.5
+			s1,2.6,2.7,2.6S489.2,589.2,489.2,587.6z M484.3,581.1c0,1.2,0.7,2.1,2.2,2.1c1.4,0,2.2-0.8,2.2-2.1s-0.7-2.1-2.2-2.1
+			S484.3,579.8,484.3,581.1z"/>
+		<path id="m7-w3-d19-day" className="st0" d="M468,622.6V610h-4.8v-2.2h12.2v2.2h-4.8v12.5L468,622.6L468,622.6z M482.2,607.8v14.8
+			h-2.5v-10.7c-0.7,0.7-1.8,0.9-3,0.9c-0.2,0-0.4,0-0.6,0v-2.2c2.4,0,3.7-0.8,4-2.7L482.2,607.8L482.2,607.8z M495.3,614.8
+			c0,4.7-1.4,8-5.6,8c-2.8,0-4.3-1.7-4.6-4l2.4-0.4c0.1,1.2,0.7,2.3,2.2,2.3c2,0,3-1.8,3-5.2c-0.7,1.2-1.9,2-3.4,2
+			c-2.8,0-4.6-2.1-4.6-4.9c0-2.3,1.4-5.1,5.2-5.1C494.3,607.6,495.3,611.5,495.3,614.8z M492.5,612.5c0-1.5-0.7-2.8-2.5-2.8
+			s-2.7,1-2.7,3c0,1.7,0.8,2.7,2.5,2.7S492.5,614.2,492.5,612.5z"/>
+		<path id="m7-w3-d20-day" className="st0" d="M469.7,653.2v-12.5h-4.8v-2.2h12.2v2.2h-4.8v12.5H469.7z M488.2,651v2.2h-10.3
+			c0.2-3.6,2-5.4,4.4-6.9c1.6-1,3.2-1.9,3.2-3.7c0-1.4-0.7-2.3-2.1-2.3c-2.1,0-2.4,1.7-2.3,3l-2.7-0.4c0-2.3,1.3-4.7,5.1-4.7
+			c2.8,0,4.6,1.6,4.6,4.4c0,2.6-1.6,3.8-3.8,5.2c-1.6,1-3,1.8-3.3,3.2H488.2z M490.1,645.8c0-4.5,1.8-7.6,5.6-7.6s5.6,3.2,5.6,7.6
+			c0,4.5-1.8,7.6-5.6,7.6C492,653.4,490.1,650.8,490.1,645.8z M497.6,650.5c0.7-0.9,0.9-2.5,0.9-4.7c0-3.6-0.5-5.5-2.8-5.5
+			c-1,0-1.7,0.4-2.1,1.1c-0.5,0.9-0.7,2.4-0.7,4.4c0,3.7,0.5,5.5,2.8,5.5C496.5,651.3,497.2,651,497.6,650.5z"/>
+		<path id="m7-w4-d21-day" className="st0" d="M482,683.7v-12.5h-4.8V669h12.2v2.2h-4.8v12.5H482z M500.5,681.6v2.2h-10.3
+			c0.2-3.6,2-5.4,4.4-6.9c1.6-1,3.2-1.9,3.2-3.7c0-1.4-0.7-2.3-2.1-2.3c-2.1,0-2.4,1.7-2.3,3l-2.7-0.4c0-2.3,1.3-4.7,5.1-4.7
+			c2.8,0,4.6,1.6,4.6,4.4c0,2.6-1.6,3.8-3.8,5.2c-1.6,1-3,1.8-3.3,3.2H500.5z M508,669v14.8h-2.5V673c-0.7,0.7-1.8,0.9-3,0.9
+			c-0.2,0-0.4,0-0.6,0v-2.2c2.4,0,3.7-0.8,4-2.7H508z"/>
+		<path id="m7-w4-d22-day" className="st0" d="M488,714.3v-12.5h-4.8v-2.2h12.2v2.2h-4.8v12.5H488z M506.5,712.1v2.2h-10.3
+			c0.2-3.6,2-5.4,4.4-6.9c1.6-1,3.2-1.9,3.2-3.7c0-1.4-0.7-2.3-2.1-2.3c-2.1,0-2.4,1.7-2.3,3l-2.7-0.4c0-2.3,1.3-4.7,5.1-4.7
+			c2.8,0,4.6,1.6,4.6,4.4c0,2.6-1.6,3.8-3.8,5.2c-1.6,1-3,1.8-3.3,3.2H506.5z M518.3,712.1v2.2H508c0.2-3.6,2-5.4,4.4-6.9
+			c1.6-1,3.2-1.9,3.2-3.7c0-1.4-0.7-2.3-2.1-2.3c-2.1,0-2.4,1.7-2.3,3l-2.7-0.4c0-2.3,1.3-4.7,5.1-4.7c2.8,0,4.6,1.6,4.6,4.4
+			c0,2.6-1.6,3.8-3.8,5.2c-1.6,1-3,1.8-3.3,3.2H518.3z"/>
+		<path id="m7-w4-d23-day" className="st0" d="M500.6,744.9v-12.5h-4.8v-2.2H508v2.2h-4.8v12.5H500.6z M519.1,742.7v2.2h-10.3
+			c0.2-3.6,2-5.4,4.4-6.9c1.6-1,3.2-1.9,3.2-3.7c0-1.4-0.7-2.3-2.1-2.3c-2.1,0-2.4,1.7-2.3,3l-2.7-0.4c0-2.3,1.3-4.7,5.1-4.7
+			c2.8,0,4.6,1.6,4.6,4.4c0,2.6-1.6,3.8-3.8,5.2c-1.6,1-3,1.8-3.3,3.2H519.1z M531.2,740.6c0,3-2.2,4.6-5.2,4.6
+			c-3.4,0-5.1-2-5.2-4.8l2.6-0.4c0,1.9,0.9,3.1,2.6,3.1c1.6,0,2.6-0.8,2.6-2.4c0-1.7-1.3-2.3-2.5-2.3h-1.4v-2.2h1.1
+			c1,0,2.2-0.5,2.2-2c0-1.3-0.7-2.1-2.1-2.1c-1.9,0-2.3,1.6-2.3,2.8l-2.7-0.4c0.1-2.8,2.1-4.5,5-4.5c2.6,0,4.7,1.4,4.7,4.1
+			c0,1.3-0.7,2.4-1.9,3C530.3,737.5,531.2,739,531.2,740.6z"/>
+		<path id="m7-w4-d24-day" className="st0" d="M515.9,775.5V763h-4.8v-2.2h12.2v2.2h-4.8v12.5H515.9z M534.4,773.3v2.2h-10.3
+			c0.2-3.6,2-5.4,4.4-6.9c1.6-1,3.2-1.9,3.2-3.7c0-1.4-0.7-2.3-2.1-2.3c-2.1,0-2.4,1.7-2.3,3l-2.7-0.4c0-2.3,1.3-4.7,5.1-4.7
+			c2.8,0,4.6,1.6,4.6,4.4c0,2.6-1.6,3.8-3.8,5.2c-1.6,1-3,1.8-3.3,3.2H534.4z M546.6,770.4v2.1h-1.9v3h-2.4v-3h-6.4v-2.4l6.4-9.3
+			h2.5v9.6L546.6,770.4L546.6,770.4z M542.2,770.4v-3.5c0-0.6,0-1.7,0-2.7c-0.5,0.9-1.2,1.9-1.5,2.3l-1.3,1.9
+			c-0.4,0.5-0.9,1.3-1.4,2c0.7,0,1.5,0,1.9,0H542.2z"/>
+		<path id="m7-w4-d25-day" className="st0" d="M534.1,806.1v-12.5h-4.8v-2.2h12.2v2.2h-4.8v12.5H534.1z M552.6,803.9v2.2h-10.3
+			c0.2-3.6,2-5.4,4.4-6.9c1.6-1,3.2-1.9,3.2-3.7c0-1.4-0.7-2.3-2.1-2.3c-2.1,0-2.4,1.7-2.3,3l-2.7-0.4c0-2.3,1.3-4.7,5.1-4.7
+			c2.8,0,4.6,1.6,4.6,4.4c0,2.6-1.6,3.8-3.8,5.2c-1.6,1-3,1.8-3.3,3.2H552.6z M564.7,801.3c0,2.8-1.8,5-5.3,5c-2.9,0-5-1.7-5-4.7
+			l2.5-0.4c0,1.9,1,3,2.5,3c1.8,0,2.7-1.1,2.7-3c0-1.8-1.1-2.7-2.7-2.7c-1.1,0-1.9,0.4-2.4,1.1l-2.3-0.4l1.1-8h8.1v2.2h-6l-0.5,3.8
+			c0.6-0.6,1.5-1,2.6-1C562.4,796.4,564.7,797.9,564.7,801.3z"/>
+		<path id="m7-w4-d26-day" className="st0" d="M555.5,836.7v-12.5h-4.8V822H563v2.2h-4.8v12.5H555.5z M574.1,834.5v2.2h-10.3
+			c0.2-3.6,2-5.4,4.4-6.9c1.6-1,3.2-1.9,3.2-3.7c0-1.4-0.7-2.3-2.1-2.3c-2.1,0-2.4,1.7-2.3,3l-2.7-0.4c0-2.3,1.3-4.7,5.1-4.7
+			c2.8,0,4.6,1.6,4.6,4.4c0,2.6-1.6,3.8-3.8,5.2c-1.6,1-3,1.8-3.3,3.2H574.1z M586.5,832c0,2.4-1.4,5-5.2,5c-4.4,0-5.4-3.8-5.4-7.2
+			c0-4.8,1.5-8,5.7-8c2.8,0,4.2,1.7,4.5,3.9l-2.5,0.4c-0.1-1.1-0.6-2.2-2.1-2.2c-2.5,0-3.1,2.6-3.1,5.3c0.7-1.3,2-2,3.5-2
+			C584.7,827.1,586.5,829.1,586.5,832z M583.9,831.9c0-1.7-0.8-2.7-2.5-2.7s-2.6,1.2-2.6,2.8c0,1.4,0.7,2.8,2.5,2.8
+			C583.1,834.8,583.9,833.9,583.9,831.9z"/>
+		<path id="m7-w4-d27-day" className="st0" d="M582.5,867.3v-12.5h-4.8v-2.2H590v2.2h-4.8v12.5H582.5z M601,865.1v2.2h-10.3
+			c0.2-3.6,2-5.4,4.4-6.9c1.6-1,3.2-1.9,3.2-3.7c0-1.4-0.7-2.3-2.1-2.3c-2.1,0-2.4,1.7-2.3,3l-2.7-0.4c0-2.3,1.3-4.7,5.1-4.7
+			c2.8,0,4.6,1.6,4.6,4.4c0,2.6-1.6,3.8-3.8,5.2c-1.6,1-3,1.8-3.3,3.2H601z M602.4,852.5h9.7v2.2c-3.2,3-5.1,7.7-5.3,12.6h-2.7
+			c0.3-4.6,2-9.2,5.3-12.6h-7.1L602.4,852.5L602.4,852.5z"/>
+		<path id="m7-w5-d28-day" className="st0" d="M611.9,897.9v-12.5h-4.8v-2.2h12.2v2.2h-4.8v12.5H611.9z M630.4,895.7v2.2h-10.3
+			c0.2-3.6,2-5.4,4.4-6.9c1.6-1,3.2-1.9,3.2-3.7c0-1.4-0.7-2.3-2.1-2.3c-2.1,0-2.4,1.7-2.3,3l-2.7-0.4c0-2.3,1.3-4.7,5.1-4.7
+			c2.8,0,4.6,1.6,4.6,4.4c0,2.6-1.6,3.8-3.8,5.2c-1.6,1-3,1.8-3.3,3.2H630.4z M642.9,893.6c0,3-2.3,4.5-5.3,4.5
+			c-3.3,0-5.3-1.7-5.3-4.5c0-2,0.8-3.2,2.5-3.8c-1.2-0.5-2-1.5-2-3.1c0-2.1,1.4-3.9,4.8-3.9c3.3,0,4.7,1.8,4.7,3.9
+			c0,1.5-0.8,2.5-2,3.1C642.1,890.4,642.9,891.6,642.9,893.6z M640.3,893.5c0-1.5-1-2.5-2.7-2.5c-1.6,0-2.7,0.9-2.7,2.5
+			s1,2.6,2.7,2.6S640.3,895.1,640.3,893.5z M635.4,887c0,1.2,0.7,2.1,2.2,2.1c1.4,0,2.2-0.8,2.2-2.1s-0.7-2.1-2.2-2.1
+			C636.1,884.9,635.4,885.7,635.4,887z"/>
+		<path id="m7-w5-d29-day" className="st0" d="M649.1,928.5V916h-4.8v-2.2h12.2v2.2h-4.8v12.5H649.1z M667.6,926.3v2.2h-10.3
+			c0.2-3.6,2-5.4,4.4-6.9c1.6-1,3.2-1.9,3.2-3.7c0-1.4-0.7-2.3-2.1-2.3c-2.1,0-2.4,1.7-2.3,3l-2.7-0.4c0-2.3,1.3-4.7,5.1-4.7
+			c2.8,0,4.6,1.6,4.6,4.4c0,2.6-1.6,3.8-3.8,5.2c-1.6,1-3,1.8-3.3,3.2H667.6z M680,920.7c0,4.7-1.4,8-5.6,8c-2.8,0-4.3-1.7-4.6-4
+			l2.4-0.4c0.1,1.2,0.7,2.3,2.2,2.3c2,0,3-1.8,3-5.2c-0.7,1.2-1.9,2-3.4,2c-2.8,0-4.6-2.1-4.6-4.9c0-2.3,1.4-5.1,5.2-5.1
+			C679,913.5,680,917.4,680,920.7z M677.2,918.4c0-1.5-0.7-2.8-2.5-2.8s-2.7,1-2.7,3c0,1.7,0.8,2.7,2.5,2.7
+			C676.2,921.3,677.2,920.1,677.2,918.4z"/>
+		<path id="m7-w5-d30-day" className="st0" d="M694.9,959.1v-12.5h-4.8v-2.2h12.2v2.2h-4.8v12.5H694.9z M713.7,954.8
+			c0,3-2.2,4.6-5.2,4.6c-3.4,0-5.1-2-5.2-4.8l2.6-0.4c0,1.9,0.9,3.1,2.6,3.1c1.6,0,2.6-0.8,2.6-2.4c0-1.7-1.3-2.3-2.5-2.3h-1.4v-2.2
+			h1.1c1,0,2.2-0.5,2.2-2c0-1.3-0.7-2.1-2.1-2.1c-1.9,0-2.3,1.6-2.3,2.8l-2.7-0.4c0.1-2.8,2.1-4.5,5-4.5c2.6,0,4.7,1.4,4.7,4.1
+			c0,1.3-0.7,2.4-1.9,3C712.8,951.7,713.7,953.1,713.7,954.8z M715.5,951.7c0-4.5,1.8-7.6,5.6-7.6s5.6,3.2,5.6,7.6
+			c0,4.5-1.8,7.6-5.6,7.6C717.4,959.3,715.5,956.7,715.5,951.7z M723,956.4c0.7-0.9,0.9-2.5,0.9-4.7c0-3.6-0.5-5.5-2.8-5.5
+			c-1,0-1.7,0.4-2.1,1.1c-0.5,0.9-0.7,2.4-0.7,4.4c0,3.7,0.5,5.5,2.8,5.5C721.9,957.2,722.5,956.9,723,956.4z"/>
+		<path id="m7-w5-d31-day" className="st0" d="M761.9,989.6v-12.5h-4.8v-2.2h12.2v2.2h-4.8v12.5H761.9z M780.7,985.3
+			c0,3-2.2,4.6-5.2,4.6c-3.4,0-5.1-2-5.2-4.8l2.6-0.4c0,1.9,0.9,3.1,2.6,3.1c1.6,0,2.6-0.8,2.6-2.4c0-1.7-1.3-2.3-2.5-2.3h-1.4v-2.2
+			h1.1c1,0,2.2-0.5,2.2-2c0-1.3-0.7-2.1-2.1-2.1c-1.9,0-2.3,1.6-2.3,2.8l-2.7-0.4c0.1-2.8,2.1-4.5,5-4.5c2.6,0,4.7,1.4,4.7,4.1
+			c0,1.3-0.7,2.4-1.9,3C779.9,982.3,780.7,983.7,780.7,985.3z M788.2,974.9v14.8h-2.5V979c-0.7,0.7-1.8,0.9-3,0.9
+			c-0.2,0-0.4,0-0.6,0v-2.2c2.4,0,3.7-0.8,4-2.7L788.2,974.9L788.2,974.9z"/>
+		<path id="m8-w5-d1-day" className="st0" d="M876.6,1020.2v-12.5h-4.8v-2.2H884v2.2h-4.8v12.5H876.6z M890.9,1005.5v14.8h-2.5v-10.7
+			c-0.7,0.7-1.8,0.9-3,0.9c-0.2,0-0.4,0-0.6,0v-2.2c2.4,0,3.7-0.8,4-2.7L890.9,1005.5L890.9,1005.5z"/>
+		<path id="m7-w1-d1-day" className="st0" d="M876.7,71.9V59.4h-4.8v-2.2h12.2v2.2h-4.8v12.5H876.7z M890.9,57.1v14.8h-2.5V61.2
+			c-0.7,0.7-1.8,0.9-3,0.9c-0.2,0-0.4,0-0.6,0v-2.2c2.4,0,3.7-0.8,4-2.7h2.1V57.1z"/>
+	</g>
+	<g id="Veranstaltungsart">
+		<g id="type-kunst">
+			<text transform="matrix(-0.4827 -0.8758 0.8758 -0.4827 597.3408 748.9069)" className="st0 st1 st3">K</text>
+			<text transform="matrix(-0.4613 -0.8873 0.8873 -0.4613 590.782 737.0396)" className="st0 st1 st4">U</text>
+			<text transform="matrix(-0.4286 -0.9035 0.9035 -0.4286 583.8648 723.7295)" className="st0 st1 st2">N</text>
+			<text transform="matrix(-0.3952 -0.9186 0.9186 -0.3952 577.4421 710.1028)" className="st0 st1 st2">S</text>
+			<text transform="matrix(-0.3611 -0.9325 0.9325 -0.3611 572.1638 697.7126)" className="st0 st1 st3">T</text>
+			<text transform="matrix(-0.3496 -0.9369 0.9369 -0.3496 567.8857 686.5851)" className="st0 st1 st3"> </text>
+		</g>
+		<g id="type-club">
+			<text transform="matrix(0.3611 -0.9325 0.9325 0.3611 565.6389 396.5468)" className="st0 st1 st3">C</text>
+			<text transform="matrix(0.3839 -0.9234 0.9234 0.3839 571.0207 382.4077)" className="st0 st1 st3">L</text>
+			<text transform="matrix(0.4175 -0.9087 0.9087 0.4175 575.4024 371.7802)" className="st0 st1 st3">U</text>
+			<text transform="matrix(0.4505 -0.8928 0.8928 0.4505 581.6569 358.0455)" className="st0 st1 st3">B</text>
+			<text transform="matrix(0.4613 -0.8873 0.8873 0.4613 588.0211 345.4029)" className="st0 st1 st4"> </text>
+		</g>
+		<g id="type-workshop">
+			<text transform="matrix(0.5746 0.8184 -0.8184 0.5746 1297.4041 287.9029)" className="st0 st1 st3">W</text>
+			<text transform="matrix(0.5448 0.8386 -0.8386 0.5448 1308.6139 303.729)" className="st0 st1 st3">O</text>
+			<text transform="matrix(0.5141 0.8577 -0.8577 0.5141 1317.3124 317.3136)" className="st0 st1 st3">R</text>
+			<text transform="matrix(0.4827 0.8758 -0.8758 0.4827 1324.6233 329.4977)" className="st0 st1 st3">K</text>
+			<text transform="matrix(0.4613 0.8873 -0.8873 0.4613 1330.9208 340.9294)" className="st0 st1 st4">S</text>
+			<text transform="matrix(0.4286 0.9035 -0.9035 0.4286 1337.2887 353.1458)" className="st0 st1 st2">H</text>
+			<text transform="matrix(0.3952 0.9186 -0.9186 0.3952 1343.7344 366.7629)" className="st0 st1 st2">O</text>
+			<text transform="matrix(0.3611 0.9325 -0.9325 0.3611 1350.0052 381.6671)" className="st0 st1 st3">P</text>
+		</g>
+		<g id="type-konzert">
+			<text transform="matrix(-0.3264 0.9452 -0.9452 -0.3264 1359.3167 670.1813)" className="st0 st1 st2">K</text>
+			<text transform="matrix(-0.3611 0.9325 -0.9325 -0.3611 1355.1145 682.3214)" className="st0 st1 st3">O</text>
+			<text transform="matrix(-0.3952 0.9186 -0.9186 -0.3952 1349.3407 697.3185)" className="st0 st1 st2">N</text>
+			<text transform="matrix(-0.4286 0.9035 -0.9035 -0.4286 1343.5006 711.1354)" className="st0 st1 st2">Z</text>
+			<text transform="matrix(-0.4505 0.8928 -0.8928 -0.4505 1337.8788 722.8813)" className="st0 st1 st3">E</text>
+			<text transform="matrix(-0.4827 0.8758 -0.8758 -0.4827 1332.21 734.1506)" className="st0 st1 st3">R</text>
+			<text transform="matrix(-0.5037 0.8639 -0.8639 -0.5037 1325.5162 746.2112)" className="st0 st1 st3">T</text>
+		</g>
+		<g id="type-diskurs">
+			<text transform="matrix(0.8699 -0.4932 0.4932 0.8699 747.5109 176.9946)" className="st0 st1 st2">D</text>
+			<text transform="matrix(0.8816 -0.472 0.472 0.8816 760.5245 169.6662)" className="st0 st1 st3">I</text>
+			<text transform="matrix(0.8928 -0.4505 0.4505 0.8928 765.7538 166.9021)" className="st0 st1 st3">S</text>
+			<text transform="matrix(0.9087 -0.4175 0.4175 0.9087 778.0016 160.5922)" className="st0 st1 st3">K</text>
+			<text transform="matrix(0.9186 -0.3952 0.3952 0.9186 790.3943 154.9126)" className="st0 st1 st2">U</text>
+			<text transform="matrix(0.9325 -0.3611 0.3611 0.9325 804.2568 149.1125)" className="st0 st1 st3">R</text>
+			<text transform="matrix(0.9452 -0.3264 0.3264 0.9452 817.4666 144.0449)" className="st0 st1 st2">S</text>
+			<text transform="matrix(0.953 -0.3029 0.3029 0.953 830.4843 139.5489)" className="st0 st1 st2"> </text>
+			<text transform="matrix(0.8758 -0.4827 0.4827 0.8758 779.628 213.6228)" className="st0 st1 st3"> </text>
+			<text transform="matrix(0.9325 -0.3611 0.3611 0.9325 824.1442 192.5097)" className="st0 st1 st3"> </text>
+		</g>
+		<g id="type-tattoo">
+			<text transform="matrix(0.9669 0.2552 -0.2552 0.9669 1061.6333 131.1902)" className="st0 st1 st2">T</text>
+			<text transform="matrix(0.9602 0.2792 -0.2792 0.9602 1073.436 134.2437)" className="st0 st1 st5">A</text>
+			<text transform="matrix(0.9492 0.3147 -0.3147 0.9492 1086.1895 138.0512)" className="st0 st1 st2">T</text>
+			<text transform="matrix(0.9411 0.338 -0.338 0.9411 1098.6935 142.241)" className="st0 st1 st6">T</text>
+			<text transform="matrix(0.928 0.3725 -0.3725 0.928 1110.0359 146.2949)" className="st0 st1 st3">O</text>
+			<text transform="matrix(0.9137 0.4064 -0.4064 0.9137 1124.9972 152.3006)" className="st0 st1 st2">O</text>
+			<text transform="matrix(0.928 0.3725 -0.3725 0.928 1113.2024 147.5654)" className="st0 st1 st3"> </text>
+			<text transform="matrix(0.9369 0.3496 -0.3496 0.9369 1088.7561 189.2192)" className="st0 st1 st3"> </text>
+		</g>
+		<g id="type-radio">
+			<text transform="matrix(-0.9137 0.4064 -0.4064 -0.9137 1136.3667 919.8967)" className="st0 st1 st2">R</text>
+			<text transform="matrix(-0.928 0.3725 -0.3725 -0.928 1123.3604 925.634)" className="st0 st1 st3">A</text>
+			<text transform="matrix(-0.9411 0.338 -0.338 -0.9411 1110.1447 930.9698)" className="st0 st1 st6">D</text>
+			<text transform="matrix(-0.9492 0.3147 -0.3147 -0.9492 1096.0581 936.007)" className="st0 st1 st2">I</text>
+			<text transform="matrix(-0.9567 0.2911 -0.2911 -0.9567 1090.5181 937.9457)" className="st0 st1 st3">O</text>
+			<text transform="matrix(-0.9636 0.2672 -0.2672 -0.9636 1074.9844 942.5498)" className="st0 st1 st7"> </text>
+			<text transform="matrix(-0.9411 0.338 -0.338 -0.9411 1090.1191 887.5316)" className="st0 st1 st6"> </text>
+		</g>
+		<g id="type-aktion">
+			<text transform="matrix(-0.9567 -0.2911 0.2911 -0.9567 843.6966 941.8367)" className="st0 st1 st3">A</text>
+			<text transform="matrix(-0.9452 -0.3264 0.3264 -0.9452 830.0613 937.6017)" className="st0 st1 st2">K</text>
+			<text transform="matrix(-0.9325 -0.3611 0.3611 -0.9325 816.8885 933.0383)" className="st0 st1 st3">T</text>
+			<text transform="matrix(-0.928 -0.3725 0.3725 -0.928 805.0558 928.4932)" className="st0 st1 st3">I</text>
+			<text transform="matrix(-0.9137 -0.4064 0.4064 -0.9137 799.5457 926.4206)" className="st0 st1 st2">O</text>
+			<text transform="matrix(-0.8982 -0.4396 0.4396 -0.8982 784.7971 919.9455)" className="st0 st1 st3">N</text>
+			<text transform="matrix(-0.8873 -0.4613 0.4613 -0.8873 771.3018 913.3282)" className="st0 st1 st4"> </text>
+			<text transform="matrix(-0.9636 -0.2672 0.2672 -0.9636 863.4137 897.7787)" className="st0 st1 st7"> </text>
+		</g>
+		<rect x="474" y="57.1" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w1-d1-event-1" transform={`matrix(1 0 0 1 ${595.3564 + textDisplacer.left } 71.8219)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="409.8" y="87.7" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w1-d2-event-1" transform={`matrix(1 0 0 1 ${531.1605 + textDisplacer.left } 102.4361)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="362.8" y="118.4" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w1-d3-event-1" transform={`matrix(1 0 0 1 ${484.1981 + textDisplacer.left } 133.1361)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="329.4" y="148.9" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w1-d4-event-1" transform={`matrix(1 0 0 1 ${450.7979 + textDisplacer.left } 163.5654)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="251.1" y="240.7" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w2-d7-event-1" transform={`matrix(1 0 0 1 ${372.4602 + textDisplacer.left } 255.4041)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="227.1" y="271.2" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w2-d8-event-1" transform={`matrix(1 0 0 1 ${348.4495 + textDisplacer.left } 285.9105)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="211.1" y="301.9" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w2-d9-event-1" transform={`matrix(1 0 0 1 ${332.5005 + textDisplacer.left } 316.5961)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="196.8" y="332.5" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w2-d10-event-1" transform={`matrix(1 0 0 1 ${318.1196 + textDisplacer.left } 347.2019)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="187.8" y="363.1" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w2-d11-event-1" transform={`matrix(1 0 0 1 ${309.1953 + textDisplacer.left } 377.751)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="165.7" y="454.8" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w3-d14-event-1" transform={`matrix(1 0 0 1 ${287.0198 + textDisplacer.left } 469.4921)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="160.6" y="485.4" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w3-d15-event-1" transform={`matrix(1 0 0 1 ${281.9244 + textDisplacer.left } 500.1016)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="158.3" y="516" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w3-d16-event-1" transform={`matrix(1 0 0 1 ${279.6149 + textDisplacer.left } 530.6981)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="158.4" y="546.6" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w3-d17-event-1" transform={`matrix(1 0 0 1 ${279.7241 + textDisplacer.left } 561.2972)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="161.5" y="577.3" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w3-d18-event-1" transform={`matrix(1 0 0 1 ${282.8087 + textDisplacer.left } 591.9966)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="173.3" y="669" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w4-d21-event-1" transform={`matrix(1 0 0 1 ${294.7046 + textDisplacer.left } 683.6674)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="183.9" y="699.6" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w4-d22-event-1" transform={`matrix(1 0 0 1 ${305.2268 + textDisplacer.left } 714.3019)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="196.8" y="729.5" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w4-d23-event-1" transform={`matrix(1 0 0 1 ${318.1798 + textDisplacer.left } 744.1951)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="213" y="760.8" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w4-d24-event-1" transform={`matrix(1 0 0 1 ${334.405 + textDisplacer.left } 775.4863)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="233.9" y="791.4" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w4-d25-event-1" transform={`matrix(1 0 0 1 ${355.2292 + textDisplacer.left } 806.0963)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="296.6" y="883.1" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w5-d28-event-1" transform={`matrix(1 0 0 1 ${417.9083 + textDisplacer.left } 897.8162)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="326.5" y="913.7" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w5-d29-event-1" transform={`matrix(1 0 0 1 ${447.8741 + textDisplacer.left } 928.416)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="363" y="944.3" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w5-d30-event-1" transform={`matrix(1 0 0 1 ${484.3356 + textDisplacer.left } 958.9915)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="409.9" y="974.9" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w5-d31-event-1" transform={`matrix(1 0 0 1 ${531.2152 + textDisplacer.left } 989.595)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="474.2" y="1005.5" className="st8" width="251.7" height="15.7"/>
+		<text id="m8-w1-d1-event-1" transform={`matrix(1 0 0 1 ${595.5076 + textDisplacer.left } 1020.2064)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="1190.2" y="57.1" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w1-d1-event-2" transform={`matrix(1 0 0 1 ${1190.1619 + textDisplacer.right } 71.8219)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="1252.7" y="87.7" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w1-d2-event-2" transform={`matrix(1 0 0 1 ${1252.7242 + textDisplacer.right } 102.4317)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="1301" y="118.3" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w1-d3-event-2" transform={`matrix(1 0 0 1 ${1300.9912 + textDisplacer.right } 132.9902)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="1337.8" y="148.9" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w1-d4-event-2" transform={`matrix(1 0 0 1 ${1337.8333 + textDisplacer.right } 163.5974)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="1418.7" y="240.6" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w2-d7-event-2" transform={`matrix(1 0 0 1 ${1418.7083 + textDisplacer.right } 255.3022)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="1440" y="271.3" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w2-d8-event-2" transform={`matrix(1 0 0 1 ${1440.0204 + textDisplacer.right } 285.9643)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="1455.9" y="301.8" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w2-d9-event-2" transform={`matrix(1 0 0 1 ${1455.9 + textDisplacer.right } 316.5009)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="1464.3" y="332.4" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w2-d10-event-2" transform={`matrix(1 0 0 1 ${1464.3292 + textDisplacer.right } 347.1237)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="1477.9" y="363" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w2-d11-event-2" transform={`matrix(1 0 0 1 ${1477.9467 + textDisplacer.right } 377.6995)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="1502.6" y="454.8" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w3-d14-event-2" transform={`matrix(1 0 0 1 ${1502.6464 + textDisplacer.right } 469.5027)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="1508" y="485.4" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w3-d15-event-2" transform={`matrix(1 0 0 1 ${1507.9623 + textDisplacer.right } 500.1107)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="1510.2" y="516" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w3-d16-event-2" transform={`matrix(1 0 0 1 ${1510.1562 + textDisplacer.right } 530.691)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="1509.3" y="546.6" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w3-d17-event-2" transform={`matrix(1 0 0 1 ${1509.2738 + textDisplacer.right } 561.3027)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="1507" y="577.2" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w3-d18-event-2" transform={`matrix(1 0 0 1 ${1506.9536 + textDisplacer.right } 591.8961)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="1495.6" y="669" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w4-d21-event-2" transform={`matrix(1 0 0 1 ${1495.6423 + textDisplacer.right } 683.7068)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="1485.1" y="699.6" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w4-d22-event-2" transform={`matrix(1 0 0 1 ${1485.0609 + textDisplacer.right } 714.2977)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="1472.4" y="730.2" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w4-d23-event-2" transform={`matrix(1 0 0 1 ${1472.3601 + textDisplacer.right } 744.9019)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="1457.2" y="760.7" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w4-d24-event-2" transform={`matrix(1 0 0 1 ${1457.2482 + textDisplacer.right } 775.3928)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="1440.4" y="791.3" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w4-d25-event-2" transform={`matrix(1 0 0 1 ${1440.3759 + textDisplacer.right } 805.9915)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="1366.8" y="883.1" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w5-d28-event-2" transform={`matrix(1 0 0 1 ${1366.7568 + textDisplacer.right } 897.8123)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="1337.5" y="913.6" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w5-d29-event-2" transform={`matrix(1 0 0 1 ${1337.536 + textDisplacer.right } 928.2952)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="1301.5" y="944.2" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w5-d30-event-2" transform={`matrix(1 0 0 1 ${1301.4639 + textDisplacer.right } 958.8983)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="1252.7" y="974.8" className="st8" width="251.7" height="15.7"/>
+		<text id="m7-w5-d31-event-2" transform={`matrix(1 0 0 1 ${1252.6897 + textDisplacer.right } 989.5064)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+		<rect x="1190.5" y="1004" className="st8" width="251.7" height="15.7"/>
+		<text id="m8-w1-d1-event-2" transform={`matrix(1 0 0 1 ${1190.4677 + textDisplacer.right } 1018.6927)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+	</g>
+	<g id="Orte">
+		<g id="location-foyer">
+			<text transform="matrix(0.9995 -3.165000e-02 3.165000e-02 0.9995 945.7775 119.2661)" className="st0 st1 st2"> </text>
+			<text transform="matrix(0.9966 -8.216000e-02 8.216000e-02 0.9966 925.6234 168.2829)" className="st0 st1 st3">F</text>
+			<text transform="matrix(0.999 -4.430000e-02 4.430000e-02 0.999 937.5477 167.3021)" className="st0 st1 st2">O</text>
+			<text transform="matrix(1 -6.330000e-03 6.330000e-03 1 952.6768 166.6907)" className="st0 st1 st3">Y</text>
+			<text transform="matrix(0.9995 3.165000e-02 -3.165000e-02 0.9995 966.1054 166.6164)" className="st0 st1 st2">E</text>
+			<text transform="matrix(0.9976 6.956000e-02 -6.956000e-02 0.9976 978.744 166.9735)" className="st0 st1 st3">R</text>
+			<text transform="matrix(0.9955 9.475000e-02 -9.475000e-02 0.9955 992.8198 167.9977)" className="st0 st1 st2"> </text>
+		</g>
+		<g id="location-radio-box">
+			<text transform="matrix(0.6592 0.7519 -0.7519 0.6592 1234.4796 286.6238)" className="st0 st1 st10">R</text>
+			<text transform="matrix(0.6319 0.7751 -0.7751 0.6319 1243.8766 297.2861)" className="st0 st1 st11">A</text>
+			<text transform="matrix(0.6037 0.7972 -0.7972 0.6037 1252.8555 308.2993)" className="st0 st1 st2">D</text>
+			<text transform="matrix(0.5844 0.8115 -0.8115 0.5844 1261.8558 320.2684)" className="st0 st1 st3">I</text>
+			<text transform="matrix(0.5548 0.832 -0.832 0.5548 1265.4602 325.0036)" className="st0 st1 st3">O</text>
+			
+				<rect x="1282" y="335.1" transform="matrix(0.8516 -0.5243 0.5243 0.8516 13.1315 722.8995)" className="st0" width="2.2" height="6.4"/>
+			<text transform="matrix(0.5037 0.8639 -0.8639 0.5037 1279.0314 345.852)" className="st0 st1 st3">B</text>
+			<text transform="matrix(0.472 0.8816 -0.8816 0.472 1286.111 358.0882)" className="st0 st1 st3">O</text>
+			<text transform="matrix(0.4286 0.9035 -0.9035 0.4286 1293.3619 371.719)" className="st0 st1 st2">X</text>
+			<text transform="matrix(0.4286 0.9035 -0.9035 0.4286 1296.4948 378.3245)" className="st0 st1 st2"> </text>
+		</g>
+		<g id="location-innenhof">
+			<text transform="matrix(-0.5346 0.8451 -0.8451 -0.5346 1318.0491 758.7686)" className="st0 st1 st2"> </text>
+			<text transform="matrix(-0.3496 0.9369 -0.9369 -0.3496 1310.4573 665.8162)" className="st0 st1 st3"> </text>
+			<text transform="matrix(-0.3952 0.9186 -0.9186 -0.3952 1303.3368 683.6779)" className="st0 st1 st2">I</text>
+			<text transform="matrix(-0.4286 0.9035 -0.9035 -0.4286 1301.1705 689.1926)" className="st0 st1 st2">N</text>
+			<text transform="matrix(-0.4613 0.8873 -0.8873 -0.4613 1294.7683 702.8063)" className="st0 st1 st4">N</text>
+			<text transform="matrix(-0.4932 0.8699 -0.8699 -0.4932 1287.8202 716.007)" className="st0 st1 st2">E</text>
+			<text transform="matrix(-0.5244 0.8515 -0.8515 -0.5244 1281.7063 727.0422)" className="st0 st1 st3">N</text>
+			<text transform="matrix(-0.5548 0.832 -0.832 -0.5548 1273.7562 739.7168)" className="st0 st1 st3">H</text>
+			<text transform="matrix(-0.5941 0.8044 -0.8044 -0.5941 1265.5356 752.2369)" className="st0 st1 st3">O</text>
+			<text transform="matrix(-0.6226 0.7825 -0.7825 -0.6226 1255.9094 765.1998)" className="st0 st1 st12">F</text>
+			<text transform="matrix(-0.6411 0.7675 -0.7675 -0.6411 1248.6072 774.3565)" className="st0 st1 st13"> </text>
+		</g>
+		<g id="location-seeufer">
+			<text transform="matrix(-0.9955 9.475000e-02 -9.475000e-02 -0.9955 1004.3987 908.2523)" className="st0 st1 st2">S</text>
+			<text transform="matrix(-0.9984 5.694000e-02 -5.694000e-02 -0.9984 990.6819 909.5526)" className="st0 st1 st2">E</text>
+			<text transform="matrix(-0.9995 3.165000e-02 -3.165000e-02 -0.9995 978.096 910.3019)" className="st0 st1 st2">E</text>
+			<text transform="matrix(-1 -6.330000e-03 6.330000e-03 -1 965.4659 910.7292)" className="st0 st1 st3">U</text>
+			<text transform="matrix(-0.999 -4.430000e-02 4.430000e-02 -0.999 950.4658 910.5828)" className="st0 st1 st2">F</text>
+			<text transform="matrix(-0.9976 -6.956000e-02 6.956000e-02 -0.9976 938.2809 910.0316)" className="st0 st1 st3">E</text>
+			<text transform="matrix(-0.9942 -0.1073 0.1073 -0.9942 925.6793 909.072)" className="st0 st1 st2">R</text>
+			<text transform="matrix(-0.9912 -0.1323 0.1323 -0.9912 911.7136 907.472)" className="st0 st1 st3"> </text>
+		</g>
+		<g id="location-clubraum">
+			<text transform="matrix(-0.6857 -0.7279 0.7279 -0.6857 695.4127 799.5329)" className="st0 st1 st3">C</text>
+			<text transform="matrix(-0.6592 -0.7519 0.7519 -0.6592 684.9716 788.512)" className="st0 st1 st10">L</text>
+			<text transform="matrix(-0.6319 -0.7751 0.7751 -0.6319 677.364 779.8719)" className="st0 st1 st11">U</text>
+			<text transform="matrix(-0.6037 -0.7972 0.7972 -0.6037 667.9189 768.2349)" className="st0 st1 st2">B</text>
+			<text transform="matrix(-0.5746 -0.8184 0.8184 -0.5746 659.3606 756.9181)" className="st0 st1 st3">R</text>
+			<text transform="matrix(-0.5448 -0.8386 0.8386 -0.5448 651.2289 745.3621)" className="st0 st1 st3">A</text>
+			<text transform="matrix(-0.5037 -0.8639 0.8639 -0.5037 643.6342 733.6854)" className="st0 st1 st3">U</text>
+			<text transform="matrix(-0.472 -0.8816 0.8816 -0.472 636.0715 720.7529)" className="st0 st1 st3">M</text>
+			<text transform="matrix(-0.4396 -0.8982 0.8982 -0.4396 627.3721 704.1229)" className="st0 st1 st3"> </text>
+		</g>
+		<g id="location-shedhalle">
+			<text transform="matrix(0.6944 -0.7196 0.7196 0.6944 655.9835 250.0806)" className="st0 st1 st3"> </text>
+			<text transform="matrix(0.7196 -0.6944 0.6944 0.7196 700.959 272.3076)" className="st0 st1 st3"> </text>
+			<text transform="matrix(0.4613 -0.8873 0.8873 0.4613 628.1223 371.564)" className="st0 st1 st4">S</text>
+			<text transform="matrix(0.5037 -0.8639 0.8639 0.5037 634.4747 359.4323)" className="st0 st1 st3">H</text>
+			<text transform="matrix(0.5346 -0.8451 0.8451 0.5346 642.0193 346.4668)" className="st0 st1 st2">E</text>
+			<text transform="matrix(0.5648 -0.8252 0.8252 0.5648 648.7115 335.6689)" className="st0 st1 st3">D</text>
+			<text transform="matrix(0.5941 -0.8044 0.8044 0.5941 657.0872 323.3705)" className="st0 st1 st3">H</text>
+			<text transform="matrix(0.6226 -0.7825 0.7825 0.6226 666.0516 311.3606)" className="st0 st1 st12">A</text>
+			<text transform="matrix(0.6502 -0.7598 0.7598 0.6502 675.0553 300.2636)" className="st0 st1 st3">L</text>
+			<text transform="matrix(0.677 -0.736 0.736 0.677 682.7625 291.2528)" className="st0 st1 st3">L</text>
+			<text transform="matrix(0.7029 -0.7113 0.7113 0.7029 690.8336 282.4662)" className="st0 st1 st3">E</text>
+		</g>
+	</g>
+	<g id="Wochen">
+		<path id="m7-w2-d7-week" className="st0" d="M1333.1,255.5l-3.6-14.8h2.8l1.7,8.1c0.4,2.1,0.5,2.5,0.7,3.7l0,0
+			c0.3-1.2,0.6-2.5,0.9-3.7l2.1-8.1h2.7l2.1,8.1c0.4,1.4,0.6,2.5,0.8,3.7l0,0c0.2-1.2,0.4-2.3,0.7-3.7l1.6-8.1h2.8l-3.6,14.8h-2.8
+			l-2.1-8c-0.3-1.2-0.7-2.5-0.9-3.7l0,0c-0.2,1.2-0.5,2.4-0.8,3.8l-2.1,7.9H1333.1z M1359.5,253.3v2.2h-10.3c0.2-3.6,2-5.4,4.4-6.9
+			c1.6-1,3.2-1.9,3.2-3.7c0-1.4-0.7-2.3-2.1-2.3c-2.1,0-2.4,1.7-2.3,3l-2.7-0.4c0-2.3,1.3-4.7,5.1-4.7c2.8,0,4.6,1.6,4.6,4.4
+			c0,2.6-1.6,3.8-3.8,5.2c-1.6,1-3,1.8-3.3,3.2H1359.5z"/>
+		<path id="m7-w2-d8-week" className="st0" d="M1354.9,286.1l-3.6-14.8h2.8l1.7,8.1c0.4,2.1,0.5,2.5,0.7,3.7l0,0
+			c0.3-1.2,0.6-2.5,0.9-3.7l2.1-8.1h2.7l2.1,8.1c0.4,1.4,0.6,2.5,0.8,3.7l0,0c0.2-1.2,0.4-2.3,0.7-3.7l1.6-8.1h2.8l-3.6,14.8h-2.8
+			l-2.1-8c-0.3-1.2-0.7-2.5-0.9-3.7l0,0c-0.2,1.2-0.5,2.4-0.8,3.8l-2.1,7.9L1354.9,286.1L1354.9,286.1z M1381.4,283.9v2.2h-10.3
+			c0.2-3.6,2-5.4,4.4-6.9c1.6-1,3.2-1.9,3.2-3.7c0-1.4-0.7-2.3-2.1-2.3c-2.1,0-2.4,1.7-2.3,3l-2.7-0.4c0-2.3,1.3-4.7,5.1-4.7
+			c2.8,0,4.6,1.6,4.6,4.4c0,2.6-1.6,3.8-3.8,5.2c-1.6,1-3,1.8-3.3,3.2L1381.4,283.9L1381.4,283.9z"/>
+		<path id="m7-w2-d9-week" className="st0" d="M1373.6,316.7l-3.6-14.8h2.8l1.7,8.1c0.4,2.1,0.5,2.5,0.7,3.7l0,0
+			c0.3-1.2,0.6-2.5,0.9-3.7l2.1-8.1h2.7l2.1,8.1c0.4,1.4,0.6,2.5,0.8,3.7l0,0c0.2-1.2,0.4-2.3,0.7-3.7l1.6-8.1h2.8l-3.6,14.8h-2.8
+			l-2.1-8c-0.3-1.2-0.7-2.5-0.9-3.7l0,0c-0.2,1.2-0.5,2.4-0.8,3.8l-2.1,7.9L1373.6,316.7L1373.6,316.7z M1400.1,314.5v2.2h-10.3
+			c0.2-3.6,2-5.4,4.4-6.9c1.6-1,3.2-1.9,3.2-3.7c0-1.4-0.7-2.3-2.1-2.3c-2.1,0-2.4,1.7-2.3,3l-2.7-0.4c0-2.3,1.3-4.7,5.1-4.7
+			c2.8,0,4.6,1.6,4.6,4.4c0,2.6-1.6,3.8-3.8,5.2c-1.6,1-3,1.8-3.3,3.2L1400.1,314.5L1400.1,314.5z"/>
+		<path id="m7-w2-d10-week" className="st0" d="M1388.5,347.3l-3.6-14.8h2.8l1.7,8.1c0.4,2.1,0.5,2.5,0.7,3.7l0,0
+			c0.3-1.2,0.6-2.5,0.9-3.7l2.1-8.1h2.7l2.1,8.1c0.4,1.4,0.6,2.5,0.8,3.7l0,0c0.2-1.2,0.4-2.3,0.7-3.7l1.6-8.1h2.8l-3.6,14.8h-2.8
+			l-2.1-8c-0.3-1.2-0.7-2.5-0.9-3.7l0,0c-0.2,1.2-0.5,2.4-0.8,3.8l-2.1,7.9L1388.5,347.3L1388.5,347.3z M1415,345.1v2.2h-10.3
+			c0.2-3.6,2-5.4,4.4-6.9c1.6-1,3.2-1.9,3.2-3.7c0-1.4-0.7-2.3-2.1-2.3c-2.1,0-2.4,1.7-2.3,3l-2.7-0.4c0-2.3,1.3-4.7,5.1-4.7
+			c2.8,0,4.6,1.6,4.6,4.4c0,2.6-1.6,3.8-3.8,5.2c-1.6,1-3,1.8-3.3,3.2L1415,345.1L1415,345.1z"/>
+		<path id="m7-w2-d11-week" className="st0" d="M1400.8,377.8l-3.6-14.8h2.8l1.7,8.1c0.4,2.1,0.5,2.5,0.7,3.7l0,0
+			c0.3-1.2,0.6-2.5,0.9-3.7l2.1-8.1h2.7l2.1,8.1c0.4,1.4,0.6,2.5,0.8,3.7l0,0c0.2-1.2,0.4-2.3,0.7-3.7l1.6-8.1h2.8l-3.6,14.8h-2.8
+			l-2.1-8c-0.3-1.2-0.7-2.5-0.9-3.7l0,0c-0.2,1.2-0.5,2.4-0.8,3.8l-2.1,7.9L1400.8,377.8L1400.8,377.8z M1427.3,375.6v2.2H1417
+			c0.2-3.6,2-5.4,4.4-6.9c1.6-1,3.2-1.9,3.2-3.7c0-1.4-0.7-2.3-2.1-2.3c-2.1,0-2.4,1.7-2.3,3l-2.7-0.4c0-2.3,1.3-4.7,5.1-4.7
+			c2.8,0,4.6,1.6,4.6,4.4c0,2.6-1.6,3.8-3.8,5.2c-1.6,1-3,1.8-3.3,3.2L1427.3,375.6L1427.3,375.6z"/>
+		<path id="m7-w3-d14-week" className="st0" d="M1424.3,469.6l-3.6-14.8h2.8l1.7,8.1c0.4,2.1,0.5,2.5,0.7,3.7l0,0
+			c0.3-1.2,0.6-2.5,0.9-3.7l2.1-8.1h2.7l2.1,8.1c0.4,1.4,0.6,2.5,0.8,3.7l0,0c0.2-1.2,0.4-2.3,0.7-3.7l1.6-8.1h2.8l-3.6,14.8h-2.8
+			l-2.1-8c-0.3-1.2-0.7-2.5-0.9-3.7l0,0c-0.2,1.2-0.5,2.4-0.8,3.8l-2.1,7.9L1424.3,469.6L1424.3,469.6z M1451.1,465.3
+			c0,3-2.2,4.6-5.2,4.6c-3.4,0-5.1-2-5.2-4.8l2.6-0.4c0,1.9,0.9,3.1,2.6,3.1c1.6,0,2.6-0.8,2.6-2.4c0-1.7-1.3-2.3-2.5-2.3h-1.4v-2.2
+			h1.1c1,0,2.2-0.5,2.2-2c0-1.3-0.7-2.1-2.1-2.1c-1.9,0-2.3,1.6-2.3,2.8l-2.7-0.4c0.1-2.8,2.1-4.5,5-4.5c2.6,0,4.7,1.4,4.7,4.1
+			c0,1.3-0.7,2.4-1.9,3C1450.2,462.2,1451.1,463.7,1451.1,465.3z"/>
+		<path id="m7-w3-d15-week" className="st0" d="M1427.9,500.2l-3.6-14.8h2.8l1.7,8.1c0.4,2.1,0.5,2.5,0.7,3.7l0,0
+			c0.3-1.2,0.6-2.5,0.9-3.7l2.1-8.1h2.7l2.1,8.1c0.4,1.4,0.6,2.5,0.8,3.7l0,0c0.2-1.2,0.4-2.3,0.7-3.7l1.6-8.1h2.8l-3.6,14.8h-2.8
+			l-2.1-8c-0.3-1.2-0.7-2.5-0.9-3.7l0,0c-0.2,1.2-0.5,2.4-0.8,3.8l-2.1,7.9L1427.9,500.2L1427.9,500.2z M1454.6,495.9
+			c0,3-2.2,4.6-5.2,4.6c-3.4,0-5.1-2-5.2-4.8l2.6-0.4c0,1.9,0.9,3.1,2.6,3.1c1.6,0,2.6-0.8,2.6-2.4c0-1.7-1.3-2.3-2.5-2.3h-1.4v-2.2
+			h1.1c1,0,2.2-0.5,2.2-2c0-1.3-0.7-2.1-2.1-2.1c-1.9,0-2.3,1.6-2.3,2.8l-2.7-0.4c0.1-2.8,2.1-4.5,5-4.5c2.6,0,4.7,1.4,4.7,4.1
+			c0,1.3-0.7,2.4-1.9,3C1453.8,492.8,1454.6,494.3,1454.6,495.9z"/>
+		<path id="m7-w3-d16-week" className="st0" d="M1428.4,530.8l-3.6-14.8h2.8l1.7,8.1c0.4,2.1,0.5,2.5,0.7,3.7l0,0
+			c0.3-1.2,0.6-2.5,0.9-3.7l2.1-8.1h2.7l2.1,8.1c0.4,1.4,0.6,2.5,0.8,3.7l0,0c0.2-1.2,0.4-2.3,0.7-3.7l1.6-8.1h2.8l-3.6,14.8h-2.8
+			l-2.1-8c-0.3-1.2-0.7-2.5-0.9-3.7l0,0c-0.2,1.2-0.5,2.4-0.8,3.8l-2.1,7.9H1428.4z M1455.1,526.5c0,3-2.2,4.6-5.2,4.6
+			c-3.4,0-5.1-2-5.2-4.8l2.6-0.4c0,1.9,0.9,3.1,2.6,3.1c1.6,0,2.6-0.8,2.6-2.4c0-1.7-1.3-2.3-2.5-2.3h-1.4V522h1.1
+			c1,0,2.2-0.5,2.2-2c0-1.3-0.7-2.1-2.1-2.1c-1.9,0-2.3,1.6-2.3,2.8l-2.7-0.4c0.1-2.8,2.1-4.5,5-4.5c2.6,0,4.7,1.4,4.7,4.1
+			c0,1.3-0.7,2.4-1.9,3C1454.3,523.4,1455.1,524.9,1455.1,526.5z"/>
+		<path id="m7-w3-d17-week" className="st0" d="M1429.5,561.4l-3.6-14.8h2.8l1.7,8.1c0.4,2.1,0.5,2.5,0.7,3.7l0,0
+			c0.3-1.2,0.6-2.5,0.9-3.7l2.1-8.1h2.7l2.1,8.1c0.4,1.4,0.6,2.5,0.8,3.7l0,0c0.2-1.2,0.4-2.3,0.7-3.7l1.6-8.1h2.8l-3.6,14.8h-2.8
+			l-2.1-8c-0.3-1.2-0.7-2.5-0.9-3.7l0,0c-0.2,1.2-0.5,2.4-0.8,3.8l-2.1,7.9H1429.5z M1456.2,557.1c0,3-2.2,4.6-5.2,4.6
+			c-3.4,0-5.1-2-5.2-4.8l2.6-0.4c0,1.9,0.9,3.1,2.6,3.1c1.6,0,2.6-0.8,2.6-2.4c0-1.7-1.3-2.3-2.5-2.3h-1.4v-2.2h1.1
+			c1,0,2.2-0.5,2.2-2c0-1.3-0.7-2.1-2.1-2.1c-1.9,0-2.3,1.6-2.3,2.8l-2.7-0.4c0.1-2.8,2.1-4.5,5-4.5c2.6,0,4.7,1.4,4.7,4.1
+			c0,1.3-0.7,2.4-1.9,3C1455.4,554,1456.2,555.5,1456.2,557.1z"/>
+		<path id="m7-w3-d18-week" className="st0" d="M1427.8,592l-3.6-14.8h2.8l1.7,8.1c0.4,2.1,0.5,2.5,0.7,3.7l0,0c0.3-1.2,0.6-2.5,0.9-3.7
+			l2.1-8.1h2.7l2.1,8.1c0.4,1.4,0.6,2.5,0.8,3.7l0,0c0.2-1.2,0.4-2.3,0.7-3.7l1.6-8.1h2.8l-3.6,14.8h-2.8l-2.1-8
+			c-0.3-1.2-0.7-2.5-0.9-3.7l0,0c-0.2,1.2-0.5,2.4-0.8,3.8l-2.1,7.9H1427.8z M1454.6,587.7c0,3-2.2,4.6-5.2,4.6
+			c-3.4,0-5.1-2-5.2-4.8l2.6-0.4c0,1.9,0.9,3.1,2.6,3.1c1.6,0,2.6-0.8,2.6-2.4c0-1.7-1.3-2.3-2.5-2.3h-1.4v-2.2h1.1
+			c1,0,2.2-0.5,2.2-2c0-1.3-0.7-2.1-2.1-2.1c-1.9,0-2.3,1.6-2.3,2.8l-2.7-0.4c0.1-2.8,2.1-4.5,5-4.5c2.6,0,4.7,1.4,4.7,4.1
+			c0,1.3-0.7,2.4-1.9,3C1453.8,584.6,1454.6,586.1,1454.6,587.7z"/>
+		<path id="m7-w4-d21-week" className="st0" d="M1410.7,683.7l-3.6-14.8h2.8l1.7,8.1c0.4,2.1,0.5,2.5,0.7,3.7l0,0
+			c0.3-1.2,0.6-2.5,0.9-3.7l2.1-8.1h2.7l2.1,8.1c0.4,1.4,0.6,2.5,0.8,3.7l0,0c0.2-1.2,0.4-2.3,0.7-3.7l1.6-8.1h2.8l-3.6,14.8h-2.8
+			l-2.1-8c-0.3-1.2-0.7-2.5-0.9-3.7l0,0c-0.2,1.2-0.5,2.4-0.8,3.8l-2.1,7.9H1410.7z M1436.8,678.6v2.1h-1.9v3h-2.4v-3h-6.4v-2.4
+			l6.4-9.3h2.5v9.6L1436.8,678.6L1436.8,678.6z M1432.5,678.6v-3.5c0-0.6,0-1.7,0-2.7c-0.5,0.9-1.2,1.9-1.5,2.3l-1.3,1.9
+			c-0.4,0.5-0.9,1.3-1.4,2c0.7,0,1.5,0,1.9,0H1432.5z"/>
+		<path id="m7-w4-d22-week" className="st0" d="M1401.3,714.3l-3.6-14.8h2.8l1.7,8.1c0.4,2.1,0.5,2.5,0.7,3.7l0,0
+			c0.3-1.2,0.6-2.5,0.9-3.7l2.1-8.1h2.7l2.1,8.1c0.4,1.4,0.6,2.5,0.8,3.7l0,0c0.2-1.2,0.4-2.3,0.7-3.7l1.6-8.1h2.8l-3.6,14.8h-2.8
+			l-2.1-8c-0.3-1.2-0.7-2.5-0.9-3.7l0,0c-0.2,1.2-0.5,2.4-0.8,3.8l-2.1,7.9H1401.3z M1427.4,709.2v2.1h-1.9v3h-2.4v-3h-6.4v-2.4
+			l6.4-9.3h2.5v9.6L1427.4,709.2L1427.4,709.2z M1423,709.2v-3.5c0-0.6,0-1.7,0-2.7c-0.5,0.9-1.2,1.9-1.5,2.3l-1.3,1.9
+			c-0.4,0.5-0.9,1.3-1.4,2c0.7,0,1.5,0,1.9,0H1423z"/>
+		<path id="m7-w4-d23-week" className="st0" d="M1388.4,744.9l-3.6-14.8h2.8l1.7,8.1c0.4,2.1,0.5,2.5,0.7,3.7l0,0
+			c0.3-1.2,0.6-2.5,0.9-3.7l2.1-8.1h2.7l2.1,8.1c0.4,1.4,0.6,2.5,0.8,3.7l0,0c0.2-1.2,0.4-2.3,0.7-3.7l1.6-8.1h2.8l-3.6,14.8h-2.8
+			l-2.1-8c-0.3-1.2-0.7-2.5-0.9-3.7l0,0c-0.2,1.2-0.5,2.4-0.8,3.8l-2.1,7.9H1388.4z M1414.5,739.8v2.1h-1.9v3h-2.4v-3h-6.4v-2.4
+			l6.4-9.3h2.5v9.6L1414.5,739.8L1414.5,739.8z M1410.2,739.8v-3.5c0-0.6,0-1.7,0-2.7c-0.5,0.9-1.2,1.9-1.5,2.3l-1.3,1.9
+			c-0.4,0.5-0.9,1.3-1.4,2c0.7,0,1.5,0,1.9,0H1410.2z"/>
+		<path id="m7-w4-d24-week" className="st0" d="M1373.3,775.5l-3.6-14.8h2.8l1.7,8.1c0.4,2.1,0.5,2.5,0.7,3.7l0,0
+			c0.3-1.2,0.6-2.5,0.9-3.7l2.1-8.1h2.7l2.1,8.1c0.4,1.4,0.6,2.5,0.8,3.7l0,0c0.2-1.2,0.4-2.3,0.7-3.7l1.6-8.1h2.8l-3.6,14.8h-2.8
+			l-2.1-8c-0.3-1.2-0.7-2.5-0.9-3.7l0,0c-0.2,1.2-0.5,2.4-0.8,3.8l-2.1,7.9H1373.3z M1399.3,770.4v2.1h-1.9v3h-2.4v-3h-6.4v-2.4
+			l6.4-9.3h2.5v9.6L1399.3,770.4L1399.3,770.4z M1395,770.4v-3.5c0-0.6,0-1.7,0-2.7c-0.5,0.9-1.2,1.9-1.5,2.3l-1.3,1.9
+			c-0.4,0.5-0.9,1.3-1.4,2c0.7,0,1.5,0,1.9,0H1395z"/>
+		<path id="m7-w4-d25-week" className="st0" d="M1354.2,806.1l-3.6-14.8h2.8l1.7,8.1c0.4,2.1,0.5,2.5,0.7,3.7l0,0
+			c0.3-1.2,0.6-2.5,0.9-3.7l2.1-8.1h2.7l2.1,8.1c0.4,1.4,0.6,2.5,0.8,3.7l0,0c0.2-1.2,0.4-2.3,0.7-3.7l1.6-8.1h2.8l-3.6,14.8h-2.8
+			l-2.1-8c-0.3-1.2-0.7-2.5-0.9-3.7l0,0c-0.2,1.2-0.5,2.4-0.8,3.8l-2.1,7.9H1354.2z M1380.3,800.9v2.1h-1.9v3h-2.4v-3h-6.4v-2.4
+			l6.4-9.3h2.5v9.6L1380.3,800.9L1380.3,800.9z M1376,800.9v-3.5c0-0.6,0-1.7,0-2.7c-0.5,0.9-1.2,1.9-1.5,2.3l-1.3,1.9
+			c-0.4,0.5-0.9,1.3-1.4,2c0.7,0,1.5,0,1.9,0H1376z"/>
+		<path id="m7-w5-d28-week" className="st0" d="M1277.4,897.9l-3.6-14.8h2.8l1.7,8.1c0.4,2.1,0.5,2.5,0.7,3.7l0,0
+			c0.3-1.2,0.6-2.5,0.9-3.7l2.1-8.1h2.7l2.1,8.1c0.4,1.4,0.6,2.5,0.8,3.7l0,0c0.2-1.2,0.4-2.3,0.7-3.7l1.6-8.1h2.8l-3.6,14.8h-2.8
+			l-2.1-8c-0.3-1.2-0.7-2.5-0.9-3.7l0,0c-0.2,1.2-0.5,2.4-0.8,3.8l-2.1,7.9H1277.4z M1304,893.1c0,2.8-1.8,5-5.3,5
+			c-2.9,0-5-1.7-5-4.7l2.5-0.4c0,1.9,1,3,2.5,3c1.8,0,2.7-1.1,2.7-3c0-1.8-1.1-2.7-2.7-2.7c-1.1,0-1.9,0.4-2.4,1.1l-2.3-0.4l1.1-8
+			h8.1v2.2h-6l-0.5,3.8c0.6-0.6,1.5-1,2.6-1C1301.7,888.2,1304,889.6,1304,893.1z"/>
+		<path id="m7-w5-d29-week" className="st0" d="M1239.9,928.5l-3.6-14.8h2.8l1.7,8.1c0.4,2.1,0.5,2.5,0.7,3.7l0,0
+			c0.3-1.2,0.6-2.5,0.9-3.7l2.1-8.1h2.7l2.1,8.1c0.4,1.4,0.6,2.5,0.8,3.7l0,0c0.2-1.2,0.4-2.3,0.7-3.7l1.6-8.1h2.8l-3.6,14.8h-2.8
+			l-2.1-8c-0.3-1.2-0.7-2.5-0.9-3.7l0,0c-0.2,1.2-0.5,2.4-0.8,3.8l-2.1,7.9H1239.9z M1266.5,923.7c0,2.8-1.8,5-5.3,5
+			c-2.9,0-5-1.7-5-4.7l2.5-0.4c0,1.9,1,3,2.5,3c1.8,0,2.7-1.1,2.7-3c0-1.8-1.1-2.7-2.7-2.7c-1.1,0-1.9,0.4-2.4,1.1l-2.3-0.4l1.1-8
+			h8.1v2.2h-6l-0.5,3.8c0.6-0.6,1.5-1,2.6-1C1264.2,918.7,1266.5,920.2,1266.5,923.7z"/>
+		<path id="m7-w5-d30-week" className="st0" d="M1192.8,959.1l-3.6-14.8h2.8l1.7,8.1c0.4,2.1,0.5,2.5,0.7,3.7l0,0
+			c0.3-1.2,0.6-2.5,0.9-3.7l2.1-8.1h2.7l2.1,8.1c0.4,1.4,0.6,2.5,0.8,3.7l0,0c0.2-1.2,0.4-2.3,0.7-3.7l1.6-8.1h2.8l-3.6,14.8h-2.8
+			l-2.1-8c-0.3-1.2-0.7-2.5-0.9-3.7l0,0c-0.2,1.2-0.5,2.4-0.8,3.8l-2.1,7.9H1192.8z M1219.4,954.3c0,2.8-1.8,5-5.3,5
+			c-2.9,0-5-1.7-5-4.7l2.5-0.4c0,1.9,1,3,2.5,3c1.8,0,2.7-1.1,2.7-3c0-1.8-1.1-2.7-2.7-2.7c-1.1,0-1.9,0.4-2.4,1.1l-2.3-0.4l1.1-8
+			h8.1v2.2h-6l-0.5,3.8c0.6-0.6,1.5-1,2.6-1C1217.1,949.3,1219.4,950.8,1219.4,954.3z"/>
+		<path id="m7-w5-d31-week" className="st0" d="M1125.9,989.6l-3.6-14.8h2.8l1.7,8.1c0.4,2.1,0.5,2.5,0.7,3.7l0,0
+			c0.3-1.2,0.6-2.5,0.9-3.7l2.1-8.1h2.7l2.1,8.1c0.4,1.4,0.6,2.5,0.8,3.7l0,0c0.2-1.2,0.4-2.3,0.7-3.7l1.6-8.1h2.8l-3.6,14.8h-2.8
+			l-2.1-8c-0.3-1.2-0.7-2.5-0.9-3.7l0,0c-0.2,1.2-0.5,2.4-0.8,3.8l-2.1,7.9H1125.9z M1152.5,984.9c0,2.8-1.8,5-5.3,5
+			c-2.9,0-5-1.7-5-4.7l2.5-0.4c0,1.9,1,3,2.5,3c1.8,0,2.7-1.1,2.7-3c0-1.8-1.1-2.7-2.7-2.7c-1.1,0-1.9,0.4-2.4,1.1l-2.3-0.4l1.1-8
+			h8.1v2.2h-6l-0.5,3.8c0.6-0.6,1.5-1,2.6-1C1150.2,979.9,1152.5,981.4,1152.5,984.9z"/>
+		<path id="m7-w1-d1-week" className="st0" d="M1026.8,72l-3.6-14.8h2.8l1.7,8.1c0.4,2.1,0.5,2.5,0.7,3.7l0,0c0.3-1.2,0.6-2.5,0.9-3.7
+			l2.1-8.1h2.7l2.1,8.1c0.4,1.4,0.6,2.5,0.8,3.7l0,0c0.2-1.2,0.4-2.3,0.7-3.7l1.6-8.1h2.8l-3.6,14.8h-2.8l-2.1-8
+			c-0.3-1.2-0.7-2.5-0.9-3.7l0,0c-0.2,1.2-0.5,2.4-0.8,3.8l-2.1,7.9C1029.8,72,1026.8,72,1026.8,72z M1049,57.3V72h-2.5V61.3
+			c-0.7,0.7-1.8,0.9-3,0.9c-0.2,0-0.4,0-0.6,0V60c2.4,0,3.7-0.8,4-2.7H1049z"/>
+		<path id="m7-w1-d2-week" className="st0" d="M1129.1,102.4l-3.6-14.8h2.8l1.7,8.1c0.4,2.1,0.5,2.5,0.7,3.7l0,0
+			c0.3-1.2,0.6-2.5,0.9-3.7l2.1-8.1h2.7l2.1,8.1c0.4,1.4,0.6,2.5,0.8,3.7l0,0c0.2-1.2,0.4-2.3,0.7-3.7l1.6-8.1h2.8l-3.6,14.8h-2.8
+			l-2.1-8c-0.3-1.2-0.7-2.5-0.9-3.7l0,0c-0.2,1.2-0.5,2.4-0.8,3.8l-2.1,7.9C1132.1,102.4,1129.1,102.4,1129.1,102.4z M1151.3,87.7
+			v14.8h-2.5V91.7c-0.7,0.7-1.8,0.9-3,0.9c-0.2,0-0.4,0-0.6,0v-2.2c2.4,0,3.7-0.8,4-2.7C1149.2,87.7,1151.3,87.7,1151.3,87.7z"/>
+		<path id="m7-w1-d3-week" className="st0" d="M1194.4,133l-3.6-14.8h2.8l1.7,8.1c0.4,2.1,0.5,2.5,0.7,3.7l0,0c0.3-1.2,0.6-2.5,0.9-3.7
+			l2.1-8.1h2.7l2.1,8.1c0.4,1.4,0.6,2.5,0.8,3.7l0,0c0.2-1.2,0.4-2.3,0.7-3.7l1.6-8.1h2.8L1206,133h-2.8l-2.1-8
+			c-0.3-1.2-0.7-2.5-0.9-3.7l0,0c-0.2,1.2-0.5,2.4-0.8,3.8l-2.1,7.9H1194.4z M1216.6,118.3V133h-2.5v-10.7c-0.7,0.7-1.8,0.9-3,0.9
+			c-0.2,0-0.4,0-0.6,0V121c2.4,0,3.7-0.8,4-2.7H1216.6z"/>
+		<path id="m7-w1-d4-week" className="st0" d="M1240.1,163.6l-3.6-14.8h2.8l1.7,8.1c0.4,2.1,0.5,2.5,0.7,3.7l0,0
+			c0.3-1.2,0.6-2.5,0.9-3.7l2.1-8.1h2.7l2.1,8.1c0.4,1.4,0.6,2.5,0.8,3.7l0,0c0.2-1.2,0.4-2.3,0.7-3.7l1.6-8.1h2.8l-3.6,14.8h-2.8
+			l-2.1-8c-0.3-1.2-0.7-2.5-0.9-3.7l0,0c-0.2,1.2-0.5,2.4-0.8,3.8l-2.1,7.9H1240.1z M1262.3,148.9v14.8h-2.5V153
+			c-0.7,0.7-1.8,0.9-3,0.9c-0.2,0-0.4,0-0.6,0v-2.2c2.4,0,3.7-0.8,4-2.7h2.1V148.9z"/>
+		<path id="m8-w5-d1-week" className="st0" d="M1028.6,1020.2l-3.6-14.8h2.8l1.7,8.1c0.4,2.1,0.5,2.5,0.7,3.7l0,0
+			c0.3-1.2,0.6-2.5,0.9-3.7l2.1-8.1h2.7l2.1,8.1c0.4,1.4,0.6,2.5,0.8,3.7l0,0c0.2-1.2,0.4-2.3,0.7-3.7l1.6-8.1h2.8l-3.6,14.8h-2.8
+			l-2.1-8c-0.3-1.2-0.7-2.5-0.9-3.7l0,0c-0.2,1.2-0.5,2.4-0.8,3.8l-2.1,7.9H1028.6z M1055.2,1015.5c0,2.8-1.8,5-5.3,5
+			c-2.9,0-5-1.7-5-4.7l2.5-0.4c0,1.9,1,3,2.5,3c1.8,0,2.7-1.1,2.7-3c0-1.8-1.1-2.7-2.7-2.7c-1.1,0-1.9,0.4-2.4,1.1l-2.3-0.4l1.1-8
+			h8.1v2.2h-6l-0.5,3.8c0.6-0.6,1.5-1,2.6-1C1052.9,1010.5,1055.2,1012,1055.2,1015.5z"/>
+	</g>
+</g>
+<g id="Hilfslinien" className="st14">
+</g>
+</svg>
+        {/* <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
              viewBox="0 0 1920 1080">
             <g onClick={handleClick} id="Monate">
                 <g onClick={handleClick} id="m7-juli">
@@ -1840,7 +2376,7 @@ function CalendarGraphicComponent() {
                 C395.1,590.1,396.2,589.6,396.9,588.6z M406.2,592v-12.5h-4.8v-2.2h12.2v2.2h-4.8V592H406.2z"/>
         </g>
         </svg>
-        
+         */}
         </CalendarGraphic>
     )
 }

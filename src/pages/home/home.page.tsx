@@ -11,12 +11,12 @@ function HomePage({ props }) {
 
     useEffect(() => {
         return () => {
-            updateBaseState({ type: actions.SET_BASE, payload: { contentLoaded: true } });
+            // updateBaseState({ type: actions.SET_BASE, payload: { contentLoaded: true } });
         }
     }, [])
 
     const contentLoaded = () => {
-        updateBaseState({ type: actions.SET_BASE, payload: { contentLoaded: true } });
+        // updateBaseState({ type: actions.SET_BASE, payload: { contentLoaded: true } });
     }
     
 

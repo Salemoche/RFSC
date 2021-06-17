@@ -88,6 +88,7 @@ export const WP_QUERY = {
                 }
             }
             days {
+                scrollText
                 days {
                     date
                     week

@@ -48,7 +48,7 @@ export const baseState = {
         // },
     },
     calendar: {
-        scrollDist: -450, // 0,
+        scrollDist: -350, // 0,
         scrollDir: 'forward',
         hasScrolled: false,
         currentDay: 1,

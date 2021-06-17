@@ -16,15 +16,22 @@ import FooterComponent from '../footer/footer.component';
 import SpacePage from '../../../pages/space/space.page';
 import AudioComponent from '../audio/audio.component';
 import LoadingComponent from '../../2_molecules/loading/loading.component';
+import actions from '../../../state/actions';
 
 function Wrapper() {
 
     const state = useBaseState().state;
+    const updateBaseState = useBaseState().dispatchBase;
+
+    const handleLoad = () => {
+        console.log('everything is ready');
+        updateBaseState({ type: actions.SET_BASE, payload: { contentLoaded: true } });
+    }
 
     return (
         <Router>
             <GlobalStyle/>
-            <AppStyles sizes={ state.base.sizes }>
+            <AppStyles sizes={ state.base.sizes } onLoad={ handleLoad }>
                 <HeaderComponent/>
                 <MainStyles styles={ state.base.styles }>
                 <Switch>
@@ -34,7 +41,7 @@ function Wrapper() {
                     <Route path="/space" exact component={SpacePage}/>
                 </Switch>
                 </MainStyles>
-                {/* <LoadingComponent/> */}
+                <LoadingComponent/>
                 <FooterComponent/>
                 <AudioComponent/>
             </AppStyles>

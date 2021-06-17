@@ -52,10 +52,33 @@ export const CalendarListStyles = styled.div `
 
         .rfsc-calendar__list__title {
             transform: rotateX(-60deg);
-            width: 50vw;
+            width: 80vw;
             display: block;
             margin: 0 auto;
-            max-width: 500px;
+            max-width: 1000px;
+
+            .rfsc-calendar__list__title__logo,
+            .rfsc-calendar__list__title__text {
+                opacity: 0;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 100%
+            }
+
+            .rfsc-calendar__list__title__logo {
+                animation: rfsc_blink_in_out 5s infinite;
+            }
+
+            .rfsc-calendar__list__title__text {
+                animation: rfsc_blink_in_out 5s 2.5s infinite;
+                font-size: ${props => props.styles.typography.fontLarge.large.fontSize}px;
+                letter-spacing: ${props => props.styles.typography.fontLarge.large.letterSpacing}px;
+                line-height: ${props => props.styles.typography.fontLarge.large.lineHeight};
+                text-align: center;
+                text-transform: uppercase;
+            }
         }
     }
 `
@@ -68,23 +91,33 @@ export const CalendarListItemStyles = styled.div `
     transition: ${props => props.styles.animation.transitions.long};
     cursor: pointer;
     pointer-events: all;
-    font-size: ${props => props.styles.typography.fontMedium.large.fontSize}px;
+     font-size: ${props => props.styles.typography.fontMedium.large.fontSize}px;
+    letter-spacing: ${props => props.styles.typography.fontMedium.large.letterSpacing}px;
     line-height: ${props => props.styles.typography.fontMedium.large.lineHeight};
 
     .rfsc-list-item__side {
 
         display: grid;
-        grid-template-rows: 1fr auto 1fr;
+        grid-template-rows: auto 1fr auto;
         grid-template-columns: 1fr;
 
         &.rfsc-list-item__side-front {
-            /* padding: ${props => (props.styles.spacing.medium)}px; */
-            border: ${props => (props.styles.spacing.medium)}px solid ${props => (props.styles.colors.green)};
+            padding: ${props => (props.styles.spacing.medium)}px;
+            /* border: ${props => (props.styles.spacing.medium)}px solid ${props => (props.styles.colors.green)}; */
 
             &.radio {
                 background: ${props => (props.styles.colors.grayReal)};
-                border: ${props => (props.styles.spacing.medium)}px solid ${props => (props.styles.colors.grayReal)};
+                /* border: ${props => (props.styles.spacing.medium)}px solid ${props => (props.styles.colors.grayReal)}; */
                 color: black;
+            }
+
+            &.tattoo {
+                color: black; 
+
+
+                .rfsc-list-item__header {
+                    color: black; 
+                }
             }
 
             &.event {
@@ -96,67 +129,76 @@ export const CalendarListItemStyles = styled.div `
                 .rfsc-list-item__content {
                     grid-row-end: 3;
                     overflow: scroll;
-                    align-items: flex-start;
-                    align-content: flex-start;
-}
+                    align-items: center;
+                    align-content: center;
                 }
             }
         }
+    }
 
-        .rfsc-list-item__header {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            grid-row-start: 1;
-            grid-row-end: 2;
-            text-transform: uppercase;
+    .rfsc-list-item__header {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        grid-row-start: 1;
+        grid-row-end: 2;
+        text-transform: uppercase;
 
-            .rfsc-list-item__header__date {
+        .rfsc-list-item__header__date {
 
-            }
-
-            .rfsc-list-item__header__category {
-            }
-
-            .rfsc-list-item__header__week {
-
-            }
         }
 
-        .rfsc-list-item__content {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-content: center;
-            align-items: center;
-            /* align-items: space-between;
-            align-content: space-between; */
-            grid-row-start: 2;
-            grid-row-end: 3;
+        .rfsc-list-item__header__category {
+        }
+
+        .rfsc-list-item__header__week {
+
+        }
+    }
+
+    .rfsc-list-item__content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+        /* align-items: space-between;
+        align-content: space-between; */
+        grid-row-start: 2;
+        grid-row-end: 3;
             font-size: ${props => props.styles.typography.fontMedium.large.fontSize}px;
-            line-height: ${props => props.styles.typography.fontMedium.large.lineHeight};
+        letter-spacing: ${props => props.styles.typography.fontMedium.large.letterSpacing}px;
+        line-height: ${props => props.styles.typography.fontMedium.large.lineHeight};
 
-            .rfsc-list-item__content__item {
-                width: 100%;
-                margin: ${props => (props.styles.spacing.large)}px 0;
-                
+        .rfsc-list-item__content__item {
+            width: 100%;
+            margin: ${props => (props.styles.spacing.medium)}px 0;
+            
 
-                span {
-                }
-
-                .rfsc-list-item__content__item__title {
-                    width: 100%;
-                    font-size: ${props => props.styles.typography.fontLarge.large.fontSize}px;
-                    line-height: ${props => props.styles.typography.fontLarge.large.lineHeight};
-                    margin: ${props => (props.styles.spacing.small)}px 0
-                }
+            span {
             }
 
-            .rfsc-list-item__content__icon {
-                width: 80%;
-                height: 80%;
+            .rfsc-list-item__content__item__title {
+                width: 100%;
+                font-size: ${props => props.styles.typography.fontLarge.large.fontSize}px;
+                letter-spacing: ${props => props.styles.typography.fontLarge.large.letterSpacing}px;
+                line-height: ${props => props.styles.typography.fontLarge.large.lineHeight};
+                margin: ${props => (props.styles.spacing.medium)}px 0;
+                margin: 0px;
+            }
+
+            .rfsc-list-item__content__item__location {
+                text-transform: uppercase;
             }
         }
+
+        .rfsc-list-item__content__icon {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            z-index: -1;
+        }
+    }
 
         .rfsc-list-item__extra {
             text-transform: uppercase;
@@ -181,6 +223,7 @@ export const CalendarListItemStyles = styled.div `
     &.behind-viewport {
         opacity: 0;
         pointer-events: none;
+        transform: rotateX(-60deg) scale(2);
     }
 
     &.in-front-of-viewport {
@@ -218,6 +261,10 @@ export const CalendarListItemStyles = styled.div `
             transform: rotateY(0deg);
             background-color: ${props => props.styles.colors.green};
             color: ${props => props.styles.colors.red};
+
+            &.tattoo {
+                background-color: white;
+            }
         }
 
         &.rfsc-list-item__side-back {
@@ -239,33 +286,54 @@ export const CalendarListItemStyles = styled.div `
 
 export const CalendarGraphic = styled.div `
 
-    .st0{fill: #ffffff;}
+    /* .st0{fill: #ffffff;}
+    .st1{font-family:'ABCMonumentGrotesk-Medium';}
+    .st2{font-size:21.0676px;}
+    .st3{font-size:21.0675px;} */
+
+    /* .st0{fill:#1A171B;}
     .st1{font-family:'ABCMonumentGrotesk-Medium';}
     .st2{font-size:21.0676px;}
     .st3{font-size:21.0675px;}
+    .st4{font-size:21.0695px;}
+    .st5{font-size:21.0661px;}
+    .st6{font-size:21.0657px;}
+    .st7{font-size:21.066px;}
+    .st8{fill:none;}
+    .st9{font-size:21px;}
+    .st10{font-size:21.0653px;}
+    .st11{font-size:21.0692px;}
+    .st12{font-size:21.0662px;}
+    .st13{font-size:21.069px;}
+    .st14{display:none;} */
 
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 
+    font-size: ${props => props.styles.typography.fontSmall.large.fontSize}px;
+    line-height: ${props => props.styles.typography.fontSmall.large.lineHeight};
+
     svg {
 
-        height: 100%;
+        height: 108%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
 
         [id*=event],
         [id*=week],
         [id*=day],
         [id*=location],
-        [id*=type] {
+        [id*=type],
+        [id*=Monate] {
             cursor: pointer;
             transition: ${props => props.styles.animation.transitions.regular};
             transform-origin: center;
             fill: white;
-
-            text {
-                transition: ${props => props.styles.animation.transitions.regular};
-            }
 
             &:hover {
                 /* transform: scale(1.5); */
@@ -275,6 +343,19 @@ export const CalendarGraphic = styled.div `
                     fill: ${props => props.styles.colors.red};
                 }
             }
+        }
+
+        [id*=event-1] {
+            text-anchor: end;
+        }
+
+        rect {
+            fill: none;
+        }
+
+        text {
+            transition: ${props => props.styles.animation.transitions.regular};
+            text-transform: uppercase;
         }
 
         [data-active] {
@@ -300,10 +381,10 @@ export const CalendarGraphic = styled.div `
         }
 
         ${props => getFilteredId(props)} {
-            fill: ${props => props.styles.colors.red};
+            /* fill: ${props => props.styles.colors.red}; */
 
             text {
-                fill: ${props => props.styles.colors.red};
+                /* fill: ${props => props.styles.colors.red}; */
             }
 
             /* &:hover {
@@ -323,7 +404,7 @@ export const CalendarGraphic = styled.div `
         }
 
         .active {
-            color:  ${props => props.styles.colors.red};
+            /* color:  ${props => props.styles.colors.red}; */
         }
     }
 
@@ -333,8 +414,9 @@ const getActiveId = ({currentDetail: {id, day, week, month}}) => {
 
     return `
         #m${month}-w${week}-d${day}-day,
-        [id*='w${week}'][id*='-week'],
-        #m${month}-w${week}-d${day}-week
+        [id*='m${month}-w${week}-d${day}'][id*='-event'],
+        #m${month}-w${week}-d${day}-week,
+        [id*='m${month}'][id*='-month']
     `;
 }
 
@@ -466,24 +548,24 @@ export const CalendarDetailsStyles = styled.div `
 `
 
 export const CalendarEventDetailsStyles = styled(CalendarDetailsStyles) `
-    /* padding: ${props => props.styles.spacing.medium}px; */
+    padding: ${props => props.styles.spacing.medium}px;
 
     &.event {
-        background-color: ${props => props.styles.colors.green};
+        background-color: ${props => props.styles.colors.backgroundGreenOpacity};
         color: ${props => props.styles.colors.red};
-        border: ${props => props.styles.spacing.medium}px solid ${props => props.styles.colors.green};
+        /* border: ${props => props.styles.spacing.medium}px solid ${props => props.styles.colors.green}; */
     }
 
     &.radio {
-        background-color: ${props => props.styles.colors.grayReal};
+        background-color: ${props => props.styles.colors.backgroundGrayOpacity};
         color: black;
-        border: ${props => props.styles.spacing.medium}px solid ${props => props.styles.colors.grayReal};
+        /* border: ${props => props.styles.spacing.medium}px solid ${props => props.styles.colors.grayReal}; */
     }
 
     &.tattoo {
-        background-color: white;
+        background-color: ${props => props.styles.colors.backgroundWhiteOpacity};
         color: black;
-        border: ${props => props.styles.spacing.medium}px solid white;
+        /* border: ${props => props.styles.spacing.medium}px solid white; */
     }
 
 
@@ -491,37 +573,50 @@ export const CalendarEventDetailsStyles = styled(CalendarDetailsStyles) `
         width: 100%;
         display: flex;
         justify-content: space-between;
-        margin-bottom: ${props => props.styles.spacing.large}px;
+        margin-bottom: ${props => props.styles.spacing.medium}px;
 
         .rfsc-detail-header__item {
             text-transform: uppercase;
-            width: 33%;
         }
 
+        .rfsc-event-detail__header__date,
+        .rfsc-tattoo-detail__header__date {
+            width: 170px;
+        }
         .rfsc-event-detail__header__leader,
         .rfsc-radio-detail__header__host,
         .rfsc-tattoo-detail__header__host {
             text-align: center;
+            flex-grow: 1;
         }
 
         .rfsc-event-detail__header__type,
         .rfsc-radio-detail__header__type,
         .rfsc-tattoo-detail__header__type {
             text-align: right;
+            width: 170px;
         }
+
+        .rfsc-radio-detail__header__date,
+        .rfsc-radio-detail__header__type {
+            width: 100px
+        }
+
     }
 
     
     .rfsc-radio-detail__header,
     .rfsc-tattoo-detail__header {
         border-bottom: 2px solid black;
-        padding-bottom: ${props => props.styles.spacing.large}px;
+        /* padding-bottom: ${props => props.styles.spacing.medium}px; */
+        padding-bottom: 13px;
     }
 `
 
 export const CalendarEventDetailStyles = styled.div `
     margin-bottom: ${props => props.styles.spacing.medium}px;
-    /* font-size: ${props => props.styles.typography.fontMedium.large.fontSize}px;
+    /*  font-size: ${props => props.styles.typography.fontMedium.large.fontSize}px;
+letter-spacing: ${props => props.styles.typography.fontMedium.large.letterSpacing}px;
     line-height: ${props => props.styles.typography.fontMedium.large.lineHeight}; */
 
     &.rfsc-event {
@@ -530,6 +625,10 @@ export const CalendarEventDetailStyles = styled.div `
 
     &.rfsc-radio, &.rfsc-tattoo {
         /* border-bottom: 2px solid black; */
+
+        &:not(:first-of-type) {
+            margin-top: calc(${props => props.styles.typography.fontMedium.large.fontSize * 1.2}px + ${props => props.styles.typography.fontMedium.large.fontSize * 1.2}px + ${props => props.styles.typography.fontLarge.large.fontSize * 1.2}px + ${props => props.styles.spacing.large}px)
+        }
     }
 
     /* ========
@@ -553,11 +652,13 @@ export const CalendarEventDetailStyles = styled.div `
 
         .rfsc-event-detail__lead__time {
             /* font-size: ${props => props.styles.typography.fontLarge.large.fontSize}px;
+letter-spacing: ${props => props.styles.typography.fontLarge.large.letterSpacing}px;
             line-height: ${props => props.styles.typography.fontLarge.large.lineHeight}; */
         }
 
         .rfsc-event-detail__lead__title {
             font-size: ${props => props.styles.typography.fontLarge.large.fontSize}px;
+            letter-spacing: ${props => props.styles.typography.fontLarge.large.letterSpacing}px;
             line-height: ${props => props.styles.typography.fontLarge.large.lineHeight};
         }
     }
@@ -585,8 +686,9 @@ export const CalendarEventDetailStyles = styled.div `
         justify-content: center;
         flex-wrap: wrap;
         text-align: center;
-        margin-bottom: ${props => props.styles.spacing.large}px;
-        padding-bottom: ${props => props.styles.spacing.large}px;
+        margin-bottom: ${props => props.styles.spacing.medium}px;
+        padding-bottom: ${props => props.styles.spacing.medium}px;
+        text-transform: uppercase;
 
         > * {
             width: 100%;
@@ -594,8 +696,9 @@ export const CalendarEventDetailStyles = styled.div `
 
         .rfsc-radio-detail__item__artist,
         .rfsc-tattoo-detail__item__artist {
-
+            text-transform: uppercase;
             font-size: ${props => props.styles.typography.fontLarge.large.fontSize}px;
+            letter-spacing: ${props => props.styles.typography.fontLarge.large.letterSpacing}px;
             line-height: ${props => props.styles.typography.fontLarge.large.lineHeight};
         }
     }

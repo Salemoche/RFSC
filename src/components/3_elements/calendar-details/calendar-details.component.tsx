@@ -55,7 +55,7 @@ function CalendarEventDetailsComponent({ type }) {
                             <div className={`rfsc-${type}-detail__header__date rfsc-detail-header__item`}>
                                 { formatDate(day.date)?.day }
                                 .
-                                { formatDate(day.date)?.month }
+                                { formatDate(day.date)?.month }.
                             </div>
                             <div className={`rfsc-${type}-detail__header__host rfsc-detail-header__item`}>
                                 { day.host }

@@ -31,7 +31,7 @@ function CalendarEventDetailComponent({ post, type }) {
                             <div className="rfsc-event-detail__header__date rfsc-detail-header__item">
                                 { formatDate(event.event_content.date)?.day }
                                 .
-                                { formatDate(event.event_content.date)?.month }
+                                { formatDate(event.event_content.date)?.month }.
                             </div>
                             <div className="rfsc-event-detail__header__leader rfsc-detail-header__item">
                                 { event.event_content.leader }

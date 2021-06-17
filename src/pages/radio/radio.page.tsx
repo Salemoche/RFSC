@@ -14,9 +14,9 @@ function RadioPage() {
     // console.log(radio, sound, base)
 
     useEffect(() => {
-        updateBaseState({ type: actions.SET_BASE, payload: { contentLoaded: true } });
+        // updateBaseState({ type: actions.SET_BASE, payload: { contentLoaded: true } });
         return () => {       
-            updateBaseState({ type: actions.SET_BASE, payload: { contentLoaded: false } });
+            // updateBaseState({ type: actions.SET_BASE, payload: { contentLoaded: false } });
         }
     }, [])
 

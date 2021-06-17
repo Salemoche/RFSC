@@ -78,8 +78,20 @@ function CalendarComponent() {
         }
     }
 
+    const closeDetails = (e) => {
+
+        e.stopPropagation();
+        const { showEventDetail, showRadioDetail, showTattooDetail } = base;
+
+        console.log(e.target);
+
+        if ( (showEventDetail || showRadioDetail || showTattooDetail) && !e.target.closest('[class*=rfsc-calendar__details]')) {
+            updateBase({ type: actions.SET_BASE, payload: { showEventDetail: false, showRadioDetail: false, showTattooDetail: false } });
+        }
+    }
+
     return (
-        <CalendarStyles onWheel={handleScroll} className="rfsc-calendar" styles={base.styles}>
+        <CalendarStyles onWheel={handleScroll} className="rfsc-calendar" styles={base.styles} onClick={closeDetails}>
             { base.contentFetched ? 
                 <React.Fragment>
                     { showDetails() }

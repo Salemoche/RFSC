@@ -170,15 +170,15 @@ function CalendarListItemComponent({
                     front: 
                     <div className={`rfsc-list-item__side rfsc-list-item__side-front ${postObject.type}`}>
                         <div className="rfsc-list-item__header">
-                            <div className="rfsc-list-item__header__date">{ date.day }.{ date.month }</div>
+                            <div className="rfsc-list-item__header__date">{ date.day }.{ date.month }.</div>
                             <div className="rfsc-list-item__header__category">{ filters.typeTitles?.length > 1 ? 'VARIOUS' : filters.typeTitles }</div>
                             <div className="rfsc-list-item__header__week">W{week}</div></div>
                             <div className="rfsc-list-item__content">
                             {post.events.map( (event, i) => (
                                 <div key={event.slug} className="rfsc-list-item__content__item">
                                     <div className="rfsc-list-item__content__item__time">
-                                        <span>{formatTime(event.event_content.fromTime)?.hours}.{formatTime(event.event_content.fromTime)?.minutes}</span> – 
-                                        <span> {formatTime(event.event_content.toTime)?.hours}.{formatTime(event.event_content.toTime)?.minutes}</span> H
+                                        <span>{formatTime(event.event_content.fromTime)?.hours}.{formatTime(event.event_content.fromTime)?.minutes}</span>–
+                                        <span>{formatTime(event.event_content.toTime)?.hours}.{formatTime(event.event_content.toTime)?.minutes}</span> H
                                     </div>
                                     <h1 className="rfsc-list-item__content__item__title">{event.title}</h1>
                                     <div className="rfsc-list-item__content__item__location">
@@ -209,7 +209,7 @@ function CalendarListItemComponent({
                     front: 
                         <div className={`rfsc-list-item__side rfsc-list-item__side-front ${postObject.type}`}>
                             <div className="rfsc-list-item__header">
-                                <div className="rfsc-list-item__header__date">{ date.day }.{ date.month }</div>
+                                <div className="rfsc-list-item__header__date">{ date.day }.{ date.month }.</div>
                                 <div className="rfsc-list-item__header__category">Tattoo</div>
                                 <div className="rfsc-list-item__header__week">W{week}</div>
                             </div>
@@ -237,8 +237,8 @@ function CalendarListItemComponent({
                     front: 
                         <div className={`rfsc-list-item__side rfsc-list-item__side-front ${postObject.type}`}>
                             <div className="rfsc-list-item__header">
-                                <div className="rfsc-list-item__header__date">{ date.day }.{ date.month }</div>
-                                <div className="rfsc-list-item__header__category">Radio-Box</div>
+                                <div className="rfsc-list-item__header__date">{ date.day }.{ date.month }.</div>
+                                <div className="rfsc-list-item__header__category">Radio</div>
                                 <div className="rfsc-list-item__header__week">W{week}</div>
                             </div>
                             <div className="rfsc-list-item__content">
@@ -265,7 +265,7 @@ function CalendarListItemComponent({
                     front: 
                         <div className={`rfsc-list-item__side rfsc-list-item__side-front ${postObject.type}`}>
                             <div className="rfsc-list-item__header">
-                                <div className="rfsc-list-item__header__date">{ date.day }.{ date.month }</div>
+                                <div className="rfsc-list-item__header__date">{ date.day }.{ date.month }.</div>
                                 <div className="rfsc-list-item__header__category">VARIOUS</div>
                                 <div className="rfsc-list-item__header__week">W{week}</div>
                             </div>

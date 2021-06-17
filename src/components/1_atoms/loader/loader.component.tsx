@@ -49,6 +49,11 @@ function LoaderComponent() {
         updateBaseState({ type: actions.SET_SOUND, payload: { 
             stream: data.siteSettings.siteSettings.stream
         }})  
+        updateBaseState({ type: actions.SET_CALENDAR, payload: { 
+            scrollText: data.pages.nodes.filter((node) => {
+                return node.pageId === 21
+            })[0].days.scrollText
+        }})  
         updateBaseState({ type: actions.SET_CONTENT, payload: {
             days: data.pages.nodes.filter((node) => {
                 return node.pageId === 21

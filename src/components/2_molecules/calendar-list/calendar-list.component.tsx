@@ -15,6 +15,7 @@ const CalendarListComponent: React.FC<CalendarListComponentProps> = () => {
     const styles = useBaseState().state.base.styles;
     const days = useBaseState().state.content.days;
     const filters = useBaseState().state.filters;
+    const calendar = useBaseState().state.calendar;
     let { scrollDist, scrollDir } = useBaseState().state.calendar;
     const updateBase = useBaseState().dispatchBase;
 
@@ -104,10 +105,10 @@ const CalendarListComponent: React.FC<CalendarListComponentProps> = () => {
             scrollDist={scrollDist} 
         >
             <div className="rfsc-calendar__list-container">
-                {days.slice(0).reverse().map((day) => (
+                {days.slice(0).reverse().map((day, i) => (
                     <div 
-                        key={`rfsc-calendar__list__day-${day.index}`}
-                        id={`rfsc-calendar__list__day-${day.index}`} 
+                        key={`rfsc-calendar__list__day-${day.index}-${i}`}
+                        id={`rfsc-calendar__list__day-${day.index}-${i}`} 
                         className="rfsc-calendar__list__day"
                         data-week={day.week}
                     >
@@ -149,7 +150,14 @@ const CalendarListComponent: React.FC<CalendarListComponentProps> = () => {
                     </div>
                 ))}
                 <div className="rfsc-calendar__list__title">
-                    <ImageContainerComponent src={base.icons.iconLogo ? base.icons.iconLogo.sourceUrl : ''} alt="rfsc-logo" hasLoader={false}/>
+                    <div className="rfsc-calendar__list__title__logo">
+                        <ImageContainerComponent src={base.icons.iconLogo ? base.icons.iconLogo.sourceUrl : ''} alt="rfsc-logo" hasLoader={false}/>
+                    </div>
+                    { !calendar.hasScrolled ? 
+                        <div className="rfsc-calendar__list__title__text">{ calendar.scrollText }</div>
+                    :
+                        ''
+                    }
                 </div>
             </div>
         </CalendarListStyles>
