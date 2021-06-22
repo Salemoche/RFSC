@@ -16,16 +16,17 @@ function PlayerComponent() {
         <NavPlayerStyles className="rfsc-nav-player" styles={ base.styles }>
             { base.contentLoaded ? 
                 <React.Fragment>
-                    <IconStyles className="rfsc-nav-player__button__icon rfsc-icon" styles={base.styles}>
-                        { sound.onAir ?
+                    { sound.onAir ?
+                        <IconStyles className="rfsc-nav-player__button__icon rfsc-icon" styles={base.styles}>
                             sound.isPlaying ? 
                                 <img src={ base.icons.iconPause.sourceUrl } alt="pause-icon" />
                             :
                                 <img src={ base.icons.iconPlay.sourceUrl } alt="play-icon" />
+                        
+                        </IconStyles>
                         :
                             ''
-                        }
-                    </IconStyles>
+                    }
                     <ButtonStyles  className="rfsc-nav-player__button rfsc-button" onClick={handlePlay} styles={ base.styles }>
                         { sound.isPlaying ? 'Pause' : 'Play' }
                     </ButtonStyles>

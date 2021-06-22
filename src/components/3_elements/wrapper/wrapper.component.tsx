@@ -1,5 +1,6 @@
 // Base
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 // Pages
 import HomePage from '../../../pages/home/home.page';
@@ -17,21 +18,57 @@ import SpacePage from '../../../pages/space/space.page';
 import AudioComponent from '../audio/audio.component';
 import LoadingComponent from '../../2_molecules/loading/loading.component';
 import actions from '../../../state/actions';
+import DeviceDetector from 'device-detector-js';
 
 function Wrapper() {
 
     const state = useBaseState().state;
     const updateBaseState = useBaseState().dispatchBase;
 
+    interface Device {
+        client: {
+            name: string,
+        }
+    }
+
+    const [device, setDevice] = useState<Device | DeviceDetector.DeviceDetectorResult | null>({
+        client: {
+            name: '',
+        }
+    });
+
     const handleLoad = () => {
         // console.log('everything is ready');
         updateBaseState({ type: actions.SET_BASE, payload: { contentLoaded: true } });
     }
 
+    const handleResize = () => {
+        console.log(device?.client?.name);
+    }
+
+    useEffect(() => {
+
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        updateBaseState({ type: actions.SET_BASE, payload: { contentLoaded: true, device: getDevice() } });
+        
+        return () => {
+            window.removeEventListener('resize', handleResize)
+        }
+    }, [])
+
+    const getDevice = () => {
+        const deviceDetector = new DeviceDetector();
+        const userAgent = window.navigator.userAgent;
+        const detectedDevice = deviceDetector.parse(userAgent);
+        setDevice(detectedDevice)
+        return detectedDevice;
+    }
+
     return (
         <Router>
             <GlobalStyle/>
-            <AppStyles sizes={ state.base.sizes } device={ state.base.device } onLoad={ handleLoad }>
+            <AppStyles sizes={ state.base.sizes } device={ device } onLoad={ handleLoad }>
                 <HeaderComponent/>
                 <MainStyles styles={ state.base.styles }>
                 <Switch>

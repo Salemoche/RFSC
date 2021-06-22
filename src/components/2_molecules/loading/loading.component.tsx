@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { LoadingStyles } from '../../../styles/default.styles';
 import { useBaseState } from '../../../state/provider';
 
@@ -6,11 +6,24 @@ function LoadingComponent() {
 
     const base = useBaseState().state.base;    
     // const content = useBaseState().state.content;
+    let transitionStyles = `
+        opacity: 1;
+    `
+
+    useEffect(() => {
+        return () => {
+            // setTimeout(() => {
+            //     transitionStyles = `
+            //         opacity: 0;
+            //     `
+            // }, 1000);
+        }
+    }, [])
 
     return (
         <React.Fragment>
             { !base.contentLoaded ?    
-                <LoadingStyles styles={base.styles}>
+                <LoadingStyles styles={base.styles} transitionStyles={ transitionStyles }>
                     <div className="rfsc-loading__graphic">
                     <svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 2383.94 1170.97">
                         <g>

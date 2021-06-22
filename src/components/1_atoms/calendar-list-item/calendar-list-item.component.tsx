@@ -2,9 +2,10 @@ import React, { useEffect, useRef, useState } from 'react'
 import { CalendarListItemStyles } from '../../../styles/calendar.styles';
 import { useBaseState } from '../../../state/provider';
 import actions from '../../../state/actions';
-import { formatTime, isLocation } from '../../../utils/helpers';
+import { formatTime, isLocation, getCategories } from '../../../utils/helpers';
 import ImageContainerComponent from '../image-container/image-container.component';
 import { useHistory } from 'react-router-dom';
+import { useSpring, animated } from 'react-spring';
 
 function CalendarListItemComponent({ 
     post, 
@@ -28,22 +29,46 @@ function CalendarListItemComponent({
     const [distanceFromViewport, setDistanceFromViewport] = useState({ toBack: 0, toFront: 0})
     // const [active, setActive] = useState(false);
     const [offsetTop, setOffsetTop] = useState(0)
+    const base = useBaseState().state.base;
     const styles = useBaseState().state.base.styles;
     const hasScrolled = useBaseState().state.calendar.hasScrolled;
     const history = useHistory();
-    const updateBaseState = useBaseState().dispatchBase
+    const updateBaseState = useBaseState().dispatchBase;
+    const [isRotatedOut, setIsRotatedOut] = useState(false)
+    const rotateOut = useSpring({
+        rotateY: isRotatedOut ? '90deg' : '0deg',
+        scale: isRotatedOut ? '1.5' : '1',
+        config: {
+            duration: 100
+        }
+    })
 
 
     useEffect(() => {
-        if (typeof elementRef.current?.offsetTop === 'number') {
-            setOffsetTop(elementRef.current?.offsetTop);
-            const id = getPost().post.id;
-            if (id) {
-                updateBaseState({type: actions.SET_CALENDAR_EVENT_POSITIONS, payload: { [id]: elementRef.current?.offsetTop}})
-            }
-        }
         setBehindViewport(false);
     }, [])
+
+    useEffect(() => {
+
+        if ( !base.showEventDetail && !base.showRadioDetail && !base.showTattooDetail  ) {
+            setIsRotatedOut(false);
+        }
+
+        setTimeout(() => {
+            // set positions
+
+            if (typeof elementRef.current?.offsetTop === 'number') {
+                setOffsetTop(elementRef.current?.offsetTop);
+
+
+                const id = getPost().post.id;
+                if (id) {
+                    updateBaseState({type: actions.SET_CALENDAR_EVENT_POSITIONS, payload: [{ id, position: elementRef.current?.offsetTop, day, week}]})
+                }
+            }
+        }, 300);
+
+    }, [base.showEventDetail, base.showRadioDetail, base.showTattooDetail ])
 
     useEffect(() => {
 
@@ -85,11 +110,16 @@ function CalendarListItemComponent({
             toFront: 0
         })
 
-    }, [scrollDist])
+        // console.log('from item:', scrollDist, containerHeight)
+
+    }, [scrollDist, containerHeight])
 
     const handleClick = (e, type) => {
         // console.log(e.target, type);
         let detail = 'showEventDetail';
+        setIsRotatedOut(is => !is);
+
+        if ( e.target.closest('[class*=inactive]' ) || e.target.closest('[class*=behind-viewport]' )) return
 
         switch (type) {
             case 'event':
@@ -112,7 +142,45 @@ function CalendarListItemComponent({
     }
 
     const setCurrentDetail = (showDetails = { showEventDetail: false, showTattooDetail: false, showRadioDetail: false }) => {
-            
+        
+        let categories: {
+            locations: string[],
+            locationTitles: string[],
+            types: string[],
+            typeTitles: string[],
+        }
+
+        switch (post.fieldGroupName) {
+            case 'Page_Days_days_Posts_EventLayout':
+                categories = getCategories(post.events[0])
+                break;
+            case 'Page_Days_days_Posts_RadioLayout':
+                categories = {
+                    locations: ['radio-box'],
+                    locationTitles: ['Radio-Box'],
+                    types: ['radio'],
+                    typeTitles: ['Radio'],
+                }
+                break;
+            case 'Page_Days_days_Posts_TattooLayout':
+                categories = {
+                    locations: ['foyer'],
+                    locationTitles: ['Foyer'],
+                    types: ['tattoo'],
+                    typeTitles: ['Tattoo'],
+                }
+                break;
+        
+            default:
+                categories = {
+                    locations: [],
+                    locationTitles: [],
+                    types: [],
+                    typeTitles: [],
+                }
+                break;
+        }
+
         updateBaseState({ type: actions.SET_ACTIVE_CALENDAR, payload: { 
             ...showDetails, 
             currentEventDetail: { 
@@ -123,8 +191,10 @@ function CalendarListItemComponent({
                 day,
                 week,
                 month,
-                types: [],
-                locations: []
+                types: categories.types,
+                locations: categories.locations
+                // types: [],
+                // locations: []
             }
         }});
     }
@@ -147,7 +217,8 @@ function CalendarListItemComponent({
             front: {
                 icon: '',
                 extra: ''
-            }
+            },
+            filteredOut: false,
         }
 
         let content = { 
@@ -164,11 +235,12 @@ function CalendarListItemComponent({
                     front: {
                         icon: '',
                         extra: post.extra
-                    }
+                    },
+                    filteredOut: post.events[0]?.filteredOut
                 }
                 content = {
                     front: 
-                    <div className={`rfsc-list-item__side rfsc-list-item__side-front ${postObject.type}`}>
+                    <animated.div className={`rfsc-list-item__side rfsc-list-item__side-front ${postObject.type}`} style={rotateOut}>
                         <div className="rfsc-list-item__header">
                             <div className="rfsc-list-item__header__date">{ date.day }.{ date.month }.</div>
                             <div className="rfsc-list-item__header__category">{ filters.typeTitles?.length > 1 ? 'VARIOUS' : filters.typeTitles }</div>
@@ -191,7 +263,7 @@ function CalendarListItemComponent({
                                 </div>
                             ))}
                             </div>
-                    </div>,
+                    </animated.div>,
                     back: <div className="rfsc-list-item__side rfsc-list-item__side-back"></div>
                 }
                 break;
@@ -203,11 +275,12 @@ function CalendarListItemComponent({
                     front: {
                         icon: post.icon.sourceUrl,
                         extra: post.extra
-                    }
+                    },
+                    filteredOut: post.filteredOut
                 }
                 content = {
                     front: 
-                        <div className={`rfsc-list-item__side rfsc-list-item__side-front ${postObject.type}`}>
+                        <animated.div className={`rfsc-list-item__side rfsc-list-item__side-front ${postObject.type}`} style={rotateOut}>
                             <div className="rfsc-list-item__header">
                                 <div className="rfsc-list-item__header__date">{ date.day }.{ date.month }.</div>
                                 <div className="rfsc-list-item__header__category">Tattoo</div>
@@ -219,7 +292,7 @@ function CalendarListItemComponent({
                             <div className="rfsc-list-item__extra">
                                 {post.extra}
                             </div>
-                        </div>,
+                        </animated.div>,
                     back: <div className="rfsc-list-item__side rfsc-list-item__side-back"></div>
                 }
                 break;
@@ -231,11 +304,12 @@ function CalendarListItemComponent({
                     front: {
                         icon: post.icon.sourceUrl,
                         extra: post.extra
-                    }
+                    },
+                    filteredOut: post.filteredOut
                 }
                 content = {
                     front: 
-                        <div className={`rfsc-list-item__side rfsc-list-item__side-front ${postObject.type}`}>
+                        <animated.div className={`rfsc-list-item__side rfsc-list-item__side-front ${postObject.type}`} style={rotateOut}>
                             <div className="rfsc-list-item__header">
                                 <div className="rfsc-list-item__header__date">{ date.day }.{ date.month }.</div>
                                 <div className="rfsc-list-item__header__category">Radio</div>
@@ -247,7 +321,7 @@ function CalendarListItemComponent({
                             <div className="rfsc-list-item__extra">
                                 {post.extra}
                             </div>
-                        </div>,
+                        </animated.div>,
                     back: <div className="rfsc-list-item__side rfsc-list-item__side-back"></div>
                 }
                 break;
@@ -259,23 +333,24 @@ function CalendarListItemComponent({
                     front: {
                         icon: post.icon.sourceUrl,
                         extra: post.extra
-                    }
+                    },
+                    filteredOut: post.filteredOut
                 }
                 content = {
                     front: 
-                        <div className={`rfsc-list-item__side rfsc-list-item__side-front ${postObject.type}`}>
-                            <div className="rfsc-list-item__header">
+                        <animated.div className={`rfsc-list-item__side rfsc-list-item__side-front ${postObject.type}`} style={rotateOut}>
+                            {/* <div className="rfsc-list-item__header">
                                 <div className="rfsc-list-item__header__date">{ date.day }.{ date.month }.</div>
                                 <div className="rfsc-list-item__header__category">VARIOUS</div>
                                 <div className="rfsc-list-item__header__week">W{week}</div>
-                            </div>
+                            </div> */}
                             <div className="rfsc-list-item__content">
                                 <ImageContainerComponent src={post.icon.sourceUrl} alt={post.icon.altText || 'icon' } className="rfsc-list-item__content__icon"/>
                             </div>
                             <div className="rfsc-list-item__extra">
                                 {post.extra}
                             </div>
-                        </div>,
+                        </animated.div>,
                     back: <div className="rfsc-list-item__side rfsc-list-item__side-back"></div>
                 }
                 break;
@@ -287,7 +362,7 @@ function CalendarListItemComponent({
     return (
         <CalendarListItemStyles 
             ref={ elementRef } 
-            className={` rfsc-calendar__list__item  rfsc-list-item  rfsc-list-item-${getPost().post.type} ${active ? 'active' : 'inactive'} ${visible ? 'visible' : 'invisible'} ${rendered ? 'rendered' : 'not-rendered'} ${behindViewport ? 'behind-viewport' : 'in-front-of-viewport'} ${hasScrolled ? '' : 'initial'}
+            className={` rfsc-calendar__list__item  rfsc-list-item  rfsc-list-item-${getPost().post.type} ${active ? 'active' : 'inactive'} ${visible ? 'visible' : 'invisible'} ${rendered ? 'rendered' : 'not-rendered'} ${behindViewport ? 'behind-viewport' : 'in-front-of-viewport'} ${hasScrolled ? '' : 'initial'} ${getPost().post.filteredOut ? 'filtered-out' : 'filtered-in'}
             `}
             scrollDist={scrollDist}
             offsetTop={offsetTop}

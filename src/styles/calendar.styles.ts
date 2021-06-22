@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { getTypography } from '../utils/helpers';
 import { defaultStyles } from './default.styles';
+import { animated } from 'react-spring';
 
 export const CalendarStyles = styled.div `
     position: absolute;
@@ -66,7 +67,10 @@ export const CalendarListStyles = styled.div `
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
-                width: 100%
+                width: 80%;
+                max-width: 500px;
+                pointer-events: none;
+                color: white;
             }
 
             .rfsc-calendar__list__title__logo {
@@ -104,18 +108,24 @@ export const CalendarListItemStyles = styled.div `
 
     .rfsc-list-item__side {
 
-        display: grid;
-        grid-template-rows: auto 1fr auto;
-        grid-template-columns: 1fr;
-
         &.rfsc-list-item__side-front {
             padding: ${props => (props.styles.spacing.medium)}px;
+            position: relative;
             /* border: ${props => (props.styles.spacing.medium)}px solid ${props => (props.styles.colors.green)}; */
 
             &.radio {
                 background: ${props => (props.styles.colors.grayReal)};
                 /* border: ${props => (props.styles.spacing.medium)}px solid ${props => (props.styles.colors.grayReal)}; */
                 color: black;
+            }
+
+            &.space {
+                background: white;
+
+                .rfsc-list-item__header {
+                    display: none;
+                }
+                /* border: ${props => (props.styles.spacing.medium)}px solid ${props => (props.styles.colors.grayReal)}; */
             }
 
             &.tattoo {
@@ -129,94 +139,122 @@ export const CalendarListItemStyles = styled.div `
 
             &.event {
 
+                display: grid;
+                grid-template-rows: auto 1fr auto;
+                grid-template-columns: 1fr;
+
                 .rfsc-list-item__header {
-                    
+                    grid-row-start: 1;
+                    grid-row-end: 2;
+                    position: relative;
+                    padding: 0;
                 }
 
                 .rfsc-list-item__content {
+                    grid-row-start: 2;
                     grid-row-end: 3;
-                    overflow-y: scroll;
+                    position: relative;
+                    /* overflow-y: scroll; */
                     align-items: center;
                     align-content: center;
                 }
             }
-        }
-    }
 
-    .rfsc-list-item__header {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        grid-row-start: 1;
-        grid-row-end: 2;
-        text-transform: uppercase;
-
-        .rfsc-list-item__header__date {
-
-        }
-
-        .rfsc-list-item__header__category {
-        }
-
-        .rfsc-list-item__header__week {
-
-        }
-    }
-
-    .rfsc-list-item__content {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-content: center;
-        align-items: center;
-        /* align-items: space-between;
-        align-content: space-between; */
-        grid-row-start: 2;
-        grid-row-end: 3;
-        /* font-size: ${props => props.styles.typography.fontMedium.large.fontSize}px;
-        letter-spacing: ${props => props.styles.typography.fontMedium.large.letterSpacing}px;
-        line-height: ${props => props.styles.typography.fontMedium.large.lineHeight}; */
-        ${props => getTypography({styles: props.styles, size: 'fontMedium'})}
-
-        .rfsc-list-item__content__item {
-            width: 100%;
-            margin: ${props => (props.styles.spacing.medium)}px 0;
-            
-
-            span {
-            }
-
-            .rfsc-list-item__content__item__title {
+            .rfsc-list-item__header {
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: flex;
+                justify-content: space-between;
                 width: 100%;
-                /* font-size: ${props => props.styles.typography.fontLarge.large.fontSize}px;
-                letter-spacing: ${props => props.styles.typography.fontLarge.large.letterSpacing}px;
-                line-height: ${props => props.styles.typography.fontLarge.large.lineHeight}; */
-                ${props => getTypography({styles: props.styles, size: 'fontLarge'})}
-
-                margin: ${props => (props.styles.spacing.medium)}px 0;
-                margin: 0px;
-            }
-
-            .rfsc-list-item__content__item__location {
                 text-transform: uppercase;
+                padding: ${props => (props.styles.spacing.medium)}px;
+
+                .rfsc-list-item__header__date {
+
+                }
+
+                .rfsc-list-item__header__category {
+                }
+
+                .rfsc-list-item__header__week {
+
+                }
+            }
+
+            .rfsc-list-item__content {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-content: center;
+                align-items: center;
+                /* align-items: space-between;
+                align-content: space-between; 
+                grid-row-start: 2;
+                grid-row-end: 3;
+                font-size: ${props => props.styles.typography.fontMedium.large.fontSize}px;
+                letter-spacing: ${props => props.styles.typography.fontMedium.large.letterSpacing}px;
+                line-height: ${props => props.styles.typography.fontMedium.large.lineHeight}; */
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 100%;
+                height: 100%;
+                ${props => getTypography({styles: props.styles, size: 'fontMedium'})}
+
+                .rfsc-list-item__content__item {
+                    width: 100%;
+                    margin: ${props => (props.styles.spacing.medium)}px 0;
+                    
+
+                    span {
+                    }
+
+                    .rfsc-list-item__content__item__title {
+                        width: 100%;
+                        /* font-size: ${props => props.styles.typography.fontLarge.large.fontSize}px;
+                        letter-spacing: ${props => props.styles.typography.fontLarge.large.letterSpacing}px;
+                        line-height: ${props => props.styles.typography.fontLarge.large.lineHeight}; */
+                        ${props => getTypography({styles: props.styles, size: 'fontLarge'})}
+
+                        margin: ${props => (props.styles.spacing.medium)}px 0;
+                        margin: 0px;
+                    }
+
+                    .rfsc-list-item__content__item__location {
+                        text-transform: uppercase;
+                    }
+                }
+
+                .rfsc-list-item__content__icon {
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    z-index: -1;
+                }
+            }
+
+
+            .rfsc-list-item__extra {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                text-transform: uppercase;
+                padding: ${props => (props.styles.spacing.medium)}px;
+                width: 100%;
+                text-align: center;
             }
         }
-
-        .rfsc-list-item__content__icon {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            z-index: -1;
-        }
     }
 
-        .rfsc-list-item__extra {
-            text-transform: uppercase;
-        }
-    }
 
     &.initial {
         opacity: 0 !important;
+    }
+    
+    &.filtered-out {
+        opacity: 0.25
     }
 
 
@@ -233,8 +271,12 @@ export const CalendarListItemStyles = styled.div `
 
     &.behind-viewport {
         opacity: 0;
-        pointer-events: none;
+        pointer-events: none !important;
         transform: rotateX(-60deg) scale(2);
+
+        * {
+            pointer-events: none !important;
+        }
     }
 
     &.in-front-of-viewport {
@@ -345,6 +387,28 @@ export const CalendarGraphic = styled.div `
             [id*=location],
             [id*=type],
             [id*=Monate] {
+                cursor: default;
+                transition: ${props => props.styles.animation.transitions.regular};
+                transform-origin: center;
+                fill: white;
+
+                /* &:hover {
+                    fill: ${props => props.styles.colors.red};
+
+                    text {
+                        fill: ${props => props.styles.colors.red};
+                    }
+                } */
+            }
+
+
+            
+            [id*=week],
+            [id*=day], 
+            [id*=event],
+            /* [id*=location], */
+            /* [id*=type], */
+            [id*=Monate] {
                 cursor: pointer;
                 transition: ${props => props.styles.animation.transitions.regular};
                 transform-origin: center;
@@ -359,7 +423,6 @@ export const CalendarGraphic = styled.div `
                     }
                 }
             }
-
             [id*=event-1] {
                 text-anchor: end;
             }
@@ -371,6 +434,10 @@ export const CalendarGraphic = styled.div `
             text {
                 transition: ${props => props.styles.animation.transitions.regular};
                 text-transform: uppercase;
+            }
+
+            tspan {
+                /* pointer-events: none; */
             }
 
             [data-active] {
@@ -396,7 +463,7 @@ export const CalendarGraphic = styled.div `
             }
 
             ${props => getFilteredId(props)} {
-                /* fill: ${props => props.styles.colors.red}; */
+                fill: ${props => props.styles.colors.red};
 
                 text {
                     /* fill: ${props => props.styles.colors.red}; */
@@ -416,6 +483,15 @@ export const CalendarGraphic = styled.div `
             #Orte, 
             #Veranstaltungsart {
                 transform-origin: center center;
+                transition: ${props => (props.styles.animation.transitions.extraExtraLong)};                
+            }
+            
+            #Veranstaltungsart {
+                transform: rotate(${props => getRotations(props).typeRotation }deg);
+            }
+
+            #Orte {
+                transform: rotate(${props => getRotations(props).locationRotation }deg);
             }
 
             .active {
@@ -435,7 +511,7 @@ export const CalendarGraphic = styled.div `
             }
 
             #Layer_1 {
-                transform: translateY(-30%);
+                transform: translateY(-20%);
             }
         }
     }
@@ -452,10 +528,14 @@ const getActiveId = ({currentDetail: {id, day, week, month}}) => {
     `;
 }
 
-const getFilteredId = ({filters: {location, type}}) => {
+const getFilteredId = (props) => {
 
-    const locationString = location.map(loc => (` #location-${loc}`)).toString();
-    const typeString = type.map(typ => (` #type-${typ}`)).toString();
+    const { locations, types } = props.currentDetail
+    if ( !props.hasScrolled ) return ''
+    
+    const locationString = locations?.map(loc => (` #location-${loc}`)).toString();
+    const typeString = types?.map(typ => (` #type-${typ}`)).toString();
+    
 
     const filterString = `
         ${locationString ? typeString + ', ' : typeString } ${locationString}
@@ -463,6 +543,38 @@ const getFilteredId = ({filters: {location, type}}) => {
 
     return filterString;
 }
+
+const getRotations = (props) => {
+
+    const { locations, types } = props.currentDetail;
+    const { rotations } = props;
+
+    
+    let typeRotation = 0;
+    let locationRotation = 0;
+
+    if ( locations.length == 0 && types.length == 0 || !props.hasScrolled ) return { typeRotation, locationRotation }
+
+    if (types) typeRotation = types[0] ? rotations.types[types[0]] + 90 : 0
+    if (locations) locationRotation = locations[0] ? rotations.locations[locations[0]] - 90 : 0
+
+    return {
+        typeRotation,
+        locationRotation
+    }
+}
+
+// const getFocused = ({currentDetailParameters: {location, type}}) => {
+
+//     const locationString = location.map(loc => (` #location-${loc}`)).toString();
+//     const typeString = type.map(typ => (` #type-${typ}`)).toString();
+
+//     const filterString = `
+//         ${locationString ? typeString + ', ' : typeString } ${locationString}
+//     `
+
+//     return filterString;
+// }
 
 
 const CalendarCircleStyles = styled.div `
@@ -556,16 +668,16 @@ export const CalendarCircleItemStyles = styled.div `
 `
 
 
-export const CalendarDetailsStyles = styled.div `
+export const CalendarDetailsStyles = styled(animated.div) `
     position: absolute;
     left: 50%;
     top: 50%;
     height: 100%;
     transform: translate(-50%, -50%);
-    min-width: 800px;
-    min-height: 800px;
-    width: 60vh;
-    height: 60vh;
+    width: 800px;
+    height: 800px;
+    max-height: calc( 100vh - 256px);
+    max-width: calc( 100vw - ${props => (props.styles.spacing.large)}px);
     overflow-y: scroll;
     background: white;
     z-index: ${props => props.styles.zIndices.details};
@@ -580,11 +692,11 @@ export const CalendarDetailsStyles = styled.div `
 
     
 
-    @media screen and (max-width: ${ defaultStyles.breakpoints.medium }px ) {
+    /* @media screen and (max-width: ${ defaultStyles.breakpoints.medium }px ) {
 
         max-height: calc( 100vw - ${props => (props.styles.spacing.large)}px);
         max-width: calc( 100vw - ${props => (props.styles.spacing.extraExtralarge)}px);
-    }
+    } */
 
 `
 
@@ -594,6 +706,14 @@ export const CalendarEventDetailsStyles = styled(CalendarDetailsStyles) `
     &.event {
         background-color: ${props => props.styles.colors.backgroundGreenOpacity};
         color: ${props => props.styles.colors.red};
+
+        a {
+            color: ${props => props.styles.colors.red};
+
+            &:hover {
+                color: black;
+            }
+        }
         /* border: ${props => props.styles.spacing.medium}px solid ${props => props.styles.colors.green}; */
     }
 
@@ -624,6 +744,7 @@ export const CalendarEventDetailsStyles = styled(CalendarDetailsStyles) `
         .rfsc-tattoo-detail__header__date {
             width: 170px;
         }
+
         .rfsc-event-detail__header__leader,
         .rfsc-radio-detail__header__host,
         .rfsc-tattoo-detail__header__host {
@@ -636,6 +757,13 @@ export const CalendarEventDetailsStyles = styled(CalendarDetailsStyles) `
         .rfsc-tattoo-detail__header__type {
             text-align: right;
             width: 170px;
+        }
+
+        .rfsc-radio-detail__text,
+        .rfsc-tattoo-detail__text {
+            /* width: 170px; */
+            margin-bottom: ${props => props.styles.spacing.medium}px;
+            border-bottom: 2px solid black;
         }
 
         .rfsc-radio-detail__header__date,
@@ -654,7 +782,7 @@ export const CalendarEventDetailsStyles = styled(CalendarDetailsStyles) `
     }
 `
 
-export const CalendarEventDetailStyles = styled.div `
+export const CalendarDetailStyles = styled.div `
     margin-bottom: ${props => props.styles.spacing.medium}px;
     /*  font-size: ${props => props.styles.typography.fontMedium.large.fontSize}px;
 letter-spacing: ${props => props.styles.typography.fontMedium.large.letterSpacing}px;
@@ -668,7 +796,7 @@ letter-spacing: ${props => props.styles.typography.fontMedium.large.letterSpacin
         /* border-bottom: 2px solid black; */
 
         &:not(:first-of-type) {
-            margin-top: calc(${props => props.styles.typography.fontMedium.large.fontSize * 1.2}px + ${props => props.styles.typography.fontMedium.large.fontSize * 1.2}px + ${props => props.styles.typography.fontLarge.large.fontSize * 1.2}px + ${props => props.styles.spacing.large}px)
+            margin-top: 84px;
         }
     }
 

@@ -16,6 +16,8 @@ import { useBaseState } from '../../../state/provider';
 import { CalendarStyles } from '../../../styles/calendar.styles';
 import actions from '../../../state/actions';
 import { useEffect } from 'react';
+import { compareArrays } from '../../../utils/helpers';
+import { useSpring, animated, useTransition } from 'react-spring';
 
 function CalendarComponent() {
 
@@ -23,12 +25,26 @@ function CalendarComponent() {
     const base = useBaseState().state.base;
     const filters = useBaseState().state.filters;
     const updateBase = useBaseState().dispatchBase;
+    const days = useBaseState().state.content.days;
     // const [ scrollDist, setScrollDist ] = useState(0);
     let scrollDist = useBaseState().state.calendar.scrollDist;
     const dampener = 2;
     const [hasFilters, setHasFilters] = useState(false);
     const [scrollDeltaY, setScrollDeltaY] = useState(0)
     const [scrollStartY, setScrollStartY] = useState(0)
+    const [filteredDays, setFilteredDays] = useState([])
+    // const [isRotatedIn, setIsRotatedIn] = useState(false)
+    const rotationStyles = {
+        from: {opacity: 0, rotateY: '-90deg'},
+        enter: {opacity: 0.25, rotateY: '0deg', width: '300px', height: '300px', position: 'fixed', left: '50%', top: '50%', zIndex: '100000', background: 'green'},
+        leave: {opacity: 0, rotateY: '90deg'},
+    };
+
+    const AnimatedCalendarDetailsComponent = animated(CalendarDetailsComponent);
+    
+    const rotateEventDetailIn = useTransition( base.showEventDetail, rotationStyles);
+    const rotateRadioDetailIn = useTransition( base.showRadioDetail, rotationStyles);
+    const rotateTattooDetailIn = useTransition( base.showTattooDetail, rotationStyles);
 
     const handleScroll = (e) => {
         // setScrollDist(state => state += e.deltaY * dampener );
@@ -40,7 +56,7 @@ function CalendarComponent() {
         ) return
         
         scrollDist += Math.floor(e.deltaY * dampener);
-        setScrollDist(scrollDist, e.deltaY, dampener);
+        setScrollDist(scrollDist, e.deltaY, dampener, true);
 
     } 
 
@@ -63,22 +79,34 @@ function CalendarComponent() {
 
     }
 
-    const setScrollDist = (scrollDist, deltaY, dampener) => {
+    const setScrollDist = (scrollDist, deltaY, dampener, mobile = false) => {
         
         scrollDist += Math.floor(deltaY * dampener);
-        console.log(scrollDist, deltaY);
+        let scrollDir = '';
+        // console.log(scrollDist, deltaY);
         
         
         if (deltaY > 0) {
-            updateBase({ type: actions.SET_CALENDAR, payload: { scrollDist, scrollDir: 'forward' } });
+            scrollDir = mobile ? 'forward' : 'backwards';
+            // updateBase({ type: actions.SET_CALENDAR, payload: { scrollDist, scrollDir: 'forward' } });
         } else {
-            updateBase({ type: actions.SET_CALENDAR, payload: { scrollDist, scrollDir: 'backwards' } });
+            scrollDir = mobile ? 'backwards' : 'forward';
+            // updateBase({ type: actions.SET_CALENDAR, payload: { scrollDist, scrollDir: 'backwards' } });
         }
+        // updateBase({ type: actions.SET_CALENDAR, payload: { scrollDist, scrollDir} });
 
-        updateBase({ type: actions.SET_CALENDAR, payload: { scrollDist, hasScrolled: true } });
+        updateBase({ type: actions.SET_CALENDAR, payload: { scrollDist, hasScrolled: true, scrollDir } });
     }
 
+    // useEffect(() => {
+
+    //     filterDays();
+    // })
+
     useEffect(() => {
+
+        filterDays();
+
         return () => {
             // updateBase({ type: actions.SET_CALENDAR, payload: { scrollDist: 0 } });
             updateBase({ type: actions.SET_BASE, payload: { headerFooterClass: 'default', showEventDetail: false, } });
@@ -87,8 +115,77 @@ function CalendarComponent() {
 
     useEffect(() => {
         setHasFilters(filters && (filters.location.length !== 0 || filters.day.length !== 0 || filters.type.length !== 0 || filters.week.length !== 0));
-        console.log(filters, hasFilters)
+
+        filterDays();
+        // console.log(filters, hasFilters)
     }, [filters])
+
+    const filterDays = () => {
+        const bufferFilteredDays = days.map(day => {
+            return ({
+                ...day,
+                posts: 
+                    day.posts?.map(post => {                        
+                        switch (post.fieldGroupName) {
+                            case 'Page_Days_days_Posts_EventLayout':
+
+                                const filteredEvents = 
+                                    // post.events?.filter(event => {
+
+                                    //     let categories: String[] = [];
+
+                                    //     event.categories.nodes.forEach(element => {
+                                    //         categories.push(element.slug);
+                                    //     });
+
+                                    //     return (
+                                    //         compareArrays(filters.location, categories).intersects ||
+                                    //         compareArrays(filters.type, categories).intersects ||
+                                    //         (filters.location.length === 0 && filters.type.length === 0)
+                                    //     );
+                                    // })
+
+                                    post.events?.map(event => {
+
+                                        let categories: String[] = [];
+
+                                        event.categories.nodes.forEach(element => {
+                                            categories.push(element.slug);
+                                        });
+
+                                        const isFilteredIn = (
+                                            compareArrays(filters.location, categories).intersects ||
+                                            compareArrays(filters.type, categories).intersects ||
+                                            (filters.location.length === 0 && filters.type.length === 0)
+                                        )
+
+                                        return {
+                                            ...event,
+                                            isFilteredIn,
+                                            isFilteredOut: !isFilteredIn
+                                        }
+                                    })
+                                
+                                return ({
+                                        ...post,
+                                        events: filteredEvents?.length > 0 ? filteredEvents : []
+                                    })
+                                break;
+                        
+                            default:
+                                return (
+                                    post
+                                )
+                                break;
+                        }
+                    })
+                }
+            )
+        })
+        // console.log(days)
+        console.log(bufferFilteredDays)
+        setFilteredDays(days);
+    }
 
     const resetFilters = () => {
         updateBase({ type: actions.RESET_FILTERS });
@@ -96,11 +193,35 @@ function CalendarComponent() {
 
     const showDetails = () => {
         if ( base.showEventDetail ) {
-            return <CalendarDetailsComponent type={'event'}/>
+            // return <CalendarDetailsComponent type={'event'}/>
+            console.log('rotate in event')
+            return rotateEventDetailIn((transitionStyles, item) => 
+                item ?
+                    <AnimatedCalendarDetailsComponent type={'event'} style={transitionStyles}/>
+                :
+                ''
+            )
         } else if ( base.showRadioDetail ) {
-            return <CalendarDetailsComponent type={'radio'}/>
+            // return <CalendarDetailsComponent type={'radio'}/>
+            console.log('rotate in radio')
+            return rotateRadioDetailIn((transitionStyles, item) => 
+                item ?
+                    <AnimatedCalendarDetailsComponent type={'radio'} style={transitionStyles}/>
+                :
+                ''
+            )
         } else if ( base.showTattooDetail ) {
-            return <CalendarDetailsComponent type={'tattoo'}/>
+            // return <CalendarDetailsComponent type={'tattoo'}/>
+            console.log('rotate in tattoo')
+            return rotateTattooDetailIn((transitionStyles, item) => 
+                item ?
+                    <React.Fragment>
+                        <AnimatedCalendarDetailsComponent type={'tattoo'} style={transitionStyles}/>
+                        {/* <animated.div style={transitionStyles} className='hansfickdi'></animated.div>  */}
+                    </React.Fragment>
+                :
+                ''
+            )
         } else {
             return ''
         }
@@ -121,19 +242,26 @@ function CalendarComponent() {
         <CalendarStyles onWheel={handleScroll} onTouchStart={(e) => {handleTouch(e, 'start')}} onTouchMove={(e) => {handleTouch(e, 'move')}} className="rfsc-calendar" styles={base.styles} onClick={closeDetails}>
             { base.contentFetched ? 
                 <React.Fragment>
-                    { showDetails() }
+                    {/* { showDetails() } */}
                     {/* <CalendarLocationsComponent locations={content.locations}/> */}
                     {/* <CalendarTypesComponent types={content.types}/> */}
-                    <CalendarListComponent/>
+                    <CalendarDetailsComponent type={'event'}/>
+                    <CalendarDetailsComponent type={'radio'}/>
+                    <CalendarDetailsComponent type={'tattoo'}/>
+                    { filteredDays.length > 0 ?
+                        <CalendarListComponent days={filteredDays}/>
+                    :
+                        ''
+                    }
                     <CalendarGraphicComponent/>
                     { hasFilters ?
                         <div className="rfsc-filter-reset" onClick={resetFilters}>
-                            { filters.location.map(location => (
-                                <span>{location}, </span>
+                            {/* { filters.location.map((location, i) => (
+                                <span key={'location-' + i}>{location}, </span>
                             ))}
-                            { filters.type.map(type => (
-                                <span>{type}, </span>
-                            ))}
+                            { filters.type.map((type, i) => (
+                                <span key={'type-' + i}>{type}, </span>
+                            ))} */}
                             Clear Filters
                         </div>
                     :

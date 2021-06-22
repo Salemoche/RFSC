@@ -10,9 +10,13 @@ function BackgroundVideoComponent() {
 
     return (
         <BackgroundVideoComponentStyles>
-            <video className="rfsc-background-video"src={ backgrounds.gray.mediaItemUrl } muted={true} autoPlay loop>
-                {/* <source src={ backgrounds.gray.mediaItemUrl } /> */}
-            </video>
+            { window.innerWidth > 768 ?
+                <video className="rfsc-background-video"src={ backgrounds.gray.video.mediaItemUrl } muted={true} autoPlay loop>
+                    {/* <source src={ backgrounds.gray.mediaItemUrl } /> */}
+                </video>
+            :
+                <img src={ backgrounds.gray.placeholder.sourceUrl } alt="" className="rfsc-background-placeholder" />
+            }
         </BackgroundVideoComponentStyles>
     )
 }

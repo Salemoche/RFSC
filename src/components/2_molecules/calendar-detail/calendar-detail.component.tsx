@@ -1,6 +1,6 @@
 import React from 'react'
 // import { formatTime, formatDate, isType, isLocation } from '../../../utils/helpers';
-import { CalendarEventDetailStyles } from '../../../styles/calendar.styles';
+import { CalendarDetailStyles } from '../../../styles/calendar.styles';
 import { useBaseState } from '../../../state/provider';
 // import { deflateSync } from 'zlib';
 
@@ -11,7 +11,7 @@ function CalendarDetailComponent({ type, post }) {
 
     return (
         <React.Fragment>
-            <CalendarEventDetailStyles className={`rfsc-${type}-detail__item`} styles={styles}>
+            <CalendarDetailStyles className={`rfsc-${type}-detail__item`} styles={styles}>
                 <div className={`rfsc-${type}-detail__item__time`}>{post.time}</div>
                 { post.artistLink ? 
                     <a href={post.artistLink} target="_blank" className={`rfsc-${type}-detail__item__artist`}>{post.artist}</a>
@@ -23,7 +23,7 @@ function CalendarDetailComponent({ type, post }) {
                 :   
                     <div className={`rfsc-${type}-detail__item__label`}>{post.label}</div>                                    
                 }
-            </CalendarEventDetailStyles>
+            </CalendarDetailStyles>
         </React.Fragment>
     )
 }

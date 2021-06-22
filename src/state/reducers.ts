@@ -3,9 +3,9 @@ import actions from './actions';
 export const reducer = ( state, action ) => {
     
     if (
-        action.type !== actions.SET_CALENDAR &&
-        action.type !== actions.SET_ACTIVE_CALENDAR &&
-        action.type !== actions.SET_CALENDAR_EVENT_POSITIONS 
+        // action.type !== actions.SET_CALENDAR &&
+        action.type !== actions.SET_ACTIVE_CALENDAR 
+        // && action.type !== actions.SET_CALENDAR_EVENT_POSITIONS 
     ) {
         console.log('updated', action.type, action.payload);
     }
@@ -115,13 +115,14 @@ export const reducer = ( state, action ) => {
                 ...state, 
                 calendar: {
                     ...state.calendar,
-                    eventPositions: {
+                    eventPositions: [
                         ...state.calendar.eventPositions,
                         ...action.payload
-                    }
+                    ]
                 }
             }
         case actions.SET_FILTERS:
+            // console.log(setFilters(state, action.payload).filters, state.filters);
             return setFilters(state, action.payload);
         case actions.RESET_FILTERS:
             return { 
@@ -130,7 +131,7 @@ export const reducer = ( state, action ) => {
                     location: [],
                     type: [],
                     week: [],
-                    day: {},
+                    day: [],
                 }
             }
         default:
@@ -140,19 +141,26 @@ export const reducer = ( state, action ) => {
 
 const setFilters = (state, payload) => {
     const { type } = payload;
+    const bufferState = state;
     let currentFilter = state.filters[type]
-    // console.log(, payload)
     // [action.payload.type]: [...state.filters[action.payload.type], action.payload.id]
+    // console.log(currentFilter);
 
     if (currentFilter.includes(payload.id)) {
+        // console.log('includes the id', payload.id)
         currentFilter = currentFilter.filter(element => {
+            // console.log('filtering')
             return element !== payload.id;
         })
     } else {
+
         currentFilter.push(payload.id)
     }
 
-    console.log(currentFilter);
+    // console.log({
+    //         ...state.filters,
+    //         [type]: currentFilter
+    // });
 
     return { 
         ...state, 

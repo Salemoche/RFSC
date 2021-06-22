@@ -75,7 +75,8 @@ export const defaultStyles = {
         transitions: {
             regular: '.1s',
             long: '.3s',
-            extraLong: '.6s'
+            extraLong: '.6s',
+            extraExtraLong: '1s'
         }
     },
     breakpoints: {
@@ -111,10 +112,15 @@ export const GlobalStyle = createGlobalStyle `
     a {
         text-decoration: none;
         color: black;
+        transition: color .1s;
 
         &.active {
             color: ${props => (defaultStyles.colors.red)};
             cursor: default;
+        }
+
+        &:hover {
+            color: ${props => (defaultStyles.colors.red)};
         }
     }
 
@@ -154,10 +160,9 @@ export const AppStyles = styled.div `
 
     @media screen and (max-width: ${ defaultStyles.breakpoints.medium }px ) {
         grid-template-rows: 
-            ${props => (props.sizes.headerHeight)}px 
+        calc( ${props => (props.sizes.headerHeight)}px + ${props => (props.device.client.name === 'Mobile Safari' ? '20px' : '0px' )}) 
             auto 
-            calc( ${props => (props.sizes.footerHeight)}px + ${props => (props.device.client.name === 'Mobile Safari' ? '20px' : '110px' )}
-             );
+            calc( ${props => (props.sizes.footerHeight)}px + ${props => (props.device.client.name === 'Mobile Safari' ? '20px' : '0px' )});
     }
 `
 
@@ -190,9 +195,9 @@ export const MainStyles = styled.main `
         .rfsc-space__content {
             /* display: block; */
             width: 1024px;
-            height: 1024px;
+            /* height: 1024px; */
             max-width: calc( 100% - ${props => (props.styles.spacing.medium)}px);
-            max-height: calc( 100% - ${props => (props.styles.spacing.medium)}px);
+            /* max-height: calc( 100% - ${props => (props.styles.spacing.medium)}px); */
             /* font-size: ${props => (props.styles.typography.fontMedium.large.fontSize)}px;
             line-height: ${props => (props.styles.typography.fontMedium.large.lineHeight)}; */
             ${getTypography({size: 'fontMedium'})}
@@ -224,18 +229,35 @@ export const SpaceStyles = styled.div `
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    padding: ${props => (props.styles.spacing.extraLarge)}px 0;
+    /* padding-bottom: ${props => (props.styles.spacing.extraLarge)}px; */
     background: white;
 
+    a {
+        text-decoration: none;
+        color: black;
+        transition: color .1s;
+
+        &.active {
+            color: black;
+            cursor: default;
+        }
+
+        &:hover {
+            color: black;
+        }
+    }
+
     .rfsc-space__content {
-        opacity: 0.3;
+        /* opacity: 0.3; */
     }
 
     .rfsc-space__icon {
         width: 100%;
         /* padding-bottom: 100%; */
+        margin-top: ${props => (props.styles.spacing.extraLarge)}px;
+        margin-top: -${props => (props.styles.spacing.extraExtraLarge)}px;
         margin-bottom: ${props => (props.styles.spacing.large)}px;
-        opacity: 0.3;
+        /* opacity: 0.3; */
 
         img {
             width: 414px;
@@ -248,7 +270,7 @@ export const SpaceStyles = styled.div `
 `
 
 export const InfoStyles = styled.div `
-    background-color: ${props => (props.styles.colors.green)};
+    background-color: white;
     
     .rfsc-infos__content {
 
@@ -324,6 +346,11 @@ export const HeaderStyles = styled.nav `
         padding: 0;
         margin: 0;
 
+        .rfsc-close-icon svg {
+            width: 30px;
+            height: 30px;
+        }
+
         a {
             transition: ${props => (props.styles.animation.transitions.long)};
 
@@ -335,6 +362,17 @@ export const HeaderStyles = styled.nav `
                 padding: 0;
                 margin: 0;
             }
+        }
+    }
+    
+
+    @media screen and (max-width: ${ defaultStyles.breakpoints.medium }px ) {
+        display: flex;
+        align-items: flex-end;
+        padding-bottom: ${props => (props.styles.spacing.small)}px;
+
+        ul {
+            height: unset;
         }
     }
 `
@@ -394,7 +432,6 @@ export const FooterStyles = styled.footer `
         display: flex;
         align-items: center;
         justify-content: center;
-        
         transition: ${props => (props.styles.animation.transitions.long)};
 
         &:hover {
@@ -448,7 +485,8 @@ export const RadioStyles = styled.div `
         grid-row-end: 2;
         grid-column-start: 1;
         grid-column-end: 13;
-        background-color: ${props => (props.styles.colors.green)}
+        background-color: ${props => (props.styles.colors.green)};
+        display: none;
     }
 
     .rfsc-radio__content {
@@ -461,10 +499,11 @@ export const RadioStyles = styled.div `
         justify-content: space-between;
         align-items: center;
 
-        > div {
+        > div:not(.rfsc-banner) {
             width: 33%;
 
             &.rfsc-radio__icon {
+                transform: scale(1.5);
                 /* width: 33%; */
                 /* height: 100%; */
             }
@@ -479,6 +518,10 @@ export const RadioStyles = styled.div `
                     margin: 0 auto;
                     display: block;
                 }
+
+                .rfsc-radio__player__message {
+                    text-align: center;
+                }
             }
         }
     }
@@ -488,7 +531,8 @@ export const RadioStyles = styled.div `
         grid-row-end: 4;
         grid-column-start: 1;
         grid-column-end: 13;
-        background-color: ${props => (props.styles.colors.green)}
+        background-color: ${props => (props.styles.colors.green)};
+        display: none;
     }
 `
 
@@ -548,6 +592,16 @@ export const FormStyles = styled.form`
         &[type="date"],
         &[type="time"] {
             width: calc(50% - ${props => (props.styles.spacing.small)}px)
+        }
+
+        &[type="submit"] {
+            background: ${props => (props.styles.colors.grayReal)};
+            transition: ${props => (props.styles.animation.transitions.regular)};
+            cursor: pointer;
+            
+            &:hover {
+                color: ${props => (props.styles.colors.red)};
+            }
         }
     }
 
@@ -635,6 +689,8 @@ export const LoadingStyles = styled.div`
     position: fixed;
     background: white;
     z-index: 1000;
+    transition: ${props => (props.styles.animation.transitions.long)};
+    /* ${props => (props.transitionStyles)} */
 
     .rfsc-loading__graphic {
         width: 500px;
@@ -683,10 +739,22 @@ export const BackgroundVideoComponentStyles = styled.div `
     pointer-events: none;
     /* z-index: -1; */
 
-    video {
+    video, img {
         width: 100%;
         height: 100%;
         object-fit: cover;
         /* pointer-events: none; */
+    }
+
+`
+
+export const BannerStyles = styled.div`
+    width: 100%;
+    left: 0;
+    ${props => (props.position)}
+    opacity: 0.3;
+    
+    img {
+        width: 100%;
     }
 `

@@ -54,6 +54,14 @@ export const WP_QUERY = {
         pages {
             nodes {    
             pageId
+            banners {
+                bannerTop {
+                    sourceUrl
+                }
+                bannerBottom {
+                    sourceUrl
+                }
+            }
             infos {
                 content
             }
@@ -76,7 +84,10 @@ export const WP_QUERY = {
                 programDays {
                     date
                     host
+                    hostLink
                     type
+                    dayIndex
+                    programText
                     program {
                         artist
                         artistLink
@@ -176,6 +187,9 @@ export const WP_QUERY = {
                 stream
                 backgroundGray {
                     mediaItemUrl
+                }
+                backgroundGrayPlaceholder {
+                    sourceUrl
                 }
             }
         }

@@ -1,6 +1,6 @@
 import React from 'react'
-import { formatTime, formatDate } from '../../../utils/helpers';
-import { CalendarEventDetailStyles } from '../../../styles/calendar.styles';
+import { formatTime, formatDate, isType, isLocation, getCategories } from '../../../utils/helpers';
+import { CalendarDetailStyles } from '../../../styles/calendar.styles';
 import { useBaseState } from '../../../state/provider';
 
 function CalendarEventDetailComponent({ post, type }) {
@@ -19,7 +19,27 @@ function CalendarEventDetailComponent({ post, type }) {
             detailContent = 
                 <React.Fragment>
                 {post.events.map((event) => {
-                    return (<CalendarEventDetailStyles 
+
+                    // const locations: string[] = [];
+                    // const locationTitles: string[] = [];
+                    // const types: string[] = [];
+                    // const typeTitles: string[] = [];
+
+                    // event.categories.edges.forEach(node => {
+                    //     const category = node.node;
+                    //     if ( isType(category)) {
+                    //         types.push(category?.slug);
+                    //         typeTitles.push(category?.name);
+                    //     } else if ( isLocation(category)) {
+                    //         locations.push(category?.slug);
+                    //         locationTitles.push(category?.name);
+                    //     }
+                    // });
+
+                    const categories = getCategories(event);
+
+                    // console.log(event)
+                    return (<CalendarDetailStyles 
                             className="rfsc-calendar__details__detail rfsc-event-detail rfsc-event" 
                             data-id={ event.id } 
                             styles={ styles }
@@ -36,7 +56,7 @@ function CalendarEventDetailComponent({ post, type }) {
                                 { event.event_content.leader }
                             </div>
                             <div className="rfsc-event-detail__header__type rfsc-detail-header__item">
-                                { 'type' }
+                                { categories.typeTitles.toString() }
                             </div>
                         </div>
                         <div className="rfsc-event-detail__lead">
@@ -49,11 +69,11 @@ function CalendarEventDetailComponent({ post, type }) {
                                 { event.title }
                             </div>
                             <div className="rfsc-event-detail__lead__location">
-                                {'location'}
+                                { categories.locationTitles.toString()}
                             </div>
                         </div>
                         <div className="rfsc-event-detail__content" dangerouslySetInnerHTML={{ __html: event.event_content.eventText }}></div>
-                    </CalendarEventDetailStyles>)
+                    </CalendarDetailStyles>)
                 })}
                 </React.Fragment>
         }

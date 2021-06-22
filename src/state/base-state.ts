@@ -60,7 +60,8 @@ export const baseState = {
         currentItem: 1,
         filters: [],
         events: [],
-        eventPositions: {}
+        eventPositions: [],
+        calendarHeight: 0,
     },
     content: {
         days: {},
@@ -72,7 +73,7 @@ export const baseState = {
     },
     sound: {
         isPlaying: false,
-        onAir: true,
+        onAir: false,
         stream: '',
     },
     filters: {

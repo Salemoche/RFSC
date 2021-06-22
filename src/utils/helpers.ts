@@ -58,6 +58,33 @@ export const isLocation = (category) => {
     return category.parentId === 'dGVybToy';
 }
 
+export const getCategories = (post) => {
+
+
+    const locations: string[] = [];
+    const locationTitles: string[] = [];
+    const types: string[] = [];
+    const typeTitles: string[] = [];
+
+    post.categories.edges.forEach(node => {
+        const category = node.node;
+        if ( isType(category)) {
+            types.push(category?.slug);
+            typeTitles.push(category?.name);
+        } else if ( isLocation(category)) {
+            locations.push(category?.slug);
+            locationTitles.push(category?.name);
+        }
+    });
+
+    return {
+        locations,
+        locationTitles,
+        types,
+        typeTitles,
+    }
+}
+
 
 export const getTypography = (props) => {
     const options = { 
@@ -97,4 +124,11 @@ export const getTypography = (props) => {
     `
 
     return styles
+}
+
+export const compareArrays = (array1, array2) => {
+    return {
+        intersections: array1.filter(e => array2.indexOf(e) !== -1),
+        intersects: array1.filter(e => array2.indexOf(e) !== -1).length > 0,
+    };
 }
