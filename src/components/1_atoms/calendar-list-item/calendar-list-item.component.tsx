@@ -42,6 +42,14 @@ function CalendarListItemComponent({
             duration: 100
         }
     })
+    const rotateIn = useSpring({
+        rotateY: isRotatedOut ? '90deg' : '0deg',
+        scale: isRotatedOut ? '1.5' : '1',
+        delay: 100,
+        config: {
+            duration: 100
+        }
+    })
 
 
     useEffect(() => {
@@ -117,7 +125,8 @@ function CalendarListItemComponent({
     const handleClick = (e, type) => {
         // console.log(e.target, type);
         let detail = 'showEventDetail';
-        setIsRotatedOut(is => !is);
+
+        if (active) setIsRotatedOut(is => !is);
 
         if ( e.target.closest('[class*=inactive]' ) || e.target.closest('[class*=behind-viewport]' )) return
 

@@ -14,6 +14,7 @@ function CalendarEventDetailsComponent({ type }) {
     const content = useBaseState().state.content;
     const currentDetail = useBaseState().state.base.currentDetailParameters
     const [isRotatedIn, setIsRotatedIn] = useState(false)
+    const [browser, setBrowser] = useState('')
     // const rotateIn = useSpring({
     //     opacity: isRotatedIn ? 1 : 0,
     //     rotateY: isRotatedIn ? '0deg' : '90deg',
@@ -27,9 +28,9 @@ function CalendarEventDetailsComponent({ type }) {
     // })
     const animationChecker = type === 'event' ? base.showEventDetail : type === 'radio' ? base.showRadioDetail : base.showTattooDetail
     const rotateIn = useTransition( animationChecker, {
-        from: {scale: '0.5', x: '-50%', y: '-50%', rotateY: '90deg', pointerEvents: 'all'},
-        enter: {scale: '1', x: '-50%', y: '-50%', rotateY: '0deg', pointerEvents: 'all'},
-        leave: {scale: '0.5', x: '-50%', y: '-50%', rotateY: '-90deg', pointerEvents: 'all'},
+        from: {scale: '0.25', x: '-50%', y: '-50%', [browser === 'Firefox' ? 'rotateX' : 'rotateY']: '90deg', pointerEvents: 'all'},
+        enter: {scale: '1', x: '-50%', y: '-50%', [browser === 'Firefox' ? 'rotateX' : 'rotateY']: '0deg', pointerEvents: 'all'},
+        leave: {scale: '0.25', x: '-50%', y: '-50%', [browser === 'Firefox' ? 'rotateX' : 'rotateY']: browser === 'Firefox' ? '90deg' : '-90deg', pointerEvents: 'all'},
         delay: 100,
         config: {
             duration: 100
@@ -40,6 +41,7 @@ function CalendarEventDetailsComponent({ type }) {
 
     useEffect(() => {
         // setIsRotatedIn(true);
+        setBrowser(base.device.client.name);
 
         return () => {
             // setIsRotatedIn(false);
@@ -85,7 +87,9 @@ function CalendarEventDetailsComponent({ type }) {
             ))
         } else if ( type === 'radio' || type === 'tattoo' ) {
 
-            return content[type].programDays.map((day) => {
+            console.log(content[type], content[type].programDays)
+
+            return content[type]?.programDays?.map((day) => {
                 return (
                     <CalendarDetailStyles 
                         className={`rfsc-calendar__details__detail rfsc-${type}-detail rfsc-${type}`} 
@@ -115,7 +119,7 @@ function CalendarEventDetailsComponent({ type }) {
                             ''
                         }
     
-                    {day.program.map((item, i) => {
+                    {day?.program?.map((item, i) => {
                         return <CalendarDetailComponent key={i} post={item} type={type}/>
                     })}
                     </CalendarDetailStyles>

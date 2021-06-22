@@ -2,13 +2,13 @@ import actions from './actions';
 
 export const reducer = ( state, action ) => {
     
-    if (
-        // action.type !== actions.SET_CALENDAR &&
-        action.type !== actions.SET_ACTIVE_CALENDAR 
-        // && action.type !== actions.SET_CALENDAR_EVENT_POSITIONS 
-    ) {
-        console.log('updated', action.type, action.payload);
-    }
+    // if (
+    //     // action.type !== actions.SET_CALENDAR &&
+    //     action.type !== actions.SET_ACTIVE_CALENDAR 
+    //     // && action.type !== actions.SET_CALENDAR_EVENT_POSITIONS 
+    // ) {
+    //     console.log('updated', action.type, action.payload);
+    // }
 
     switch ( action.type ) {
         case actions.SET_BASE:

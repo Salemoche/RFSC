@@ -521,6 +521,7 @@ export const RadioStyles = styled.div `
 
                 .rfsc-radio__player__message {
                     text-align: center;
+                    cursor: default;
                 }
             }
         }

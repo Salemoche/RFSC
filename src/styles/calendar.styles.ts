@@ -99,7 +99,6 @@ export const CalendarListItemStyles = styled.div `
     max-width: calc( 100vw - ${props => (props.styles.spacing.large)}px);
     margin: 0 auto;
     transition: ${props => props.styles.animation.transitions.long};
-    cursor: pointer;
     pointer-events: all;
     /* font-size: ${props => props.styles.typography.fontMedium.large.fontSize}px;
     letter-spacing: ${props => props.styles.typography.fontMedium.large.letterSpacing}px;
@@ -261,6 +260,7 @@ export const CalendarListItemStyles = styled.div `
     &.active {
         opacity: 1;
         transform: rotateX(-60deg) scale(1);
+        cursor: pointer;
     }
 
     &.inactive {
@@ -329,11 +329,11 @@ export const CalendarListItemStyles = styled.div `
 
     /* &.rendered {
         display: inherit;
-    }
+    }*/
 
     &.not-rendered {
-        display: none;
-    } */
+        visibility: hidden;
+    } 
 
 `
 
@@ -530,6 +530,8 @@ const getActiveId = ({currentDetail: {id, day, week, month}}) => {
 
 const getFilteredId = (props) => {
 
+    if (!props.currentDetail) return ''
+
     const { locations, types } = props.currentDetail
     if ( !props.hasScrolled ) return ''
     
@@ -553,7 +555,7 @@ const getRotations = (props) => {
     let typeRotation = 0;
     let locationRotation = 0;
 
-    if ( locations.length == 0 && types.length == 0 || !props.hasScrolled ) return { typeRotation, locationRotation }
+    if ( locations?.length == 0 && types?.length == 0 || !props.hasScrolled || !props.currentDetail) return { typeRotation, locationRotation }
 
     if (types) typeRotation = types[0] ? rotations.types[types[0]] + 90 : 0
     if (locations) locationRotation = locations[0] ? rotations.locations[locations[0]] - 90 : 0
@@ -735,6 +737,8 @@ export const CalendarEventDetailsStyles = styled(CalendarDetailsStyles) `
         display: flex;
         justify-content: space-between;
         margin-bottom: ${props => props.styles.spacing.medium}px;
+        padding-bottom: 13px;
+        border-bottom: 2px solid ${props => props.styles.colors.red};
 
         .rfsc-detail-header__item {
             text-transform: uppercase;
@@ -759,13 +763,6 @@ export const CalendarEventDetailsStyles = styled(CalendarDetailsStyles) `
             width: 170px;
         }
 
-        .rfsc-radio-detail__text,
-        .rfsc-tattoo-detail__text {
-            /* width: 170px; */
-            margin-bottom: ${props => props.styles.spacing.medium}px;
-            border-bottom: 2px solid black;
-        }
-
         .rfsc-radio-detail__header__date,
         .rfsc-radio-detail__header__type {
             width: 100px
@@ -778,7 +775,6 @@ export const CalendarEventDetailsStyles = styled(CalendarDetailsStyles) `
     .rfsc-tattoo-detail__header {
         border-bottom: 2px solid black;
         /* padding-bottom: ${props => props.styles.spacing.medium}px; */
-        padding-bottom: 13px;
     }
 `
 
@@ -804,12 +800,20 @@ letter-spacing: ${props => props.styles.typography.fontMedium.large.letterSpacin
     Event 
     ======== */
 
+    .rfsc-radio-detail__text,
+    .rfsc-tattoo-detail__text {
+        /* width: 170px; */
+        margin-bottom: ${props => props.styles.spacing.medium}px;
+        padding-bottom: ${props => props.styles.spacing.medium}px;
+        border-bottom: 2px solid black;
+    }
+
     .rfsc-event-detail__lead {
         width: 100%;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        margin-bottom: ${props => props.styles.spacing.large}px;
+        margin-bottom: ${props => props.styles.spacing.medium}px;
 
         .rfsc-event-detail__lead__time,
         .rfsc-event-detail__lead__title,

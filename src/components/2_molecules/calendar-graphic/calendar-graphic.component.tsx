@@ -137,14 +137,14 @@ function CalendarGraphicComponent() {
         let graphicEvents: object[] = [];
 
         days.forEach((singleDay, i) => {
-            singleDay.posts.forEach((post, j) => {
-                const { events } = post;
-                if (events?.length > 0) {
-                    const event1 = events[0];
+            const postWithEvent = singleDay.posts.filter(post => post.events);
+            // postWithEvent.forEach((post, j) => {
+                if (postWithEvent[0]) {
+                    const event1 = postWithEvent[0].events[0];
                     const event1Text = document.createElement('text');
                     event1Text.innerHTML = event1.title;
-                    const event1Id = events[0].id || '';
-                    const event2 = events[1] || null;
+                    const event1Id = postWithEvent[0].events[0].id || '';
+                    const event2 = postWithEvent[1]?.events[0] || null;
 
                     const { day, month } = formatDate(event1.event_content.date);
                     const { week } = singleDay
@@ -163,19 +163,21 @@ function CalendarGraphicComponent() {
                     event1Node?.setAttribute('data-event-id', event1Id);
                     // document.querySelector(`#m${month}-w${week}-d${day}-event-1`)?.setAttribute('d', '');
 
+                    
                     if (event2) {
                         const event2Text = document.createElement('text');
                         event2Text.innerHTML = event2.title;
-                        const event2Id = events[1].id || '';
-
+                        const event2Id = postWithEvent[1].events[0].id || '';
+                        
                         const event2Node = document.querySelector(`#m${month}-w${week}-d${day}-event-2`)
-                        event2Node?.append(event2Text.cloneNode(true));
+                        if (!event2Node) return
+                        event2Node.innerHTML = event2.title;
                         event2Node?.setAttribute('data-event-id', event2Id);
                         // document.querySelector(`#m${month}-w${week}-d${day}-event-2`)?.setAttribute('d', '');
                     }
                 }
             });
-        });
+        // });
         // console.log(graphicEvents);
         updateBaseState({ type: actions.SET_CALENDAR, payload: { events: graphicEvents }})
     }

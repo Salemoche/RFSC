@@ -29,9 +29,6 @@ const CalendarListComponent = ({days}) => {
     const viewPortShift = -500; // shift the viewport in the z-axis
     const far = 2000; // until where are the tiles visible in the z-axis
 
-    useEffect(() => {
-    }, [])
-
     // console.log('the days are', days);
 
     useEffect(() => {
@@ -45,14 +42,14 @@ const CalendarListComponent = ({days}) => {
 
     }, [])
 
-    useEffect(() => {
-        // let elementHeight = listRef.current?.offsetHeight;
-        // console.log('from list:', elementHeight)
-        // if (typeof elementHeight === 'number') {
-        //     setOffsetHeight(elementHeight);
-        //     updateBase({ type: actions.SET_CALENDAR, payload: { scrollDist: -350 } });
-        // }
-    }, [filters])
+    // useEffect(() => {
+    //     // let elementHeight = listRef.current?.offsetHeight;
+    //     // console.log('from list:', elementHeight)
+    //     // if (typeof elementHeight === 'number') {
+    //     //     setOffsetHeight(elementHeight);
+    //     //     updateBase({ type: actions.SET_CALENDAR, payload: { scrollDist: -350 } });
+    //     // }
+    // }, [filters])
 
     useEffect(() => {
         
@@ -110,7 +107,7 @@ const CalendarListComponent = ({days}) => {
     }
 
     return (
-        <CalendarListStyles  ref={ listRef }
+        <CalendarListStyles ref={ listRef }
             className="rfsc-calendar__list" 
             styles={styles} 
             scrollDist={scrollDist} 

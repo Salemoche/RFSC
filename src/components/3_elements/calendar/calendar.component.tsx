@@ -121,69 +121,69 @@ function CalendarComponent() {
     }, [filters])
 
     const filterDays = () => {
-        const bufferFilteredDays = days.map(day => {
-            return ({
-                ...day,
-                posts: 
-                    day.posts?.map(post => {                        
-                        switch (post.fieldGroupName) {
-                            case 'Page_Days_days_Posts_EventLayout':
+        // const bufferFilteredDays = days.map(day => {
+        //     return ({
+        //         ...day,
+        //         posts: 
+        //             day.posts?.map(post => {                        
+        //                 switch (post.fieldGroupName) {
+        //                     case 'Page_Days_days_Posts_EventLayout':
 
-                                const filteredEvents = 
-                                    // post.events?.filter(event => {
+        //                         const filteredEvents = 
+        //                             // post.events?.filter(event => {
 
-                                    //     let categories: String[] = [];
+        //                             //     let categories: String[] = [];
 
-                                    //     event.categories.nodes.forEach(element => {
-                                    //         categories.push(element.slug);
-                                    //     });
+        //                             //     event.categories.nodes.forEach(element => {
+        //                             //         categories.push(element.slug);
+        //                             //     });
 
-                                    //     return (
-                                    //         compareArrays(filters.location, categories).intersects ||
-                                    //         compareArrays(filters.type, categories).intersects ||
-                                    //         (filters.location.length === 0 && filters.type.length === 0)
-                                    //     );
-                                    // })
+        //                             //     return (
+        //                             //         compareArrays(filters.location, categories).intersects ||
+        //                             //         compareArrays(filters.type, categories).intersects ||
+        //                             //         (filters.location.length === 0 && filters.type.length === 0)
+        //                             //     );
+        //                             // })
 
-                                    post.events?.map(event => {
+        //                             post.events?.map(event => {
 
-                                        let categories: String[] = [];
+        //                                 let categories: String[] = [];
 
-                                        event.categories.nodes.forEach(element => {
-                                            categories.push(element.slug);
-                                        });
+        //                                 event.categories.nodes.forEach(element => {
+        //                                     categories.push(element.slug);
+        //                                 });
 
-                                        const isFilteredIn = (
-                                            compareArrays(filters.location, categories).intersects ||
-                                            compareArrays(filters.type, categories).intersects ||
-                                            (filters.location.length === 0 && filters.type.length === 0)
-                                        )
+        //                                 const isFilteredIn = (
+        //                                     compareArrays(filters.location, categories).intersects ||
+        //                                     compareArrays(filters.type, categories).intersects ||
+        //                                     (filters.location.length === 0 && filters.type.length === 0)
+        //                                 )
 
-                                        return {
-                                            ...event,
-                                            isFilteredIn,
-                                            isFilteredOut: !isFilteredIn
-                                        }
-                                    })
+        //                                 return {
+        //                                     ...event,
+        //                                     isFilteredIn,
+        //                                     isFilteredOut: !isFilteredIn
+        //                                 }
+        //                             })
                                 
-                                return ({
-                                        ...post,
-                                        events: filteredEvents?.length > 0 ? filteredEvents : []
-                                    })
-                                break;
+        //                         return ({
+        //                                 ...post,
+        //                                 events: filteredEvents?.length > 0 ? filteredEvents : []
+        //                             })
+        //                         break;
                         
-                            default:
-                                return (
-                                    post
-                                )
-                                break;
-                        }
-                    })
-                }
-            )
-        })
-        // console.log(days)
-        console.log(bufferFilteredDays)
+        //                     default:
+        //                         return (
+        //                             post
+        //                         )
+        //                         break;
+        //                 }
+        //             })
+        //         }
+        //     )
+        // })
+        // // console.log(days)
+        // console.log(bufferFilteredDays)
         setFilteredDays(days);
     }
 
@@ -191,41 +191,41 @@ function CalendarComponent() {
         updateBase({ type: actions.RESET_FILTERS });
     } 
 
-    const showDetails = () => {
-        if ( base.showEventDetail ) {
-            // return <CalendarDetailsComponent type={'event'}/>
-            console.log('rotate in event')
-            return rotateEventDetailIn((transitionStyles, item) => 
-                item ?
-                    <AnimatedCalendarDetailsComponent type={'event'} style={transitionStyles}/>
-                :
-                ''
-            )
-        } else if ( base.showRadioDetail ) {
-            // return <CalendarDetailsComponent type={'radio'}/>
-            console.log('rotate in radio')
-            return rotateRadioDetailIn((transitionStyles, item) => 
-                item ?
-                    <AnimatedCalendarDetailsComponent type={'radio'} style={transitionStyles}/>
-                :
-                ''
-            )
-        } else if ( base.showTattooDetail ) {
-            // return <CalendarDetailsComponent type={'tattoo'}/>
-            console.log('rotate in tattoo')
-            return rotateTattooDetailIn((transitionStyles, item) => 
-                item ?
-                    <React.Fragment>
-                        <AnimatedCalendarDetailsComponent type={'tattoo'} style={transitionStyles}/>
-                        {/* <animated.div style={transitionStyles} className='hansfickdi'></animated.div>  */}
-                    </React.Fragment>
-                :
-                ''
-            )
-        } else {
-            return ''
-        }
-    }
+    // const showDetails = () => {
+    //     if ( base.showEventDetail ) {
+    //         // return <CalendarDetailsComponent type={'event'}/>
+    //         console.log('rotate in event')
+    //         return rotateEventDetailIn((transitionStyles, item) => 
+    //             item ?
+    //                 <AnimatedCalendarDetailsComponent type={'event'} style={transitionStyles}/>
+    //             :
+    //             ''
+    //         )
+    //     } else if ( base.showRadioDetail ) {
+    //         // return <CalendarDetailsComponent type={'radio'}/>
+    //         console.log('rotate in radio')
+    //         return rotateRadioDetailIn((transitionStyles, item) => 
+    //             item ?
+    //                 <AnimatedCalendarDetailsComponent type={'radio'} style={transitionStyles}/>
+    //             :
+    //             ''
+    //         )
+    //     } else if ( base.showTattooDetail ) {
+    //         // return <CalendarDetailsComponent type={'tattoo'}/>
+    //         console.log('rotate in tattoo')
+    //         return rotateTattooDetailIn((transitionStyles, item) => 
+    //             item ?
+    //                 <React.Fragment>
+    //                     <AnimatedCalendarDetailsComponent type={'tattoo'} style={transitionStyles}/>
+    //                     {/* <animated.div style={transitionStyles} className='hansfickdi'></animated.div>  */}
+    //                 </React.Fragment>
+    //             :
+    //             ''
+    //         )
+    //     } else {
+    //         return ''
+    //     }
+    // }
 
     const closeDetails = (e) => {
 

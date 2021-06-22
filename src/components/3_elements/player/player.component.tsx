@@ -9,7 +9,9 @@ function PlayerComponent() {
     const updateBaseState = useBaseState().dispatchBase;
 
     const handlePlay = () => {
-        updateBaseState({ type: actions.TOGGLE_PLAY });
+        if (sound.onAir) {
+            updateBaseState({ type: actions.TOGGLE_PLAY });
+        }
     }
 
     return (

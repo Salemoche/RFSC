@@ -33,7 +33,9 @@ function RadioPage() {
     }, [])
 
     const handlePlay = () => {
-        updateBaseState({ type: actions.TOGGLE_PLAY });
+        if (sound.onAir) {
+            updateBaseState({ type: actions.TOGGLE_PLAY });
+        }
     }
 
     // const handleOnLoad = (e) => {

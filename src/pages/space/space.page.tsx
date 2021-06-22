@@ -41,7 +41,7 @@ function SpacePage() {
         transitions((styles, item) => 
             item &&
             <animated.div style={styles}>
-                <SpaceStyles className="rfsc-content rfsc-space" styles={ base.styles } onLoad={ contentLoaded }>
+                <SpaceStyles className="rfsc-content rfsc-space" styles={ base.styles }>
                     <BannerComponent src={space.banners?.bannerTop?.sourceUrl} position={'top: 0; position: relative;'}/>
                     <div className="rfsc-space__icon">
                         <ImageContainerComponent src={space.icon.sourceUrl} alt="space-icon"/>
