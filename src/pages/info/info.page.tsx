@@ -46,9 +46,10 @@ function InfoPage() {
             <InfoStyles className="rfsc-content rfsc-infos" styles={ styles }>
                 <BannerComponent src={ infos?.banners?.bannerTop?.sourceUrl } position={'top: 0; position: relative;'}/>
                 <div 
-                    className="rfsc-infos__content" 
-                    dangerouslySetInnerHTML={{ __html: infos.content }}    
-                ></div>                    
+                    className="rfsc-infos__content"   
+                >
+                    <p className="rfsc-infos__content__p" dangerouslySetInnerHTML={{ __html: infos.content }}></p>
+                </div>                    
                 <BannerComponent src={ infos?.banners?.bannerBottom?.sourceUrl } position={'bottom: 0; position: relative;'}/>
             </InfoStyles>
             </animated.div>

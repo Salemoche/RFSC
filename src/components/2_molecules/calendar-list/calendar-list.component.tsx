@@ -170,11 +170,13 @@ const CalendarListComponent = ({days}) => {
                     ''
                 }
                 <div className="rfsc-calendar__list__title">
-                    <div className="rfsc-calendar__list__title__logo">
-                        <ImageContainerComponent src={base.icons.iconLogo ? base.icons.iconLogo.sourceUrl : ''} alt="rfsc-logo" hasLoader={false}/>
-                    </div>
                     { !calendar.hasScrolled ? 
-                        <div className="rfsc-calendar__list__title__text">{ calendar.scrollText }</div>
+                        <React.Fragment>
+                            <div className="rfsc-calendar__list__title__logo">
+                                <ImageContainerComponent src={base.icons.iconLogo ? base.icons.iconLogo.sourceUrl : ''} alt="rfsc-logo" hasLoader={false}/>
+                            </div>
+                            <div className="rfsc-calendar__list__title__text">{ calendar.scrollText }</div>
+                        </React.Fragment>
                     :
                         ''
                     }

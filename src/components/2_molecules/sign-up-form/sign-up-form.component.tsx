@@ -45,8 +45,8 @@ function SignUpFormComponent () {
     return (
         <FormStyles className="contact-form" onSubmit={handleSubmit} styles={ styles }>
             <input type="email" name="user_email" required placeholder="Gültige E-Mail Adresse" />
-            <input type="date" name="event_date" required min="2021-07-01" max="2021-08-01"/>
-            <input type="time" name="event_time" required min="12:00" max="23:59"/>
+            {/* <input type="date" name="event_date" required min="2021-07-01" max="2021-08-01"/> */}
+            {/* <input type="time" name="event_time" required min="12:00" max="23:59"/> */}
             <input type="text" required name="event_title" placeholder="Titel der Veranstaltung (max. 20 Zeichen)" max={20}/>
             <input type="text" required name="event_organizer" placeholder="Wer organisiert die Veranstaltung? (Privatpersonen/Name des Kollektivs)"/>
             <input type="email" name="contact_email" required placeholder="E-Mail der Ansprechsperson" />
@@ -66,11 +66,11 @@ function SignUpFormComponent () {
                 <input type="checkbox" name="event_types[]" value="art"/><span className="rfsc-checkbox-label">Kunst (Ausstellung / Performance)</span>
                 <input type="checkbox" name="event_types[]" value="discourse"/><span className="rfsc-checkbox-label">Diskurs</span>
                 <input type="checkbox" name="event_types[]" value="workshop"/><span className="rfsc-checkbox-label">Workshop (Wissenstransfer)</span>
-                <input type="checkbox" name="event_types[]" value="tattoo"/><span className="rfsc-checkbox-label">Tattoo</span>
+                {/* <input type="checkbox" name="event_types[]" value="tattoo"/><span className="rfsc-checkbox-label">Tattoo</span> */}
                 <input type="checkbox" name="event_types[]" value="action"/><span className="rfsc-checkbox-label">Aktion</span>
                 <input type="checkbox" name="event_types[]" value="radio"/><span className="rfsc-checkbox-label">Radio</span>
-                <input type="checkbox" name="event_types[]" value="concert"/><span className="rfsc-checkbox-label">Konzert</span>
-                <input type="checkbox" name="event_types[]" value="club"/><span className="rfsc-checkbox-label">Club</span>
+                {/* <input type="checkbox" name="event_types[]" value="concert"/><span className="rfsc-checkbox-label">Konzert</span> */}
+                {/* <input type="checkbox" name="event_types[]" value="club"/><span className="rfsc-checkbox-label">Club</span> */}
             </div>
             <textarea 
                 name="event_description" 
@@ -102,7 +102,7 @@ function SignUpFormComponent () {
                 <input type="checkbox" name="event_techrider[]" value="stools"/><span className="rfsc-checkbox-label">Sitzhocker & Stühle</span>
                 <input type="checkbox" name="event_techrider[]" value="backstage"/><span className="rfsc-checkbox-label">Backstage</span>
             </div>
-            <input name="organizer_instagram" placeholder="Instagram-handles zum Taggen aller involvierten Personen in Instagram-Posts & -Stories plus SC-Account)"/>
+            <input name="organizer_instagram" placeholder="Instagram-handles zum Taggen aller involvierten Personen"/>
             <textarea 
                 name="event_specials" 
                 id="" 

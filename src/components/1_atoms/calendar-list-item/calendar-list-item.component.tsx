@@ -39,15 +39,15 @@ function CalendarListItemComponent({
         rotateY: isRotatedOut ? '90deg' : '0deg',
         scale: isRotatedOut ? '1.5' : '1',
         config: {
-            duration: 100
+            duration: 300
         }
     })
     const rotateIn = useSpring({
         rotateY: isRotatedOut ? '90deg' : '0deg',
         scale: isRotatedOut ? '1.5' : '1',
-        delay: 100,
+        delay: 300,
         config: {
-            duration: 100
+            duration: 300
         }
     })
 

@@ -14,6 +14,7 @@ export const baseState = {
         icons: {
             iconLogo: { sourceUrl: ''},
             iconPlay: { sourceUrl: ''},
+            iconPlayFooter: { sourceUrl: ''},
             iconPause: { sourceUrl: ''},
             iconOnAir: { sourceUrl: ''},
         },

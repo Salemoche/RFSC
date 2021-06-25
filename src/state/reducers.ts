@@ -40,6 +40,14 @@ export const reducer = ( state, action ) => {
                 ...state, 
                 base: {
                     ...state.base,
+                    contentLoaded: action.payload
+                }
+            }
+        case actions.CONTENT_FETCHED:
+            return { 
+                ...state, 
+                base: {
+                    ...state.base,
                     contentFetched: action.payload
                 }
             }

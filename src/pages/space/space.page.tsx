@@ -47,7 +47,9 @@ function SpacePage() {
                         <ImageContainerComponent src={space.icon.sourceUrl} alt="space-icon"/>
                     </div>
                     <div className="rfsc-space__content">
-                        <div className="rfsc-space__content__text" dangerouslySetInnerHTML={{__html: space.content}}></div>
+                        <div className="rfsc-space__content__text">
+                            <p className="rfsc-space__content__text__paragraph" dangerouslySetInnerHTML={{__html: space.content}}></p>
+                        </div>
                         <SignUpFormComponent/>
                     </div>
                     <BannerComponent src={space.banners?.bannerBottom?.sourceUrl} position={'bottom: 0; position: relative;'}/>

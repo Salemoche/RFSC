@@ -20,10 +20,11 @@ function PlayerComponent() {
                 <React.Fragment>
                     { sound.onAir ?
                         <IconStyles className="rfsc-nav-player__button__icon rfsc-icon" styles={base.styles}>
-                            sound.isPlaying ? 
+                            {sound.isPlaying ? 
                                 <img src={ base.icons.iconPause.sourceUrl } alt="pause-icon" />
                             :
-                                <img src={ base.icons.iconPlay.sourceUrl } alt="play-icon" />
+                                <img src={ base.icons.iconPlayFooter.sourceUrl } alt="play-icon" />
+                            }
                         
                         </IconStyles>
                         :

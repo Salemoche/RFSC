@@ -11,11 +11,14 @@ function BackgroundVideoComponent() {
     return (
         <BackgroundVideoComponentStyles>
             { window.innerWidth > 768 ?
-                <video className="rfsc-background-video"src={ backgrounds.gray.video.mediaItemUrl } muted={true} autoPlay loop>
-                    {/* <source src={ backgrounds.gray.mediaItemUrl } /> */}
-                </video>
+                <div className="rfsc-background-video">
+                    <img src={ backgrounds.gray.placeholder.sourceUrl } alt="" />
+                    <video preload="metadata" muted={true} autoPlay loop>
+                        <source className="rfsc-background-video" src={` ${backgrounds.gray.video.mediaItemUrl}#t=0.5 `} type="video/mp4" />
+                    </video>
+                </div>
             :
-                <img src={ backgrounds.gray.placeholder.sourceUrl } alt="" className="rfsc-background-placeholder" />
+                <img src={ backgrounds.gray.placeholderMobile.sourceUrl } alt="" className="rfsc-background-placeholder" />
             }
         </BackgroundVideoComponentStyles>
     )

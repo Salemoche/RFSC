@@ -43,11 +43,13 @@ function LoaderComponent() {
                 iconLogo: data.siteSettings.siteSettings.logo,
                 iconOnAir: data.siteSettings.siteSettings.iconOnAir,
                 iconPlay: data.siteSettings.siteSettings.iconPlay,
+                iconPlayFooter: data.siteSettings.siteSettings.iconPlayFooter,
                 iconPause: data.siteSettings.siteSettings.iconPause 
             },
             backgrounds: {
                 gray: {
                     video: data.siteSettings.siteSettings.backgroundGray,
+                    placeholderMobile: data.siteSettings.siteSettings.backgroundGrayPlaceholderMobile,
                     placeholder: data.siteSettings.siteSettings.backgroundGrayPlaceholder
                 }
             }
@@ -103,13 +105,14 @@ function LoaderComponent() {
             })[0].program
             // space: data.pageBy.
         }})  
+        
+        updateBaseState({ type: actions.CONTENT_FETCHED, payload: true});
+        // if (!contentLoaded) {
+        //     console.log('testing')
+        //     // setContentLoaded(true);
 
-        if (!contentLoaded) {
-            console.log('testing')
-            updateBaseState({ type: actions.CONTENT_LOADED, payload: true});
-            setContentLoaded(true);
-            // updateBaseState({ type: actions.SET_BASE, payload: {showEventDetail: true}});
-        }
+        //     // updateBaseState({ type: actions.SET_BASE, payload: {showEventDetail: true}});
+        // }
         // updateBaseState({ type: actions.SET_DAYS, payload: data.pageBy.days.days})  
         // updateBaseState({ type: actions.SET_EVENTS, payload: data.events.nodes})  
         // updateBaseState({ type: actions.SET_TYPES, payload: data.categories.edges.filter((edge) => {

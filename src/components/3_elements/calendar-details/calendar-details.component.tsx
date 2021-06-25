@@ -31,9 +31,9 @@ function CalendarEventDetailsComponent({ type }) {
         from: {scale: '0.25', x: '-50%', y: '-50%', [browser === 'Firefox' ? 'rotateX' : 'rotateY']: '90deg', pointerEvents: 'all'},
         enter: {scale: '1', x: '-50%', y: '-50%', [browser === 'Firefox' ? 'rotateX' : 'rotateY']: '0deg', pointerEvents: 'all'},
         leave: {scale: '0.25', x: '-50%', y: '-50%', [browser === 'Firefox' ? 'rotateX' : 'rotateY']: browser === 'Firefox' ? '90deg' : '-90deg', pointerEvents: 'all'},
-        delay: 100,
+        delay: 300,
         config: {
-            duration: 100
+            duration: 300
         }
     })
 
@@ -49,8 +49,7 @@ function CalendarEventDetailsComponent({ type }) {
     }, [])
 
     useEffect(() => {
-
-        if (elementRef && elementRef.current ) {
+            if (elementRef && elementRef.current ) {
 
             let currentDetailElement: HTMLElement = document.createElement("null");
 
@@ -63,13 +62,15 @@ function CalendarEventDetailsComponent({ type }) {
                 currentDetailElement = document.querySelector(`[data-id='${currentDetail.day}']`) as HTMLElement;
             }
 
+            console.log(currentDetailElement, currentDetailElement?.offsetTop)
+
             elementRef.current.scrollTop = currentDetailElement?.offsetTop - 16 || 0;
         }
         
         return () => {
             
         }
-    }, [elementRef])
+    }, [elementRef, base.showEventDetail, base.showRadioDetail, base.showTattooDetail])
 
     const handleScroll = (e) => {
 
@@ -114,7 +115,9 @@ function CalendarEventDetailsComponent({ type }) {
                             </div>
                         </div>
                         {day.programText ?
-                            <div className={`rfsc-${type}-detail__text`}>{ day.programText }</div>
+                            <div className={`rfsc-${type}-detail__text`}>
+                                <p>{ day.programText }</p>
+                            </div>
                         :
                             ''
                         }

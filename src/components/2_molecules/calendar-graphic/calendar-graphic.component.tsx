@@ -113,7 +113,7 @@ function CalendarGraphicComponent() {
             })[0]?.position
             
             if (scrollPosition === undefined) return
-            updateBaseState({ type: actions.SET_CALENDAR, payload: { scrollDist: scrollPosition || -350, hasScrolled: true } });
+            updateBaseState({ type: actions.SET_CALENDAR, payload: { scrollDist: scrollPosition - 500 || -350, hasScrolled: true } });
             
         } else if (e.target.closest('#Orte')) {
             type = 'location';
@@ -148,6 +148,8 @@ function CalendarGraphicComponent() {
 
                     const { day, month } = formatDate(event1.event_content.date);
                     const { week } = singleDay
+
+                    console.log(day, month, week)
                     
                     graphicEvents.push({
                         1: event1,
@@ -489,7 +491,7 @@ function CalendarGraphicComponent() {
         <rect x="409.9" y="974.9" className="st8" width="251.7" height="15.7"/>
         <text id="m7-w5-d31-event-1" onClick={ handleClick } transform={`matrix(1 0 0 1 ${531.2152 + textDisplacer.left } 989.595)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
         <rect x="474.2" y="1005.5" className="st8" width="251.7" height="15.7"/>
-        <text id="m8-w1-d1-event-1" onClick={ handleClick } transform={`matrix(1 0 0 1 ${595.5076 + textDisplacer.left } 1020.2064)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+        <text id="m8-w5-d1-event-1" onClick={ handleClick } transform={`matrix(1 0 0 1 ${595.5076 + textDisplacer.left } 1020.2064)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
         <rect x="1190.2" y="57.1" className="st8" width="251.7" height="15.7"/>
         <text id="m7-w1-d1-event-2" onClick={ handleClick } transform={`matrix(1 0 0 1 ${1190.1619 + textDisplacer.right } 71.8219)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
         <rect x="1252.7" y="87.7" className="st8" width="251.7" height="15.7"/>
@@ -537,7 +539,7 @@ function CalendarGraphicComponent() {
         <rect x="1252.7" y="974.8" className="st8" width="251.7" height="15.7"/>
         <text id="m7-w5-d31-event-2" onClick={ handleClick } transform={`matrix(1 0 0 1 ${1252.6897 + textDisplacer.right } 989.5064)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
         <rect x="1190.5" y="1004" className="st8" width="251.7" height="15.7"/>
-        <text id="m8-w1-d1-event-2" onClick={ handleClick } transform={`matrix(1 0 0 1 ${1190.4677 + textDisplacer.right } 1018.6927)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
+        <text id="m8-w5-d1-event-2" onClick={ handleClick } transform={`matrix(1 0 0 1 ${1190.4677 + textDisplacer.right } 1018.6927)`}><tspan x="0" y="0" className="st1 st9">VERANSTALTUNGS-SLOT</tspan></text>
     </g>
 	<g id="Orte">
 		<g id="location-foyer">

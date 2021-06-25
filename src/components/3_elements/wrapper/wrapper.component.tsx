@@ -19,6 +19,7 @@ import AudioComponent from '../audio/audio.component';
 import LoadingComponent from '../../2_molecules/loading/loading.component';
 import actions from '../../../state/actions';
 import DeviceDetector from 'device-detector-js';
+import HeaderMobileComponent from '../header-mobile/header-mobile.component';
 
 function Wrapper() {
 
@@ -28,12 +29,18 @@ function Wrapper() {
     interface Device {
         client: {
             name: string,
+        },
+        device: {
+            type: string
         }
     }
 
     const [device, setDevice] = useState<Device | DeviceDetector.DeviceDetectorResult | null>({
         client: {
             name: '',
+        },
+        device: {
+            type: ''
         }
     });
 
@@ -50,7 +57,7 @@ function Wrapper() {
 
         handleResize();
         window.addEventListener('resize', handleResize);
-        updateBaseState({ type: actions.SET_BASE, payload: { contentLoaded: true, device: getDevice() } });
+        updateBaseState({ type: actions.SET_BASE, payload: { device: getDevice() } });
         
         return () => {
             window.removeEventListener('resize', handleResize)
@@ -69,7 +76,11 @@ function Wrapper() {
         <Router>
             <GlobalStyle/>
             <AppStyles sizes={ state.base.sizes } device={ device } onLoad={ handleLoad }>
-                <HeaderComponent/>
+                {device?.device?.type !== 'smartphone' && window.innerWidth > 768 ?
+                    <HeaderComponent/>
+                :
+                    <HeaderMobileComponent/>
+                }
                 <MainStyles styles={ state.base.styles }>
                 <Switch>
                     <Route path="/" exact component={HomePage}/>
@@ -79,7 +90,11 @@ function Wrapper() {
                 </Switch>
                 </MainStyles>
                 <LoadingComponent/>
-                <FooterComponent/>
+                {device?.device?.type !== 'smartphone' && window.innerWidth > 768  ?
+                    <FooterComponent/>
+                :
+                    ''
+                }
                 <AudioComponent/>
             </AppStyles>
         </Router>

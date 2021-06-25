@@ -1,17 +1,58 @@
 import styled, { createGlobalStyle } from 'styled-components'
 import { animation } from './animation.styles';
-import { getTypography } from '../utils/helpers';
+// import { getTypography } from '../utils/helpers';
+
+
+const getTypography = (props) => {
+    const options = { 
+        styles: defaultStyles, 
+        size: 'fontMedium',
+        fontSize: defaultStyles.typography.fontMedium.large.fontSize,
+        lineHeight: defaultStyles.typography.fontMedium.large.lineHeight,
+        letterSpacing: defaultStyles.typography.fontMedium.large.letterSpacing,
+        ...props
+    }
+
+    
+    const { typography } = options.styles;
+
+    const styles = `
+        font-size: ${ typography[options.size].large.fontSize };
+        line-height: ${ typography[options.size].large.lineHeight };
+        letter-spacing: ${ typography[options.size].large.letterSpacing };
+
+        @media screen and ( max-width: ${ options.styles.breakpoints.large }px ) {
+            font-size: ${ typography[options.size].large.fontSize };
+            line-height: ${ typography[options.size].large.lineHeight };
+            letter-spacing: ${ typography[options.size].large.letterSpacing };
+        }
+
+        @media screen and ( max-width: ${ options.styles.breakpoints.medium }px ) {
+            font-size: ${ typography[options.size]?.medium?.fontSize || typography[options.size].small.fontSize };
+            line-height: ${ typography[options.size]?.medium?.lineHeight || typography[options.size].small.lineHeight };
+            letter-spacing: ${ typography[options.size]?.medium?.letterSpacing || typography[options.size].small.letterSpacing };
+        }
+
+        @media screen and ( max-width: ${ options.styles.breakpoints.small }px ) {
+            font-size: ${ typography[options.size].small.fontSize };
+            line-height: ${ typography[options.size].small.lineHeight };
+            letter-spacing: ${ typography[options.size].small.letterSpacing };
+        }
+    `
+
+    return styles
+}
 
 export const defaultStyles = {
     colors: {
         grayOpacity: '#00000044',
-        grayReal: '#eee',
+        grayReal: '#ccc',
         green: '#d0ff00',
         red: '#ff0000',
         grayFont: '#00000059',
-        backgroundGrayOpacity: '#eeeeeed9',
-        backgroundGreenOpacity: '#d0ff00d9',
-        backgroundWhiteOpacity: '#ffffffd9'
+        backgroundGrayOpacity: '#cccccc',
+        backgroundGreenOpacity: '#d0ff00',
+        backgroundWhiteOpacity: '#ffffff'
     },
     zIndices: {
         header: 100,
@@ -47,6 +88,23 @@ export const defaultStyles = {
                 letterSpacing: '0.8px'
             },
         },
+        fontExtraLarge: {
+            large: {
+                fontSize: '42px',
+                lineHeight: 1,
+                letterSpacing: '0.8px'
+            },
+            medium: {
+                fontSize: '30px',
+                lineHeight: 1,
+                letterSpacing: '0.7px'
+            },
+            small: {
+                fontSize: '12vw',
+                lineHeight: 1,
+                letterSpacing: '0.8px'
+            },
+        },
         fontMedium: {
             large: {
                 fontSize: '23px',
@@ -54,7 +112,7 @@ export const defaultStyles = {
                 letterSpacing: '0.8px'
             },
             small: {
-                fontSize: '19px',
+                fontSize: '17px',
                 lineHeight: 1.2,
                 letterSpacing: '0.8px'
             },
@@ -126,9 +184,15 @@ export const GlobalStyle = createGlobalStyle `
 
     p {
         margin-top: 0;
+        margin-bottom: 0;
+        letter-spacing: 0.7px;
 
-        &::not(:last-child) {
-            margin-bottom: ${defaultStyles.spacing.medium};
+        &:not(:last-of-type) {
+            margin-bottom: ${props => defaultStyles.spacing.medium}px;
+        }
+
+        a {
+            text-decoration: underline;
         }
     }
 
@@ -160,9 +224,8 @@ export const AppStyles = styled.div `
 
     @media screen and (max-width: ${ defaultStyles.breakpoints.medium }px ) {
         grid-template-rows: 
-        calc( ${props => (props.sizes.headerHeight)}px + ${props => (props.device.client.name === 'Mobile Safari' ? '20px' : '0px' )}) 
+        calc( ${props => (props.sizes.headerHeight) + 5 }px) 
             auto 
-            calc( ${props => (props.sizes.footerHeight)}px + ${props => (props.device.client.name === 'Mobile Safari' ? '20px' : '0px' )});
     }
 `
 
@@ -220,7 +283,23 @@ export const MainStyles = styled.main `
                 margin-top: ${props => props.styles.spacing.extraLarge}px;
                 margin-bottom: ${props => props.styles.spacing.extraLarge}px;
             }
+            
+            .rfsc-space__content__text {
+                margin-bottom: ${props => props.styles.spacing.medium}px;
+            }
         }
+    }
+
+    
+    
+
+    @media screen and (max-width: ${ defaultStyles.breakpoints.medium }px ) {
+        /* padding-bottom: 0 ${props => (props.styles.spacing.extraExtraLarge)}px;  */
+
+        .rfsc-content {
+            padding-bottom: ${props => (props.styles.spacing.extraExtraLarge)}px; 
+        }
+
     }
 ` 
 
@@ -312,10 +391,10 @@ letter-spacing: ${props => props.styles.typography.fontLarge.large.letterSpacing
 `
 
 const getHeaderFooterStyles = ({ styles, className}, header = true) => {
-    if (className.includes('info') || className.includes('space')) {
+    if (className.includes('info') || className.includes('space') || className.includes('radio')) {
         return styles.colors.grayOpacity;
     } else {
-        return styles.colors.green;
+        return styles.colors.grayOpacity;
     }
     
 }
@@ -370,9 +449,58 @@ export const HeaderStyles = styled.nav `
         display: flex;
         align-items: flex-end;
         padding-bottom: ${props => (props.styles.spacing.small)}px;
+        position: fixed;
+        top: 0;
+    }
+
+    &.rfsc-header-mobile {
+        height: ${props => (props.sizes.headerHeight) + 5}px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        ${props => getTypography({styles: props.styles, size: 'fontExtraLarge'})}
+        background: ${props => (props.styles.colors.grayReal)};
+        padding: ${props => (props.styles.spacing.small)}px;
+
+        .rfsc-header-mobile__button {    
+            transform: translateY(2px);
+            /* width: 100%;
+            text-align: center; */
+            &.rfsc-header-mobile-icon {
+                min-width: 32px;
+                min-height: 32px;
+            }
+        }
+
+        .rfsc-header-mobile__menu {
+            position: absolute;
+            top: 100%;
+        }
+
+        &.menu-open {
+            ul {
+                opacity: 1;
+                pointer-events: all;
+            }
+        }
+
 
         ul {
+            opacity: 0;
+            pointer-events: none;
+            transition: ${props => (props.styles.animation.transitions.long)};
+            padding: ${props => (props.styles.spacing.small)}px;
+            padding-top: 0;
+            background: ${props => (props.styles.colors.grayReal)};
             height: unset;
+
+            flex-wrap: wrap;
+
+            a {
+                width: 100%;
+                text-align: center;
+                /* margin-top: ${props => (props.styles.spacing.small)}px; */
+            }
         }
     }
 `
@@ -535,6 +663,38 @@ export const RadioStyles = styled.div `
         background-color: ${props => (props.styles.colors.green)};
         display: none;
     }
+
+    @media screen and (max-width: ${ defaultStyles.breakpoints.medium }px ) {
+        .rfsc-radio__content {
+
+            display: flex;
+            flex-wrap: wrap;
+
+            > div:not(.rfsc-banner) {
+                width: 100%;
+                max-height: 33%;
+                height: 200px;
+
+                .rfsc-image {
+                    width: 100%;
+                    height: 100%;
+                }
+
+                &.rfsc-radio__icon {
+                    transform: scale(1);
+                    /* width: 33%; */
+                    /* height: 100%; */
+                }
+
+                &.rfsc-radio__player {
+                    cursor: pointer;
+                    height: 100px;
+                    /* width: 33%; */
+                    /* height: 100%; */
+                }
+            }
+        }
+    }
 `
 
 export const IconStyles = styled.div`
@@ -597,7 +757,8 @@ export const FormStyles = styled.form`
 
         &[type="submit"] {
             background: ${props => (props.styles.colors.grayReal)};
-            transition: ${props => (props.styles.animation.transitions.regular)};
+            transition: ${props => (props.styles.animation.transitions.long)};
+            border: none;
             cursor: pointer;
             
             &:hover {
@@ -690,7 +851,7 @@ export const LoadingStyles = styled.div`
     position: fixed;
     background: white;
     z-index: 1000;
-    transition: ${props => (props.styles.animation.transitions.long)};
+    transition: ${props => (props.styles.animation.transitions.extraLong)};
     /* ${props => (props.transitionStyles)} */
 
     .rfsc-loading__graphic {
@@ -729,6 +890,19 @@ export const LoadingStyles = styled.div`
             }
         }
     }
+
+    @media screen and ( max-width: ${ defaultStyles.breakpoints.medium }px ) {
+        .rfsc-loading__graphic {
+            max-width: 50vw;
+            max-height: 50vw;
+
+            svg {
+                max-width: 50vw;
+                max-height: 50vw;
+                top: calc(50% - 60px)
+            }
+        }
+    }
 `
 
 
@@ -740,11 +914,20 @@ export const BackgroundVideoComponentStyles = styled.div `
     pointer-events: none;
     /* z-index: -1; */
 
-    video, img {
+    .rfsc-background-video {
         width: 100%;
         height: 100%;
-        object-fit: cover;
-        /* pointer-events: none; */
+
+        video, img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            /* pointer-events: none; */
+        }
+
     }
 
 `
@@ -757,5 +940,10 @@ export const BannerStyles = styled.div`
     
     img {
         width: 100%;
+    }
+    
+    @media screen and (max-width: ${ defaultStyles.breakpoints.medium }px ) {
+        /* padding: ${defaultStyles.spacing.small}px;
+         */
     }
 `

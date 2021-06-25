@@ -21,6 +21,13 @@ export const CalendarStyles = styled.div `
         cursor: pointer;
         text-transform: uppercase;
     }
+
+
+    @media screen and (max-width: ${ defaultStyles.breakpoints.medium }px ) {
+
+        perspective: 450px;
+        
+    }
 `
 
 export const CalendarListStyles = styled.div `
@@ -70,7 +77,8 @@ export const CalendarListStyles = styled.div `
                 width: 80%;
                 max-width: 500px;
                 pointer-events: none;
-                color: white;
+                color: ${props => (defaultStyles.colors.red)}
+                ;
             }
 
             .rfsc-calendar__list__title__logo {
@@ -88,6 +96,13 @@ export const CalendarListStyles = styled.div `
                 text-transform: uppercase;
             }
         }
+    }
+
+
+    @media screen and (max-width: ${ defaultStyles.breakpoints.medium }px ) {
+
+        top: 60%;
+        
     }
 `
 export const CalendarListItemStyles = styled.div `
@@ -156,6 +171,8 @@ export const CalendarListItemStyles = styled.div `
                     /* overflow-y: scroll; */
                     align-items: center;
                     align-content: center;
+                    /* transform: translateY(10px); */
+                    margin-top: -7px;
                 }
             }
 
@@ -265,7 +282,7 @@ export const CalendarListItemStyles = styled.div `
 
     &.inactive {
         transform: rotateX(-60deg) scale(0.9);
-        opacity: 0.9
+        /* opacity: 0.9 */
         /* opacity: 0.5; */
     }
 
@@ -365,12 +382,12 @@ export const CalendarGraphic = styled.div `
     align-items: center;
     justify-content: center;
 
-    font-size: ${props => props.styles.typography.fontSmall.large.fontSize}px;
-    line-height: ${props => props.styles.typography.fontSmall.large.lineHeight};
+    font-size: 21px;
+    line-height: 0.5px;
 
     svg {
 
-        height: 108vh;
+        height: calc(100vh - 100px);
         width: 100vw;
         position: absolute;
         /* left: 0;
@@ -416,10 +433,10 @@ export const CalendarGraphic = styled.div `
 
                 &:hover {
                     /* transform: scale(1.5); */
-                    fill: ${props => props.styles.colors.red};
+                    fill: black;
 
                     text {
-                        fill: ${props => props.styles.colors.red};
+                        fill: black;
                     }
                 }
             }
@@ -434,6 +451,8 @@ export const CalendarGraphic = styled.div `
             text {
                 transition: ${props => props.styles.animation.transitions.regular};
                 text-transform: uppercase;
+                font-size: 21px;
+                letter-spacing: 0.5px;
             }
 
             tspan {
@@ -463,7 +482,7 @@ export const CalendarGraphic = styled.div `
             }
 
             ${props => getFilteredId(props)} {
-                fill: ${props => props.styles.colors.red};
+                fill: black;
 
                 text {
                     /* fill: ${props => props.styles.colors.red}; */
@@ -487,11 +506,11 @@ export const CalendarGraphic = styled.div `
             }
             
             #Veranstaltungsart {
-                transform: rotate(${props => getRotations(props).typeRotation }deg);
+                transform: rotate(${props => getRotations(props, true).typeRotation }deg);
             }
 
             #Orte {
-                transform: rotate(${props => getRotations(props).locationRotation }deg);
+                transform: rotate(${props => getRotations(props, true).locationRotation }deg);
             }
 
             .active {
@@ -501,17 +520,26 @@ export const CalendarGraphic = styled.div `
         }
     }
 
-    @media screen and (max-width: ${ defaultStyles.breakpoints.medium }px ) {
+    @media screen and (max-width: 768px ) {
 
         svg {
-            width: 170%;
+            width: 260%;
 
             [id*='-event'] {
                 display: none;
             }
 
             #Layer_1 {
-                transform: translateY(-20%);
+                transform: translateY(-10%);
+            }
+
+            
+            #Veranstaltungsart {
+                transform: rotate(${props => +getRotations(props).typeRotation}deg) !important;
+            }
+
+            #Orte {
+                transform: rotate(${props => +getRotations(props).locationRotation}deg) !important;
             }
         }
     }
@@ -546,19 +574,20 @@ const getFilteredId = (props) => {
     return filterString;
 }
 
-const getRotations = (props) => {
+const getRotations = (props, shift = false) => {
 
     const { locations, types } = props.currentDetail;
     const { rotations } = props;
 
+    const shiftValue = shift ? 90 : 0
     
     let typeRotation = 0;
     let locationRotation = 0;
 
     if ( locations?.length == 0 && types?.length == 0 || !props.hasScrolled || !props.currentDetail) return { typeRotation, locationRotation }
 
-    if (types) typeRotation = types[0] ? rotations.types[types[0]] + 90 : 0
-    if (locations) locationRotation = locations[0] ? rotations.locations[locations[0]] - 90 : 0
+    if (types) typeRotation = types[0] ? rotations.types[types[0]] + shiftValue : 0
+    if (locations) locationRotation = locations[0] ? rotations.locations[locations[0]] - shiftValue : 0
 
     return {
         typeRotation,
@@ -676,9 +705,9 @@ export const CalendarDetailsStyles = styled(animated.div) `
     top: 50%;
     height: 100%;
     transform: translate(-50%, -50%);
-    width: 800px;
-    height: 800px;
-    max-height: calc( 100vh - 256px);
+    width: 900px;
+    height: 900px;
+    max-height: calc( 100vh - 130px);
     max-width: calc( 100vw - ${props => (props.styles.spacing.large)}px);
     overflow-y: scroll;
     background: white;
@@ -694,16 +723,21 @@ export const CalendarDetailsStyles = styled(animated.div) `
 
     
 
-    /* @media screen and (max-width: ${ defaultStyles.breakpoints.medium }px ) {
+    @media screen and (max-width: ${ defaultStyles.breakpoints.medium }px ) {
 
-        max-height: calc( 100vw - ${props => (props.styles.spacing.large)}px);
-        max-width: calc( 100vw - ${props => (props.styles.spacing.extraExtralarge)}px);
-    } */
+        max-height: calc( 100vh - 130px);
+        top: calc(50% - 40px);
+        max-width: 100vw;
+    }
 
 `
 
 export const CalendarEventDetailsStyles = styled(CalendarDetailsStyles) `
-    padding: ${props => props.styles.spacing.medium}px;
+    /* padding: ${props => props.styles.spacing.medium}px; */
+
+    /* > * {
+        padding: ${props => props.styles.spacing.medium}px;
+    } */
 
     &.event {
         background-color: ${props => props.styles.colors.backgroundGreenOpacity};
@@ -711,6 +745,7 @@ export const CalendarEventDetailsStyles = styled(CalendarDetailsStyles) `
 
         a {
             color: ${props => props.styles.colors.red};
+            text-decoration: underline;
 
             &:hover {
                 color: black;
@@ -737,6 +772,7 @@ export const CalendarEventDetailsStyles = styled(CalendarDetailsStyles) `
         display: flex;
         justify-content: space-between;
         margin-bottom: ${props => props.styles.spacing.medium}px;
+        margin-top: ${props => props.styles.spacing.medium}px;
         padding-bottom: 13px;
         border-bottom: 2px solid ${props => props.styles.colors.red};
 
@@ -780,12 +816,19 @@ export const CalendarEventDetailsStyles = styled(CalendarDetailsStyles) `
 
 export const CalendarDetailStyles = styled.div `
     margin-bottom: ${props => props.styles.spacing.medium}px;
+
+    > * {
+        padding-left: ${props => props.styles.spacing.medium}px;
+        padding-right: ${props => props.styles.spacing.medium}px;
+
+    }
     /*  font-size: ${props => props.styles.typography.fontMedium.large.fontSize}px;
 letter-spacing: ${props => props.styles.typography.fontMedium.large.letterSpacing}px;
     line-height: ${props => props.styles.typography.fontMedium.large.lineHeight}; */
 
     &.rfsc-event {
         border-bottom: 2px solid ${props => props.styles.colors.red};
+        margin-bottom: 84px;
     }
 
     &.rfsc-radio, &.rfsc-tattoo {
@@ -844,7 +887,7 @@ letter-spacing: ${props => props.styles.typography.fontLarge.large.letterSpacing
             margin-top: 0;
 
             &:not(:last-of-type) {
-                margin-bottom: ${props => props.styles.typography.fontLarge.large.lineHeight};
+                margin-bottom: ${props => props.styles.spacing.medium}px;
             }
         }
     }

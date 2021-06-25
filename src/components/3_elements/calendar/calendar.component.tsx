@@ -73,7 +73,7 @@ function CalendarComponent() {
         } else if (type == 'move') {
             setScrollDeltaY(e.touches[0].clientY - scrollStartY);
             // console.log(scroll);
-            setScrollDist(scrollDist, scrollDeltaY, - (dampener * 0.1));
+            setScrollDist(scrollDist, scrollDeltaY, - (dampener * 0.5));
             // setScrollStartY(e.touches[0].clientY)
         }
 

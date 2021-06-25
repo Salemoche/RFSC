@@ -178,6 +178,9 @@ export const WP_QUERY = {
                 iconPlay {
                     sourceUrl
                 }
+                iconPlayFooter {
+                    sourceUrl
+                }
                 iconPause {
                     sourceUrl
                 }
@@ -187,6 +190,9 @@ export const WP_QUERY = {
                 stream
                 backgroundGray {
                     mediaItemUrl
+                }
+                backgroundGrayPlaceholderMobile {
+                    sourceUrl
                 }
                 backgroundGrayPlaceholder {
                     sourceUrl
