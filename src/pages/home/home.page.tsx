@@ -32,7 +32,7 @@ function HomePage({ props }) {
     const handleContentLoaded = () => {
         // set(!show)
         setContentLoaded(!contentLoaded)
-        updateBaseState({ type: actions.SET_BASE, payload: { handleContentLoaded: true } });
+        updateBaseState({ type: actions.SET_BASE, payload: { contentLoaded: true } });
     }
     
 

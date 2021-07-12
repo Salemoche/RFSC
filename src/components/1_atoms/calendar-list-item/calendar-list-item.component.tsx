@@ -80,6 +80,8 @@ function CalendarListItemComponent({
 
     useEffect(() => {
 
+        console.log(hasScrolled, scrollDist);
+
         if ( // is scrolled in focus arrea
             containerHeight - scrollDist + viewPortShift > offsetTop - activeThreshold / 2 
             && containerHeight - scrollDist + viewPortShift < offsetTop + activeThreshold / 2
@@ -120,7 +122,7 @@ function CalendarListItemComponent({
 
         // console.log('from item:', scrollDist, containerHeight)
 
-    }, [scrollDist, containerHeight])
+    }, [scrollDist, containerHeight, hasScrolled])
 
     const handleClick = (e, type) => {
         // console.log(e.target, type);

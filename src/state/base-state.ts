@@ -39,7 +39,8 @@ export const baseState = {
             locations: []
         },
         backgrounds: {
-            gray: {}
+            gray: {},
+            radio: {}
         },
         device: {
             client: {
@@ -57,6 +58,7 @@ export const baseState = {
         scrollDist: -350, // 0,
         scrollDir: 'forward',
         hasScrolled: false,
+        hasFirstScrollPassed: false,
         currentDay: 1,
         currentItem: 1,
         filters: [],
@@ -76,6 +78,7 @@ export const baseState = {
         isPlaying: false,
         onAir: false,
         stream: '',
+        radioText: '',
     },
     filters: {
         location: [],

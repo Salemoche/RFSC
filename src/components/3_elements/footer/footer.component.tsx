@@ -7,7 +7,7 @@ import { useBaseState } from '../../../state/provider';
 import actions from '../../../state/actions';
 import { NavLink } from 'react-router-dom';
 
-function FooterComponent() {
+function FooterComponent({ mobile = false }) {
     const state = useBaseState().state;
     const setFooterSize = useBaseState().dispatchBase;
 
@@ -16,7 +16,7 @@ function FooterComponent() {
     }, [])
 
     return (
-        <FooterStyles className={`rfsc-footer ${ state.base.headerFooterClass }`} sizes={ state.base.sizes } styles={ state.base.styles }>
+        <FooterStyles style={{display: mobile ? 'none' : 'inherit'}} className={`rfsc-footer ${ state.base.headerFooterClass }`} sizes={ state.base.sizes } styles={ state.base.styles }>
             <PlayerComponent/>
             <NavLink to="/radio">Radio</NavLink>
             <div className="rfsc-footer-on-air">

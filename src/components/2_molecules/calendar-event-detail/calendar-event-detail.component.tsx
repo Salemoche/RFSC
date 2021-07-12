@@ -7,6 +7,7 @@ function CalendarEventDetailComponent({ post, type }) {
 
     const styles = useBaseState().state.base.styles;
     const content = useBaseState().state.content;
+    const device = useBaseState().state.base.device;
 
     const getDetailContent = () => {
 
@@ -40,25 +41,45 @@ function CalendarEventDetailComponent({ post, type }) {
 
                     // console.log(event)
                     return (<CalendarDetailStyles 
-                            className="rfsc-calendar__details__detail rfsc-event-detail rfsc-event" 
+                            className={`rfsc-calendar__details__detail rfsc-event-detail rfsc-event`} 
                             data-id={ event.id } 
                             styles={ styles }
                             type={ postObject.type }
                             key={ event.id }
                         >
-                        <div className="rfsc-event-detail__header rfsc-detail-header">
-                            <div className="rfsc-event-detail__header__date rfsc-detail-header__item">
-                                { formatDate(event.event_content.date)?.day }
-                                .
-                                { formatDate(event.event_content.date)?.month }.
+
+                        {device?.device?.type !== 'smartphone' && window.innerWidth > 768  ?
+                            <div className="rfsc-event-detail__header rfsc-detail-header">
+                                <div className="rfsc-event-detail__header__date rfsc-detail-header__item">
+                                    { formatDate(event.event_content.date)?.day }
+                                    .
+                                    { formatDate(event.event_content.date)?.month }.
+                                </div>
+                                <div className="rfsc-event-detail__header__leader rfsc-detail-header__item">
+                                    by { event.event_content.leader }
+                                </div>
+                                <div className="rfsc-event-detail__header__type rfsc-detail-header__item">
+                                    { categories.typeTitles.toString() }
+                                </div>
                             </div>
-                            <div className="rfsc-event-detail__header__leader rfsc-detail-header__item">
-                                { event.event_content.leader }
+                        :
+                            <div className="rfsc-event-detail__header rfsc-event-detail__header-mobile rfsc-detail-header">
+                                <div className="rfsc-event-detail__header__date rfsc-detail-header__item">
+                                    { formatDate(event.event_content.date)?.day }
+                                    .
+                                    { formatDate(event.event_content.date)?.month }.
+                                </div>
+                                <div className="rfsc-event-detail__header__by rfsc-detail-header__item">
+                                    by
+                                </div>
+                                <div className="rfsc-event-detail__header__type rfsc-detail-header__item">
+                                    { categories.typeTitles.toString() }
+                                </div>
+                                <div className="rfsc-event-detail__header__leader rfsc-event-detail__header__leader-wide rfsc-detail-header__item">
+                                    { event.event_content.leader }
+                                </div>
                             </div>
-                            <div className="rfsc-event-detail__header__type rfsc-detail-header__item">
-                                { categories.typeTitles.toString() }
-                            </div>
-                        </div>
+                        }
                         <div className="rfsc-event-detail__lead">
                             <div className="rfsc-event-detail__lead__time">
                             { `${formatTime(event?.event_content?.fromTime)?.hours}:${formatTime(event?.event_content?.fromTime)?.minutes}` } 

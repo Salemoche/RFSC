@@ -51,12 +51,19 @@ function LoaderComponent() {
                     video: data.siteSettings.siteSettings.backgroundGray,
                     placeholderMobile: data.siteSettings.siteSettings.backgroundGrayPlaceholderMobile,
                     placeholder: data.siteSettings.siteSettings.backgroundGrayPlaceholder
+                },
+                radio: {
+                    video: data.siteSettings.siteSettings.backgroundRadio,
+                    placeholderMobile: data.siteSettings.siteSettings.backgroundGrayPlaceholderMobile,
+                    placeholder: data.siteSettings.siteSettings.backgroundGrayPlaceholder
                 }
             }
         }})  
-        updateBaseState({ type: actions.SET_SOUND, payload: { 
-            stream: data.siteSettings.siteSettings.stream
-        }})  
+        if (data.siteSettings.siteSettings.stream) {
+            updateBaseState({ type: actions.SET_SOUND, payload: { 
+                stream: data.siteSettings.siteSettings.stream
+            }})
+        }
         updateBaseState({ type: actions.SET_CALENDAR, payload: { 
             scrollText: data.pages.nodes.filter((node) => {
                 return node.pageId === 21

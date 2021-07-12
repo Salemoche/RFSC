@@ -1,9 +1,22 @@
 @font-face {
-    font-family: 'Monument';
+    font-family: 'Monument Regular';
     font-style: normal;
     font-weight: 400;
     // src: url('/assets/fonts/ABCMonumentGrotesk-Medium.otf') format('opentype');
     src: local(''),
+        url('/assets/fonts/ABCMonumentGrotesk-Regular.woff2') format('woff2'),
+        url('/assets/fonts/ABCMonumentGrotesk-Regular.woff') format('woff'),
+        url('/assets/fonts/ABCMonumentGrotesk-Regular.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'Monument Medium';
+    font-style: normal;
+    font-weight: 400;
+    // src: url('/assets/fonts/ABCMonumentGrotesk-Medium.otf') format('opentype');
+    src: local(''),
+        url('/assets/fonts/ABCMonumentGrotesk-Medium.woff2') format('woff2'),
+        url('/assets/fonts/ABCMonumentGrotesk-Medium.woff') format('woff'),
         url('/assets/fonts/ABCMonumentGrotesk-Medium.otf') format('opentype');
 }
 
@@ -14,4 +27,13 @@
     // src: url('/assets/fonts/Ballyhaunis NF Regular.ttf') format('truetype');
     src: local(''),
         url('/assets/fonts/Ballyhaunis NF Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Helvetica Neue';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/assets/fonts/HelveticaNeueLTCYR-Md.woff2') format('woff2');
+    src: local(''),
+         url('/assets/fonts/HelveticaNeueLTCYR-Md.woff') format('woff'),
 }

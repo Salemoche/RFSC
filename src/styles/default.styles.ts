@@ -160,7 +160,7 @@ export const GlobalStyle = createGlobalStyle `
     body {
         overflow: hidden;
 
-        font-family: 'Monument', 'Helvetica', 'Arial', sans-serif;
+        font-family: 'Monument Medium', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
         /* font-size: ${defaultStyles.typography.fontMedium.large.fontSize}px;
         letter-spacing: ${defaultStyles.typography.fontMedium.large.letterSpacing}px;
         line-height: ${defaultStyles.typography.fontMedium.large.lineHeight}; */
@@ -170,7 +170,7 @@ export const GlobalStyle = createGlobalStyle `
     a {
         text-decoration: none;
         color: black;
-        transition: color .1s;
+        transition: color .3s;
 
         &.active {
             color: ${props => (defaultStyles.colors.red)};
@@ -223,9 +223,9 @@ export const AppStyles = styled.div `
     width: 100vw;
 
     @media screen and (max-width: ${ defaultStyles.breakpoints.medium }px ) {
-        grid-template-rows: 
+        /* grid-template-rows: 
         calc( ${props => (props.sizes.headerHeight) + 5 }px) 
-            auto 
+            auto  */
     }
 `
 
@@ -295,6 +295,8 @@ export const MainStyles = styled.main `
 
     @media screen and (max-width: ${ defaultStyles.breakpoints.medium }px ) {
         /* padding-bottom: 0 ${props => (props.styles.spacing.extraExtraLarge)}px;  */
+
+        grid-row-end: 4;
 
         .rfsc-content {
             padding-bottom: ${props => (props.styles.spacing.extraExtraLarge)}px; 
@@ -599,41 +601,78 @@ export const NavPlayerStyles = styled.div `
 
 export const RadioStyles = styled.div `
 
-    display: grid;
+    /* display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: 
-        ${props => (props.sizes.headerHeight)}px
+        14.6vw
         auto 
-        ${props => (props.sizes.footerHeight)}px;
-    height: 100vh;
+        14.6vw; */
+    height: 100%;
     background-color: white;
+    padding: 14.6vw 0 13.14vw 0;
 
-    .rfsc-radio__header {
+    /* .rfsc-radio__header {
         grid-row-start: 1;
         grid-row-end: 2;
         grid-column-start: 1;
         grid-column-end: 13;
         background-color: ${props => (props.styles.colors.green)};
         display: none;
+    } */
+
+    .rfsc-radio__marquee {
+        /* ${getTypography({size: 'fontLarge'})} */
+        overflow-y: hidden;
+        font-family: 'Monument Regular', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+        width: 100%;
+        background: white;
+        line-height: 0.9;
+
+        &.rfsc-radio__marquee-top {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            font-size: 14.6vw;
+            line-height: 1;
+            color: ${props => (props.styles.colors.grayReal)};
+
+            .marquee {
+                transform: translateY(5%)
+            }
+        }
+
+        /* &.rfsc-radio__marquee-bottom {
+            grid-row-start: 3;
+            grid-row-end: 4;
+        } */
+
     }
 
     .rfsc-radio__content {
-        grid-row-start: 2;
-        grid-row-end: 3;
+        position: relative;
+        height: 100%;
+        /* grid-row-start: 1;
+        grid-row-end: 3; */
         grid-column-start: 1;
         grid-column-end: 13;
         width: 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        /* padding: 0 ${props => (props.styles.spacing.extraLarge)}px; */
 
         > div:not(.rfsc-banner) {
             width: 33%;
 
             &.rfsc-radio__icon {
-                transform: scale(1.5);
+                transform: scale(0.8);
                 /* width: 33%; */
                 /* height: 100%; */
+
+                /* &:first-of-type {
+                    transform: scale(1.2)
+                } */
             }
 
             &.rfsc-radio__player {
@@ -641,7 +680,7 @@ export const RadioStyles = styled.div `
                 /* width: 33%; */
                 /* height: 100%; */
                 .rfsc-image {
-                    width: 200px;
+                    width: 175px;
                     max-width: 66%;
                     margin: 0 auto;
                     display: block;
@@ -651,17 +690,42 @@ export const RadioStyles = styled.div `
                     text-align: center;
                     cursor: default;
                 }
+
+                &.offline {
+                    width: unset;
+                    max-width: unset;
+                    width: 100%;
+                    height: 100%;
+
+                    .rfsc-image {
+                        max-width: unset;
+                        width: 100%;
+                        height: 100%;
+                        transform: scale(1.5);
+                    }
+                }
             }
         }
     }
 
     .rfsc-radio__footer {
-        grid-row-start: 3;
-        grid-row-end: 4;
-        grid-column-start: 1;
-        grid-column-end: 13;
-        background-color: ${props => (props.styles.colors.green)};
-        display: none;
+        font-family: 'Monument Regular', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: white;
+        line-height: 0.9;
+        color: ${props => (props.styles.colors.grayReal)};
+        font-size: 14.6vw;
+
+        &:hover {
+            color: ${props => (props.styles.colors.red)};
+        }
+
+        > div {
+            transform: translateY(5%);
+        }
     }
 
     @media screen and (max-width: ${ defaultStyles.breakpoints.medium }px ) {
@@ -682,6 +746,10 @@ export const RadioStyles = styled.div `
 
                 &.rfsc-radio__icon {
                     transform: scale(1);
+
+                    &.offline {
+                        height: 100px;
+                    }
                     /* width: 33%; */
                     /* height: 100%; */
                 }
@@ -691,7 +759,40 @@ export const RadioStyles = styled.div `
                     height: 100px;
                     /* width: 33%; */
                     /* height: 100%; */
+
+                    &.offline {
+                        height: 300px;
+
+                        .rfsc-image > img {
+                            transform: scale(2);
+                        }
+                    }
                 }
+            }
+        }
+
+        .rfsc-radio__marquee {
+
+            &.rfsc-radio__marquee-top {
+                padding-top: ${props => (props.styles.spacing.small)}px;
+                ;
+
+                .marquee {
+                    transform: translateY(5%)
+                }
+            }
+        }
+
+        .rfsc-radio__footer {
+
+            /* bottom: 50px; */
+
+            &:hover {
+                color: ${props => (props.styles.colors.red)};
+            }
+
+            div div {
+                transform: translateY(5%);
             }
         }
     }
@@ -740,7 +841,7 @@ export const FormStyles = styled.form`
     input, 
     textarea,
     select {
-        font-family: 'Monument', 'Helvetica', 'Arial', sans-serif;
+        font-family: 'Monument Medium', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
         width: 100%;
         /* font-size: ${props => (props.styles.typography.fontMedium.large.fontSize)}px;
         line-height: ${props => (props.styles.typography.fontMedium.large.lineHeight)}; */
@@ -868,26 +969,28 @@ export const LoadingStyles = styled.div`
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
+            width: 500px;
+            max-width: 50vw;
 
             .rfsc-loading-graphic-blink {
                 opacity: 0;
             }
 
-            #rfsc-loading-graphic__2 {
+            /* #rfsc-loading-graphic__2 {
                 animation: rfsc_blink_in_out 5s  0.5s infinite;
-            }
+            } */
 
             #rfsc-loading-graphic__text-summer {
-                animation: rfsc_blink_in_out 5s infinite;
+                animation: rfsc_blink 2.5s infinite alternate;
             }
 
             #rfsc-loading-graphic__text-camp {
-                animation: rfsc_blink_in_out 5s infinite;
+                animation: rfsc_blink 2.5s infinite alternate;
             }
 
-            #rfsc-loading-graphic__1 {
+            /* #rfsc-loading-graphic__1 {
                 animation: rfsc_blink_in_out 5s  0.5s infinite;
-            }
+            } */
         }
     }
 
@@ -929,6 +1032,8 @@ export const BackgroundVideoComponentStyles = styled.div `
         }
 
     }
+
+    ${props => props.style};
 
 `
 

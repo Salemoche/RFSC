@@ -50,7 +50,7 @@ function Wrapper() {
     }
 
     const handleResize = () => {
-        console.log(device?.client?.name);
+        console.log(getDevice().client?.name);
     }
 
     useEffect(() => {
@@ -58,6 +58,15 @@ function Wrapper() {
         handleResize();
         window.addEventListener('resize', handleResize);
         updateBaseState({ type: actions.SET_BASE, payload: { device: getDevice() } });
+
+        console.log('the device is', getDevice());
+
+        if (getDevice().client?.name?.toLocaleLowerCase().includes('safari')) {
+            setTimeout(() => {
+                updateBaseState({ type: actions.SET_BASE, payload: { contentLoaded: true } });
+                console.log('force load');
+            }, 10000);
+        }
         
         return () => {
             window.removeEventListener('resize', handleResize)
@@ -75,7 +84,7 @@ function Wrapper() {
     return (
         <Router>
             <GlobalStyle/>
-            <AppStyles sizes={ state.base.sizes } device={ device } onLoad={ handleLoad }>
+            <AppStyles className={`device-${device?.device?.type}`} sizes={ state.base.sizes } device={ device } onLoad={ handleLoad }>
                 {device?.device?.type !== 'smartphone' && window.innerWidth > 768 ?
                     <HeaderComponent/>
                 :
@@ -93,7 +102,7 @@ function Wrapper() {
                 {device?.device?.type !== 'smartphone' && window.innerWidth > 768  ?
                     <FooterComponent/>
                 :
-                    ''
+                    <FooterComponent mobile={true}/>
                 }
                 <AudioComponent/>
             </AppStyles>

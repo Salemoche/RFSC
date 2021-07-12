@@ -3,18 +3,19 @@ import { BackgroundVideoComponentStyles } from '../../../styles/default.styles';
 // import video from '../../../assets/video/background_gray.mp4';
 import { useBaseState } from '../../../state/provider';
 
-function BackgroundVideoComponent() {
+function BackgroundVideoComponent({ videoUrl = '', placeholderUrl = '', styles = '' }) {
 
     const backgrounds = useBaseState().state.base.backgrounds;  
+    // console.log(videoUrl)
     // console.log(backgrounds);
 
     return (
-        <BackgroundVideoComponentStyles>
+        <BackgroundVideoComponentStyles styles={styles}>
             { window.innerWidth > 768 ?
                 <div className="rfsc-background-video">
-                    <img src={ backgrounds.gray.placeholder.sourceUrl } alt="" />
+                    <img src={ placeholderUrl || backgrounds.gray.placeholder.sourceUrl } alt="" />
                     <video preload="metadata" muted={true} autoPlay loop>
-                        <source className="rfsc-background-video" src={` ${backgrounds.gray.video.mediaItemUrl}#t=0.5 `} type="video/mp4" />
+                        <source className="rfsc-background-video" src={` ${ videoUrl || backgrounds.gray.video.mediaItemUrl}#t=0.5 `} type="video/mp4" />
                     </video>
                 </div>
             :

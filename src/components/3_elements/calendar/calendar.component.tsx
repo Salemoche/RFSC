@@ -23,11 +23,12 @@ function CalendarComponent() {
 
     // const content = useBaseState().state.content;
     const base = useBaseState().state.base;
+    const calendar = useBaseState().state.calendar;
     const filters = useBaseState().state.filters;
     const updateBase = useBaseState().dispatchBase;
     const days = useBaseState().state.content.days;
     // const [ scrollDist, setScrollDist ] = useState(0);
-    let scrollDist = useBaseState().state.calendar.scrollDist;
+    let scrollDist = calendar.scrollDist;
     const dampener = 2;
     const [hasFilters, setHasFilters] = useState(false);
     const [scrollDeltaY, setScrollDeltaY] = useState(0)
@@ -95,7 +96,7 @@ function CalendarComponent() {
         }
         // updateBase({ type: actions.SET_CALENDAR, payload: { scrollDist, scrollDir} });
 
-        updateBase({ type: actions.SET_CALENDAR, payload: { scrollDist, hasScrolled: true, scrollDir } });
+        updateBase({ type: actions.SET_CALENDAR, payload: { scrollDist, hasScrolled: true, hasFirstScrollPassed: true, scrollDir } });
     }
 
     // useEffect(() => {
@@ -106,6 +107,13 @@ function CalendarComponent() {
     useEffect(() => {
 
         filterDays();
+        console.log(calendar.hasFirstScrollPassed)
+
+        if (calendar.hasFirstScrollPassed) {
+            updateBase({ type: actions.SET_CALENDAR, payload: { hasScrolled: true, scrollDist: -350 } });
+            // updateBase({ type: actions.SET_CALENDAR, payload: { hasScrolled: true } });
+            // console.log('changing to true')
+        }
 
         return () => {
             // updateBase({ type: actions.SET_CALENDAR, payload: { scrollDist: 0 } });

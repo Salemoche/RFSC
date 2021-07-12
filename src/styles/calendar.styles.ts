@@ -103,6 +103,10 @@ export const CalendarListStyles = styled.div `
 
         top: 60%;
         
+        .rfsc-calendar__list-container .rfsc-calendar__list__title .rfsc-calendar__list__title__logo {
+            max-width: unset;
+            width: 120%;
+        }
     }
 `
 export const CalendarListItemStyles = styled.div `
@@ -725,8 +729,8 @@ export const CalendarDetailsStyles = styled(animated.div) `
 
     @media screen and (max-width: ${ defaultStyles.breakpoints.medium }px ) {
 
-        max-height: calc( 100vh - 130px);
-        top: calc(50% - 40px);
+        max-height: calc( 100vh - 150px);
+        top: calc(50% - 48px);
         max-width: 100vw;
     }
 
@@ -804,6 +808,31 @@ export const CalendarEventDetailsStyles = styled(CalendarDetailsStyles) `
             width: 100px
         }
 
+    }
+
+    .rfsc-event-detail__header-mobile,
+    .rfsc-tattoo-detail__header-mobile,
+    .rfsc-radio-detail__header-mobile {
+        flex-wrap: wrap;
+
+        .rfsc-event-detail__header__by,
+        .rfsc-radio-detail__header__by,
+        .rfsc-tattoo-detail__header__by {
+            text-align: center;
+            width: 33%;
+        }
+
+        
+        [class*='detail__header__date'],
+        [class*='detail__header__type'] {
+            width: 33%;
+        }
+
+        .rfsc-event-detail__header__leader-wide,
+        .rfsc-event-radio__header__host-wide,
+        .rfsc-event-tattoo__header__host-wide {
+            width: 100%;
+        }
     }
 
     

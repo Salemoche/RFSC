@@ -191,6 +191,9 @@ export const WP_QUERY = {
                 backgroundGray {
                     mediaItemUrl
                 }
+                backgroundRadio {
+                    mediaItemUrl
+                }
                 backgroundGrayPlaceholderMobile {
                     sourceUrl
                 }

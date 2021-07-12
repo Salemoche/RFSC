@@ -15,6 +15,7 @@ function CalendarEventDetailsComponent({ type }) {
     const currentDetail = useBaseState().state.base.currentDetailParameters
     const [isRotatedIn, setIsRotatedIn] = useState(false)
     const [browser, setBrowser] = useState('')
+    const device = useBaseState().state.base.device;
     // const rotateIn = useSpring({
     //     opacity: isRotatedIn ? 1 : 0,
     //     rotateY: isRotatedIn ? '0deg' : '90deg',
@@ -99,21 +100,41 @@ function CalendarEventDetailsComponent({ type }) {
                         type={ type }
                         key={ day.dayIndex }
                     >
-                        <div data-id={'hoi'} className={`rfsc-${type}-detail__header rfsc-detail-header`}>
-                            <div className={`rfsc-${type}-detail__header__date rfsc-detail-header__item`}>
-                                { formatDate(day.date)?.day }
-                                .
-                                { formatDate(day.date)?.month }.
+
+                        {device?.device?.type !== 'smartphone' && window.innerWidth > 768  ?
+                            <div data-id={''} className={`rfsc-${type}-detail__header rfsc-detail-header`}>
+                                <div className={`rfsc-${type}-detail__header__date rfsc-detail-header__item`}>
+                                    { formatDate(day.date)?.day }
+                                    .
+                                    { formatDate(day.date)?.month }.
+                                </div>
+                                {day.hostLink ?
+                                    <a href={ day.hostLink } target="_blank" className={`rfsc-${type}-detail__header__host rfsc-detail-header__item`}>by { day.host }</a>
+                                :
+                                    <div className={`rfsc-${type}-detail__header__host rfsc-detail-header__item`}>by { day.host }</div>
+                                }
+                                <div className={`rfsc-${type}-detail__header__type rfsc-detail-header__item`}>
+                                    { day.type || type }
+                                </div>
                             </div>
-                            {day.hostLink ?
-                                <a href={ day.hostLink } className={`rfsc-${type}-detail__header__host rfsc-detail-header__item`}>{ day.host }</a>
-                            :
-                                <div className={`rfsc-${type}-detail__header__host rfsc-detail-header__item`}>{ day.host }</div>
-                            }
-                            <div className={`rfsc-${type}-detail__header__type rfsc-detail-header__item`}>
-                                { day.type || type }
+                        :
+                            <div data-id={''} className={`rfsc-${type}-detail__header rfsc-${type}-detail__header-mobile rfsc-detail-header`}>
+                                <div className={`rfsc-${type}-detail__header__date rfsc-detail-header__item`}>
+                                    { formatDate(day.date)?.day }
+                                    .
+                                    { formatDate(day.date)?.month }.
+                                </div>
+                                <div className={`rfsc-${type}-detail__header__by rfsc-detail-header__item`}>by</div>
+                                <div className={`rfsc-${type}-detail__header__type rfsc-detail-header__item`}>
+                                    { day.type || type }
+                                </div>
+                                {day.hostLink ?
+                                    <a href={ day.hostLink } className={`rfsc-${type}-detail__header__host rfsc-${type}-detail__header__host-wide rfsc-detail-header__item`}>{ day.host }</a>
+                                :
+                                    <div className={`rfsc-${type}-detail__header__host rfsc-${type}-detail__header__host-wide rfsc-detail-header__item`}>{ day.host }</div>
+                                }
                             </div>
-                        </div>
+                        }
                         {day.programText ?
                             <div className={`rfsc-${type}-detail__text`}>
                                 <p>{ day.programText }</p>
