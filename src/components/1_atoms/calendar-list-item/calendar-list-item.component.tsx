@@ -125,12 +125,12 @@ function CalendarListItemComponent({
     }, [scrollDist, containerHeight, hasScrolled])
 
     const handleClick = (e, type) => {
-        // console.log(e.target, type);
         let detail = 'showEventDetail';
 
         if (active) setIsRotatedOut(is => !is);
 
-        if ( e.target.closest('[class*=inactive]' ) || e.target.closest('[class*=behind-viewport]' )) return
+        if ( window.innerWidth > 768 && (e.target.closest('[class*=inactive]' ) || e.target.closest('[class*=behind-viewport]' ))) return
+        console.log(e.target, type);
 
         switch (type) {
             case 'event':
@@ -163,7 +163,12 @@ function CalendarListItemComponent({
 
         switch (post.fieldGroupName) {
             case 'Page_Days_days_Posts_EventLayout':
-                categories = getCategories(post.events[0])
+                categories = post?.events ? getCategories(post?.events[0]) : {
+                    locations: [],
+                    locationTitles: [],
+                    types: [],
+                    typeTitles: [],
+                };
                 break;
             case 'Page_Days_days_Posts_RadioLayout':
                 categories = {
@@ -239,15 +244,16 @@ function CalendarListItemComponent({
 
         switch (post.fieldGroupName) {
             case 'Page_Days_days_Posts_EventLayout':
+                if (!post?.events || post.events.length == 0) break;
                 postObject = {
                     type: 'event',
-                    events: post.events,
-                    id: post.events[0]?.id,
+                    events: post?.events,
+                    id: post?.events[0]?.id,
                     front: {
                         icon: '',
                         extra: post.extra
                     },
-                    filteredOut: post.events[0]?.filteredOut
+                    filteredOut: post?.events[0]?.filteredOut
                 }
                 content = {
                     front: 

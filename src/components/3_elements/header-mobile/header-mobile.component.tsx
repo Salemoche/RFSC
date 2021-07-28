@@ -14,7 +14,7 @@ function HeaderMobileComponent() {
     const [menuOpen, setMenuOpen] = useState(false)
 
     useEffect(() => {
-        setBaseState({ type: actions.SET_SIZES, payload: { headerHeight: 50 } });
+        setBaseState({ type: actions.SET_SIZES, payload: { headerHeight: 55 } });
     }, [])
 
     const handleClose = () => {

@@ -99,13 +99,39 @@ export const CalendarListStyles = styled.div `
     }
 
 
-    @media screen and (max-width: ${ defaultStyles.breakpoints.medium }px ) {
+    /* @media screen and (max-width: ${ defaultStyles.breakpoints.medium }px ) {
 
         top: 60%;
         
         .rfsc-calendar__list-container .rfsc-calendar__list__title .rfsc-calendar__list__title__logo {
             max-width: unset;
             width: 120%;
+        }
+    } */
+
+    @media screen and (max-width: ${ defaultStyles.breakpoints.medium }px ) {
+
+        top: 0;
+        transform: none;
+
+        .rfsc-calendar__list-container {
+            transform: none;
+            height: 100vh;
+            overflow-y: scroll;
+            pointer-events: all;
+            padding-bottom: 128px;
+            /* padding-top: ${props => (props.styles.spacing.medium)}px */
+            /* display: flex;
+            flex-wrap: wrap;
+            flex-direction: column-reverse; */
+            
+            .rfsc-calendar__list__day {
+/* 
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                flex-direction: column-reverse; */
+            }
         }
     }
 `
@@ -269,60 +295,7 @@ export const CalendarListItemStyles = styled.div `
     }
 
 
-    &.initial {
-        opacity: 0 !important;
-    }
-    
-    &.filtered-out {
-        opacity: 0.25
-    }
 
-
-    &.active {
-        opacity: 1;
-        transform: rotateX(-60deg) scale(1);
-        cursor: pointer;
-    }
-
-    &.inactive {
-        transform: rotateX(-60deg) scale(0.9);
-        /* opacity: 0.9 */
-        /* opacity: 0.5; */
-    }
-
-    &.behind-viewport {
-        opacity: 0;
-        pointer-events: none !important;
-        transform: rotateX(-60deg) scale(2);
-
-        * {
-            pointer-events: none !important;
-        }
-    }
-
-    &.in-front-of-viewport {
-        /* background: yellow; */
-    }
-
-    &.invisible {
-        opacity: 0;
-        /* display: none; */
-    }
-
-    &:hover {
-        transform: rotateX(-60deg) scale(1.05);
-
-
-        /* .rfsc-list-item__side {
-            &.rfsc-list-item__side-front {
-                transform: rotateY(-180deg);
-            }
-
-            &.rfsc-list-item__side-back {
-                transform: rotateY(0deg);
-            }
-        } */
-    }
 
     .rfsc-list-item__side {
         width: 100%;
@@ -347,14 +320,97 @@ export const CalendarListItemStyles = styled.div `
         }
     }
 
+    @media screen and (min-width: ${ defaultStyles.breakpoints.medium }px ) {
 
-    /* &.rendered {
-        display: inherit;
-    }*/
+        &.initial {
+            opacity: 0 !important;
+        }
 
-    &.not-rendered {
-        visibility: hidden;
-    } 
+        &.filtered-out {
+            opacity: 0.25
+        }
+
+
+        &.active {
+            opacity: 1;
+            transform: rotateX(-60deg) scale(1);
+            cursor: pointer;
+        }
+
+        &.inactive {
+            transform: rotateX(-60deg) scale(0.9);
+            /* opacity: 0.9 */
+            /* opacity: 0.5; */
+        }
+
+        &.behind-viewport {
+            opacity: 0;
+            pointer-events: none !important;
+            transform: rotateX(-60deg) scale(2);
+
+            * {
+                pointer-events: none !important;
+            }
+        }
+
+        &.in-front-of-viewport {
+            /* background: yellow; */
+        }
+
+        &.invisible {
+            opacity: 0;
+            /* display: none; */
+        }
+
+        &:hover {
+            transform: rotateX(-60deg) scale(1.05);
+
+
+            /* .rfsc-list-item__side {
+                &.rfsc-list-item__side-front {
+                    transform: rotateY(-180deg);
+                }
+
+                &.rfsc-list-item__side-back {
+                    transform: rotateY(0deg);
+                }
+            } */
+        }
+
+
+        /* &.rendered {
+            display: inherit;
+        }*/
+
+        &.not-rendered {
+            visibility: hidden;
+        } 
+
+    }
+
+    @media screen and (max-width: ${ defaultStyles.breakpoints.medium }px ) {
+
+        transform: none;
+        width: 100%;
+        max-width: unset;
+        height: 100vw;
+        max-height: unset;
+        /* margin-bottom: ${props => (props.styles.spacing.medium)}px; */
+        
+        /* height: 100%; */
+        .rfsc-list-item__side {
+
+            &.rfsc-list-item__side-front {
+                padding: ${props => (props.styles.spacing.medium)}px;
+                position: relative;
+                /* border: ${props => (props.styles.spacing.medium)}px solid ${props => (props.styles.colors.green)}; */
+            }
+        }
+
+        /* &.rfsc-list-item-event:not(:last-of-type) {
+            border-bottom: 1px solid ${props => props.styles.colors.red};
+        } */
+    }
 
 `
 
@@ -525,6 +581,8 @@ export const CalendarGraphic = styled.div `
     }
 
     @media screen and (max-width: 768px ) {
+
+        display: none;
 
         svg {
             width: 260%;

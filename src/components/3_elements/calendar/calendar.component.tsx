@@ -53,7 +53,8 @@ function CalendarComponent() {
         if (
             e.target.classList.value.includes('rfsc-calendar__detail') ||
             e.target.classList.value.includes('rfsc-event-detail') ||
-            e.target.closest('[class*=rfsc-calendar__detail]')
+            e.target.closest('[class*=rfsc-calendar__detail]') ||
+            window.innerWidth < 768
         ) return
         
         scrollDist += Math.floor(e.deltaY * dampener);
@@ -63,20 +64,20 @@ function CalendarComponent() {
 
     const handleTouch = (e, type) => {
 
-        if (
-            e.target.classList.value.includes('rfsc-calendar__detail') ||
-            e.target.classList.value.includes('rfsc-event-detail') ||
-            e.target.closest('[class*=rfsc-calendar__detail]')
-        ) return
+        // if (
+        //     e.target.classList.value.includes('rfsc-calendar__detail') ||
+        //     e.target.classList.value.includes('rfsc-event-detail') ||
+        //     e.target.closest('[class*=rfsc-calendar__detail]')
+        // ) return
 
-        if (type == 'start') {
-            setScrollStartY(e.touches[0].clientY)
-        } else if (type == 'move') {
-            setScrollDeltaY(e.touches[0].clientY - scrollStartY);
-            // console.log(scroll);
-            setScrollDist(scrollDist, scrollDeltaY, - (dampener * 0.5));
-            // setScrollStartY(e.touches[0].clientY)
-        }
+        // if (type == 'start') {
+        //     setScrollStartY(e.touches[0].clientY)
+        // } else if (type == 'move') {
+        //     setScrollDeltaY(e.touches[0].clientY - scrollStartY);
+        //     // console.log(scroll);
+        //     setScrollDist(scrollDist, scrollDeltaY, - (dampener * 0.5));
+        //     // setScrollStartY(e.touches[0].clientY)
+        // }
 
     }
 

@@ -5,6 +5,7 @@ import { useBaseState } from '../../../state/provider';
 import actions from '../../../state/actions';
 import { formatDate, isLocation, isType, getCategories } from '../../../utils/helpers';
 import ImageContainerComponent from '../../1_atoms/image-container/image-container.component';
+import moment from 'moment';
 // interface CalendarListComponentProps {
 //     // scrollDist: Number
 //     days: Object[]
@@ -18,6 +19,7 @@ const CalendarListComponent = ({days}) => {
     const filters = useBaseState().state.filters;
     const calendar = useBaseState().state.calendar;
     let { scrollDist, scrollDir } = useBaseState().state.calendar;
+    const device = useBaseState().state.base.device;
     const updateBase = useBaseState().dispatchBase;
 
     const [offsetTop, setOffsetTop] = useState(0)
@@ -39,6 +41,9 @@ const CalendarListComponent = ({days}) => {
 
         // updateBase({ type: actions.SET_CALENDAR, payload: { scrollDist, scrollDir: 'forward' } });
 
+        if (window.innerWidth < 768) {
+            scrollToDay();
+        }
 
     }, [])
 
@@ -65,6 +70,13 @@ const CalendarListComponent = ({days}) => {
         }
     }, [scrollDist])
 
+    const scrollToDay = () => {
+        const day = moment().day();
+        const month = moment().month();
+        const topPosition = document.querySelector(`rfsc-calendar__list__day-${day}-${month}`)
+        // console.log('now is:', )
+    }
+
     // const getFilters = (post) => {
     // }
 
@@ -77,7 +89,7 @@ const CalendarListComponent = ({days}) => {
 
         switch (post.fieldGroupName) {
             case 'Page_Days_days_Posts_EventLayout':
-                post.events.forEach(event => {
+                post.events?.forEach(event => {
                     // event.categories.edges.forEach(node => {
                     //     const category = node.node;
                     //     if ( isType(category)) {
@@ -113,8 +125,62 @@ const CalendarListComponent = ({days}) => {
             scrollDist={scrollDist} 
         >
             <div className="rfsc-calendar__list-container">
-                { days ?
-                    days.slice(0).reverse().map((day, i) => {
+                { days ? 
+                    window.innerWidth > 768 ?
+                        days.slice(0).reverse().map((day, i) => {
+
+                            // if (typeof dayRefs.current?.offsetTop === 'number') {
+                            //     setOffsetTop(dayRefs.current?.offsetTop);
+                            //     if (day.index) {
+                            //         updateBase({type: actions.SET_CALENDAR_EVENT_POSITIONS, payload: { [day.index]: dayRefs.current?.offsetTop}})
+                            //     }
+                            // }
+                            return (
+                            <div 
+                                key={`rfsc-calendar__list__day-${day.index}-${i}`}
+                                id={`rfsc-calendar__list__day-${day.index}-${i}`} 
+                                className="rfsc-calendar__list__day"
+                                data-week={day.week}
+                                // ref={dayRefs[i]}
+                            >
+                                {day.posts?.slice(0).reverse().map((post, i) => {
+                                    
+                                    // const hasLocationFilter = filters.location.filter(value => {
+                                    //     return getFilters(post).locations.includes(value)
+                                    // });
+                                    
+                                    // const hasTypeFilter = filters.type.filter(value => {
+                                    //     return getFilters(post).types.includes(value)
+                                    // });
+
+                                    // const hasNoFilters = filters.location && filters.types ? filters.location?.length === 0 && filters.types?.length === 0 ? true : false : true;
+
+                                    if (
+                                        !(post.fieldGroupName == 'Page_Days_days_Posts_EventLayout' && post?.events?.length === 0)
+                                    ) {
+                                        return (
+                                            <CalendarListItemComponent
+                                                key={i}
+                                                date={formatDate(day.date)}
+                                                day={day.index}
+                                                week={day.week}
+                                                month={7}
+                                                in-project={`${day.index}-${post.i}`}
+                                                post={post}
+                                                scrollDist={+scrollDist}
+                                                containerHeight={offsetHeight}
+                                                activeThreshold={activeThreshold}
+                                                viewPortShift={viewPortShift}
+                                                far={far}
+                                                filters={getFilters(post)}
+                                            />
+                                        )
+                                    }
+                                })}
+                            </div>
+                        )})
+                    :
+                    days.map((day, i) => {
 
                         // if (typeof dayRefs.current?.offsetTop === 'number') {
                         //     setOffsetTop(dayRefs.current?.offsetTop);
@@ -130,7 +196,7 @@ const CalendarListComponent = ({days}) => {
                             data-week={day.week}
                             // ref={dayRefs[i]}
                         >
-                            {day.posts?.slice(0).reverse().map((post, i) => {
+                            {day.posts?.map((post, i) => {
                                 
                                 // const hasLocationFilter = filters.location.filter(value => {
                                 //     return getFilters(post).locations.includes(value)

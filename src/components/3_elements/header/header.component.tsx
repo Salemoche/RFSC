@@ -13,7 +13,7 @@ function HeaderComponent() {
     const setBaseState = useBaseState().dispatchBase;
 
     useEffect(() => {
-        setBaseState({ type: actions.SET_SIZES, payload: { headerHeight: 50 } });
+        setBaseState({ type: actions.SET_SIZES, payload: { headerHeight: 55 } });
     }, [])
 
     const handleClose = () => {

@@ -5,8 +5,8 @@ export const baseState = {
         contentFetched: false,
         contentLoaded: false,
         sizes: {
-            headerHeight: 50,
-            footerHeight: 50,
+            headerHeight: 55,
+            footerHeight: 55,
         },
         locationCount: 0,
         typeCount: 0,

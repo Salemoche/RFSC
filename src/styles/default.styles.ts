@@ -1048,7 +1048,6 @@ export const BannerStyles = styled.div`
     }
     
     @media screen and (max-width: ${ defaultStyles.breakpoints.medium }px ) {
-        /* padding: ${defaultStyles.spacing.small}px;
-         */
+        padding-top: 12px;
     }
 `
